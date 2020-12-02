@@ -3,13 +3,14 @@
 //--------------------------------------------------------
 
 import { ExceptionHandler } from '@absolunet/ioc';
+import CustomError          from './CustomError';
 
 
 /**
  * Application exception handler.
  *
  * @memberof app.exceptions
- * @augments ioc.foundation.exceptions.Handler
+ * @augments ioc.foundation.exceptions.BaseHandler
  * @hideconstructor
  */
 class Handler extends ExceptionHandler {
@@ -38,6 +39,10 @@ class Handler extends ExceptionHandler {
 	 * @inheritdoc
 	 */
 	async renderConsole(exception) {
+		if (exception instanceof CustomError && this.app.environment.includes('production')) {
+			delete exception.stack;
+		}
+
 		await super.renderConsole(exception);
 	}
 
