@@ -2,7 +2,8 @@
 //-- Node IoC - Providers - Application Service Provider
 //--------------------------------------------------------
 
-import { ServiceProvider } from '@absolunet/ioc';
+import __                           from '@absolunet/private-registry';
+import { ServiceProvider, Command } from '@absolunet/ioc';
 
 
 /**
@@ -29,6 +30,28 @@ class AppServiceProvider extends ServiceProvider {
 		// this.app.bind('service.name', concrete) or
 		// this.app.singleton('service.name', concrete). However, you should not
 		// use any service since some services may not be available yet.
+		const VERBOSIFIED = 'verbosified';
+
+		if (!__(Command).get(VERBOSIFIED)) {
+			__(Command).set(VERBOSIFIED, true);
+			const { spawn, call } = Command.prototype;
+			const logCommand      = function(prefix, command) {
+				this.log(`\n>> ${prefix}\n>> ${command.trim()}\n`);
+			};
+
+			Command.prototype.spawn = function(command, parameters = '', ...rest) {
+				const stringParameters = Array.isArray(parameters) ? parameters.join(' ') : parameters;
+				logCommand.call(this, 'Running', `${command} ${stringParameters}`.trim());
+
+				return spawn.call(this, command, parameters, ...rest);
+			};
+
+			Command.prototype.call = function(command, ...rest) {
+				logCommand.call(this, 'Running internal command', command);
+
+				return call.call(this, `${command} ${this.verbose ? `-${'v'.repeat(this.verbose)}` : ''}`.trimEnd(), ...rest);
+			};
+		}
 	}
 
 	/**
