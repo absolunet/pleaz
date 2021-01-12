@@ -1,0 +1,2 @@
+# The binary path of Homebrew
+brew_binary_path: '{{BREW_BINARY_PATH|/usr/local/opt}}'
