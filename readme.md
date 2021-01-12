@@ -1,3 +1,8 @@
+# Pleaz
+PHP Local Environment from A to Z
+
+[Documentation](./documentation/readme.md)
+
 # Node IoC
 
 [![npm](https://img.shields.io/npm/v/@absolunet/ioc.svg)](https://www.npmjs.com/package/@absolunet/ioc)

@@ -1,6 +1,12 @@
+# Pleaz Project
 .env
-node_modules
+dist
 coverage
+
+# Node
+node_modules
 package-lock.json
+
+# IDE
 .idea
 .vscode
