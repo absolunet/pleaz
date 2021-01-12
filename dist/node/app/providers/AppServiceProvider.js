@@ -49,7 +49,7 @@ class AppServiceProvider extends _ioc.ServiceProvider {
       } = _ioc.Command.prototype;
 
       const logCommand = function (prefix, command) {
-        this.log(`>> ${prefix}\n>> ${command.trim()}\n`);
+        this.log(`\n>> ${prefix}\n>> ${command.trim()}\n`);
       };
 
       _ioc.Command.prototype.spawn = function (command, parameters = '', ...rest) {

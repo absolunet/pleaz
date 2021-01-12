@@ -15,7 +15,7 @@ pleaz whoami
 
 ```
 # Non-working example for demonstration
-pleaz whoami
+pleaz whoami --verbose
 
   >> Running
   >> whoami
