@@ -4,7 +4,7 @@
 
 import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
-
+import NginxHandler from '../handlers/NginxHandler';
 
 /**
  * Application service provider.
@@ -52,6 +52,8 @@ class AppServiceProvider extends ServiceProvider {
 				return call.call(this, `${command} ${this.verbose ? `-${'v'.repeat(this.verbose)}` : ''}`.trimEnd(), ...rest);
 			};
 		}
+
+		this.registerConsoleAdapters();
 	}
 
 	/**
@@ -60,6 +62,13 @@ class AppServiceProvider extends ServiceProvider {
 	boot() {
 		// You may use services here to bootstrap them. You can get a service
 		// instance using this.app.make('service.name').
+	}
+
+	/**
+	 * Register Console Adapters.
+	 */
+	registerConsoleAdapters() {
+		this.app.bind('handler.nginx', NginxHandler);
 	}
 
 }

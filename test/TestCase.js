@@ -42,6 +42,22 @@ class TestCase extends BaseTestCase {
 		this.error = null;
 	}
 
+	whenAttempting(action) {
+		try {
+			action();
+		} catch (error) {
+			this.error = error;
+		}
+	}
+
+	async whenAttemptingAsync(action) {
+		try {
+			await action();
+		} catch (error) {
+			this.error = error;
+		}
+	}
+
 	thenResultShouldBe(expected) {
 		this.thenShouldNotHaveThrown();
 		this.expect(this.result).toBe(expected);
