@@ -4,7 +4,9 @@
 
 import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
-import NginxHandler from '../handlers/NginxHandler';
+import NginxHandler                 from '../handlers/NginxHandler';
+import PhpHandler                   from '../handlers/PhpHandler';
+
 
 /**
  * Application service provider.
@@ -69,6 +71,7 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	registerConsoleAdapters() {
 		this.app.bind('handler.nginx', NginxHandler);
+		this.app.bind('handler.php', PhpHandler);
 	}
 
 }
