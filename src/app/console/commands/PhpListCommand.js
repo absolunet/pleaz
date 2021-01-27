@@ -20,7 +20,7 @@ class PhpListCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'List all PHP version installed.';
+		return 'List all versions of PHP installed.';
 	}
 
 	/**

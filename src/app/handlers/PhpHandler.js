@@ -69,7 +69,7 @@ class PhpHandler extends Handler {
 	 */
 	async switch(version = null) {
 		if (!version) {
-			throw new CustomError(`Please specify PHP Version.`);
+			throw new CustomError(`Please specify PHP version.`);
 		}
 
 		this.ensureVersionExists(version);
@@ -87,7 +87,7 @@ class PhpHandler extends Handler {
 		const versionInstalled = this.listVersionInstalled;
 
 		if (!versionInstalled) {
-			throw new CustomError(`No version of Homebrew PHP is found on your system.`);
+			throw new CustomError(`No version of PHP installed via Homebrew found.`);
 		}
 
 		const fullVersionList = [];
@@ -132,7 +132,7 @@ class PhpHandler extends Handler {
 	 */
 	ensureVersionExists(version) {
 		if (version && !this.terminal.process.runAndGet(`brew list --formula | grep "^php@${version}"; true`)) {
-			throw new CustomError(`Version ${version} is not installed.`);
+			throw new CustomError(`PHP '${version}' installed via Homebrew, can not be found.`);
 		}
 
 		return true;

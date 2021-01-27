@@ -20,7 +20,7 @@ class PhpSwitchCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Switch PHP.';
+		return 'Switch current PHP version.';
 	}
 
 	/**
