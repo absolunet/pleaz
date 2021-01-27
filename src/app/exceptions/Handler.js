@@ -3,6 +3,7 @@
 //--------------------------------------------------------
 
 import { ExceptionHandler } from '@absolunet/ioc';
+import CustomError          from './CustomError';
 
 
 /**
@@ -38,6 +39,10 @@ class Handler extends ExceptionHandler {
 	 * @inheritdoc
 	 */
 	async renderConsole(exception) {
+		if (exception instanceof CustomError && this.app.environment.includes('production')) {
+			delete exception.stack;
+		}
+
 		await super.renderConsole(exception);
 	}
 
