@@ -15,11 +15,11 @@ class Handler {
 	 */
 	spawn(command, parameters = '', privileged = false) {
 		let spawnCommand = command;
-		let spawnParameters = parameters;
+		let spawnParameters = parameters.trim();
 
 		if (this.privileged || privileged === true) {
 			spawnCommand = 'sudo';
-			spawnParameters = `${command} ${parameters}`;
+			spawnParameters = `${command} ${parameters.trim()}`;
 		}
 
 		return this.command.spawn(spawnCommand, spawnParameters);

@@ -6,7 +6,7 @@ import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
 import NginxHandler                 from '../handlers/NginxHandler';
 import PhpHandler                   from '../handlers/PhpHandler';
-
+import DockerHandler                from '../handlers/DockerHandler';
 
 /**
  * Application service provider.
@@ -55,7 +55,7 @@ class AppServiceProvider extends ServiceProvider {
 			};
 		}
 
-		this.registerConsoleAdapters();
+		this.registerConsoleHandlers();
 	}
 
 	/**
@@ -67,11 +67,12 @@ class AppServiceProvider extends ServiceProvider {
 	}
 
 	/**
-	 * Register Console Adapters.
+	 * Register Console Handlers.
 	 */
-	registerConsoleAdapters() {
+	registerConsoleHandlers() {
 		this.app.bind('handler.nginx', NginxHandler);
 		this.app.bind('handler.php', PhpHandler);
+		this.app.bind('handler.docker', DockerHandler);
 	}
 
 }
