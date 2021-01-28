@@ -20,16 +20,17 @@ class PhpStartCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Start PHP server.';
+		return 'Start PHP server. (ex. 7.2, 7.3)';
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.php.start(this.parameter('phpVersion'));
+		const version = this.parameter('phpVersion') || this.php.getCurrentVersion();
+		await this.php.start(version);
 
-		this.success(`php-fpm@${this.php.getFullVersion()} has started.`);
+		this.success(`php@${version} (${this.php.getFullVersion(version)}) has started.`);
 	}
 
 }

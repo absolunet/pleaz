@@ -20,16 +20,17 @@ class PhpStopCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Stop PHP server.';
+		return 'Stop PHP server. (ex. 7.2, 7.3)';
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.php.stop(this.parameter('phpVersion'));
+		const version = this.parameter('phpVersion') || this.php.getCurrentVersion();
+		await this.php.stop(version);
 
-		this.success(`php-fpm@${this.php.getFullVersion()} has stopped.`);
+		this.success(`php@${version} (${this.php.getFullVersion(version)}) has stopped.`);
 	}
 
 }

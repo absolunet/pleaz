@@ -13,7 +13,7 @@ class PhpHandler extends Handler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['terminal', 'config'];
+		return ['terminal'];
 	}
 
 	/**
@@ -25,9 +25,7 @@ class PhpHandler extends Handler {
 	getBinaryPath(version = null) {
 		this.ensureVersionExists(version);
 
-		return !version
-			? 'php-fpm'
-			: `${this.config.get('pleaz.brew_binary_path')}/php@${version}/sbin/php-fpm`;
+		return this.terminal.process.runAndGet(`brew --prefix php@${version || this.getCurrentVersion()}`);
 	}
 
 	/**
@@ -37,7 +35,7 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async start(version = null) {
-		await this.spawn(this.getBinaryPath(version), '-D', true);
+		await this.spawn(`${this.getBinaryPath(version)}/sbin/php-fpm`, '-D', true);
 	}
 
 	/**
@@ -58,7 +56,7 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async stop(version = null) {
-		await this.spawn('pkill -f', this.getBinaryPath(version), true);
+		await this.spawn('pkill -f', `${this.getBinaryPath(version)}/sbin/php-fpm`, true);
 	}
 
 	/**
@@ -91,7 +89,7 @@ class PhpHandler extends Handler {
 		}
 
 		return versionInstalled.split(' / ').map((version) => {
-			return this.getFullVersion(version.split('php@').pop());
+			return `${version} (${this.getFullVersion(version.split('php@').pop())})`;
 		});
 	}
 
@@ -102,11 +100,11 @@ class PhpHandler extends Handler {
 	 * @returns {string} - Return PHP Version.
 	 */
 	getFullVersion(version = null) {
-		const spawnVersion = !version ? this.command.parameter('phpVersion') : version;
+		const spawnVersion = version || this.command.parameter('phpVersion');
 
 		return this.terminal
 			.process
-			.runAndGet(`${this.getBinaryPath(spawnVersion)} -v | awk '/^PHP/{print $2}'`);
+			.runAndGet(`${this.getBinaryPath(spawnVersion)}/sbin/php-fpm -v | awk '/^PHP/{print $2}'`);
 	}
 
 	/**
@@ -130,6 +128,18 @@ class PhpHandler extends Handler {
 		if (version && !this.terminal.process.runAndGet(`brew list --formula | grep "^php@${version}"; true`)) {
 			throw new CustomError(`PHP '${version}' installed via Homebrew, can't be found.`);
 		}
+	}
+
+	/**
+	 * Get Current PHP version.
+	 *
+	 * @returns {string} - Return current PHP version.
+	 */
+	getCurrentVersion() {
+
+		return this.terminal
+			.process
+			.runAndGet(`php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;'`).trim();
 	}
 
 }

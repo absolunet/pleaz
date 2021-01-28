@@ -28,7 +28,7 @@ class PhpListCommand extends PhpCommand {
 	 */
 	handle() {
 		this.php.list().forEach((version) => {
-			this.success(`php-fpm@${version}.`);
+			this.success(`${version}.`);
 		});
 	}
 
