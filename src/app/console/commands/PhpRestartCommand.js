@@ -20,7 +20,7 @@ class PhpRestartCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Restart PHP server. (ex. 7.2, 7.3)';
+		return 'Restart PHP server.';
 	}
 
 	/**

@@ -72,7 +72,7 @@ class PhpHandler extends Handler {
 
 		this.ensureVersionExists(version);
 
-		await this.spawn('brew', 'unlink php');
+		await this.spawn('brew', `unlink php@${this.getCurrentVersion()}`);
 		await this.spawn('brew', `link --overwrite --force php@${version}`);
 	}
 

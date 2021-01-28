@@ -20,7 +20,7 @@ class PhpStartCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Start PHP server. (ex. 7.2, 7.3)';
+		return 'Start PHP server.';
 	}
 
 	/**

@@ -19,6 +19,13 @@ class PhpListCommand extends PhpCommand {
 	/**
 	 * @inheritdoc
 	 */
+	get parameters() {
+		return [];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	get description() {
 		return 'List all versions of PHP installed.';
 	}

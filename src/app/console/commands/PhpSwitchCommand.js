@@ -20,15 +20,22 @@ class PhpSwitchCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Switch current PHP version. (ex. 7.2, 7.3)';
+		return 'Switch current PHP version.';
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	get isPhpVersionRequired() {
+		return true;
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	async handle() {
-		const version = this.parameter('phpVersion') || this.php.getCurrentVersion();
-		this.php.ensureVersionExists(version);
+		const version = this.parameter('phpVersion');
+
 		await this.php.switch(version);
 
 		this.success(`php@${version} (${this.php.getFullVersion(version)}) has switched.`);

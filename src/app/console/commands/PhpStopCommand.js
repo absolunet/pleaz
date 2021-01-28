@@ -20,7 +20,7 @@ class PhpStopCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Stop PHP server. (ex. 7.2, 7.3)';
+		return 'Stop PHP server.';
 	}
 
 	/**
