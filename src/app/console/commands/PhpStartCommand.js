@@ -29,7 +29,7 @@ class PhpStartCommand extends PhpCommand {
 	async handle() {
 		await this.php.start(this.parameter('phpVersion'));
 
-		this.success(`php-fpm@${this.php.fullVersion()} has started.`);
+		this.success(`php-fpm@${this.php.getFullVersion()} has started.`);
 	}
 
 }

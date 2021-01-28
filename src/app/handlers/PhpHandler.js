@@ -84,18 +84,15 @@ class PhpHandler extends Handler {
 	 * @returns {[]} - Return List of PHP version installed.
 	 */
 	list() {
-		const versionInstalled = this.listVersionInstalled;
+		const versionInstalled = this.getInstalledVersions();
 
 		if (!versionInstalled) {
 			throw new CustomError(`No version of PHP installed via Homebrew found.`);
 		}
 
-		const fullVersionList = [];
-		versionInstalled.split(' / ').forEach((version) => {
-			fullVersionList.push(this.fullVersion(version.split('php@').pop()));
+		return versionInstalled.split(' / ').map((version) => {
+			return this.getFullVersion(version.split('php@').pop());
 		});
-
-		return fullVersionList;
 	}
 
 	/**
@@ -104,7 +101,7 @@ class PhpHandler extends Handler {
 	 * @param {string|null} version - PHP Version.
 	 * @returns {string} - Return PHP Version.
 	 */
-	fullVersion(version = null) {
+	getFullVersion(version = null) {
 		const spawnVersion = !version ? this.command.parameter('phpVersion') : version;
 
 		return this.terminal
@@ -117,7 +114,7 @@ class PhpHandler extends Handler {
 	 *
 	 * @returns {string} - Return PHP Version.
 	 */
-	get listVersionInstalled() {
+	getInstalledVersions() {
 
 		return this.terminal
 			.process
@@ -128,14 +125,11 @@ class PhpHandler extends Handler {
 	 * Ensure Homebrew Version Exists.
 	 *
 	 * @param {string} version - PHP Version.
-	 * @returns {boolean} - Return true if version exists.
 	 */
 	ensureVersionExists(version) {
 		if (version && !this.terminal.process.runAndGet(`brew list --formula | grep "^php@${version}"; true`)) {
-			throw new CustomError(`PHP '${version}' installed via Homebrew, can not be found.`);
+			throw new CustomError(`PHP '${version}' installed via Homebrew, can't be found.`);
 		}
-
-		return true;
 	}
 
 }

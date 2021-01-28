@@ -29,7 +29,7 @@ class PhpStopCommand extends PhpCommand {
 	async handle() {
 		await this.php.stop(this.parameter('phpVersion'));
 
-		this.success(`php-fpm@${this.php.fullVersion()} has stopped.`);
+		this.success(`php-fpm@${this.php.getFullVersion()} has stopped.`);
 	}
 
 }

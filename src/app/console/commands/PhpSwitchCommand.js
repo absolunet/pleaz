@@ -30,7 +30,7 @@ class PhpSwitchCommand extends PhpCommand {
 		this.php.ensureVersionExists(this.parameter('phpVersion'));
 		await this.php.switch(this.parameter('phpVersion'));
 
-		this.success(`php-fpm@${this.php.fullVersion()} has switched.`);
+		this.success(`php-fpm@${this.php.getFullVersion()} has switched.`);
 	}
 
 }
