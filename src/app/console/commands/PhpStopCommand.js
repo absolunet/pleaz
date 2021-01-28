@@ -27,9 +27,10 @@ class PhpStopCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.php.stop(this.parameter('phpVersion'));
+		const version = this.parameter('phpVersion') || this.php.getCurrentVersion();
+		await this.php.stop(version);
 
-		this.success(`php-fpm@${this.php.fullVersion} has stopped.`);
+		this.success(`php@${version} (${this.php.getFullVersion(version)}) has stopped.`);
 	}
 
 }

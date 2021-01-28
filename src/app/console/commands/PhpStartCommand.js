@@ -27,9 +27,10 @@ class PhpStartCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.php.start(this.parameter('phpVersion'));
+		const version = this.parameter('phpVersion') || this.php.getCurrentVersion();
+		await this.php.start(version);
 
-		this.success(`php-fpm@${this.php.fullVersion} has started.`);
+		this.success(`php@${version} (${this.php.getFullVersion(version)}) has started.`);
 	}
 
 }
