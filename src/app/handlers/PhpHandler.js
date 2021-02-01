@@ -13,7 +13,7 @@ class PhpHandler extends Handler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['terminal'];
+		return ['terminal', 'file', 'file.system.sync'];
 	}
 
 	/**
@@ -149,7 +149,7 @@ class PhpHandler extends Handler {
 	 */
 	async xdebugDisable() {
 		if (!this.isXdebugEnable()) {
-			throw new CustomError(`Xdebug has already disabled.`);
+			throw new CustomError(`Xdebug has already been disabled.`);
 		}
 
 		await this.toggleXdebug(false);
@@ -162,7 +162,7 @@ class PhpHandler extends Handler {
 	 */
 	async xdebugEnable() {
 		if (this.isXdebugEnable()) {
-			throw new CustomError(`Xdebug has already enabled.`);
+			throw new CustomError(`Xdebug has already been enabled.`);
 		}
 
 		await this.toggleXdebug(true);
@@ -178,7 +178,9 @@ class PhpHandler extends Handler {
 		const enableFile = `${this.getIniFilesPath()}/ext-xdebug.ini`;
 		const disableFile = `${enableFile}.dis`;
 
-		await this.spawn('mv', enable ? `${disableFile} ${enableFile}` : `${enableFile} ${disableFile}`);
+		return await enable
+			? this.fileSystemSync.rename(disableFile, enableFile)
+			: this.fileSystemSync.rename(enableFile, disableFile);
 	}
 
 	/**
@@ -202,7 +204,6 @@ class PhpHandler extends Handler {
 			.process
 			.runAndGet(`php --ini | grep Scan | cut -d" " -f7`).trim();
 	}
-
 
 }
 
