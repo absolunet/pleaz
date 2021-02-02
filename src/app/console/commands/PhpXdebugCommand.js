@@ -21,19 +21,19 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Enable and disable Xdebug.';
+		return 'Get Xdebug status or enable/disable.';
 	}
 
 	/**
 	 * Status Parameters.
 	 *
-	 * @returns {{DISABLE: string, STATUS: string, ENABLE: string}} - Status Parameters available.
+	 * @returns {{enable: Function, disable: Function, status: Function}} - Status Parameters available.
 	 */
 	get STATUS() {
 		return {
-			ENABLE: 'enable',
-			DISABLE: 'disable',
-			STATUS: 'status'
+			enable: this.handleEnable,
+			disable: this.handleDisable,
+			status: this.handleStatus
 		};
 	}
 
@@ -42,7 +42,7 @@ class PhpXdebugCommand extends PhpCommand {
 	 */
 	get parameters() {
 		return [
-			['status', true, null, 'Enable/Disable/Status Xdebug. [enable|disable|status]']
+			['status', false, 'status', `Get Xdebug status or enable/disable. [${Object.keys(this.STATUS)}]`]
 		];
 	}
 
@@ -50,36 +50,26 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
+
 		const handler = this.getHandlerForStatus(this.parameter('status'));
 
-		const { message, restart } = await handler();
+		const { message } = await handler();
 
 		this.success(message);
 
-		if (restart) {
-			await this.php.restart();
-		}
 	}
 
 	/**
 	 * Handler for status.
 	 *
 	 * @param {string} status - Status Parameters.
-	 * @returns {Promise} Promise<{message: string, restart: (bool|undefined)}> - The async process promise.
+	 * @returns {Promise} Promise<{message: string}> - The async process promise.
 	 */
 	getHandlerForStatus(status) {
-		const handler = {
-			[this.STATUS.ENABLE]:  this.handleEnable,
-			[this.STATUS.DISABLE]: this.handleDisable,
-			[this.STATUS.STATUS]: this.handleStatus
-		}[status];
+		const handler = this.STATUS[status];
 
 		if (!handler) {
-			const parameters = Object.keys(this.STATUS).map((key) => {
-				return this.STATUS[key];
-			});
-
-			throw new CustomError(`Only [${parameters}] parameters are available.`);
+			throw new CustomError(`Only [${Object.keys(this.STATUS)}] parameters are available.`);
 		}
 
 		return handler.bind(this);
@@ -88,41 +78,38 @@ class PhpXdebugCommand extends PhpCommand {
 	/**
 	 * Enable PHP Xdebug.
 	 *
-	 * @returns {Promise} Promise<{message: string, restart: bool|undefined}> - The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async handleEnable() {
-		await this.php.xdebugEnable();
+		await this.php.toggleXdebug(true);
 
 		return {
-			message: 'Xdebug has been enabled.',
-			restart: true
+			message: 'Xdebug has been enabled.'
 		};
 	}
 
 	/**
 	 * Disable PHP Xdebug.
 	 *
-	 * @returns {Promise} Promise<{message: string, restart: bool|undefined}> - The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async handleDisable() {
-		await this.php.xdebugDisable();
+		await this.php.toggleXdebug(false);
 
 		return {
-			message: 'Xdebug has been disabled.',
-			restart: true
+			message: 'Xdebug has been disabled.'
 		};
 	}
 
 	/**
 	 * Get Status of PHP Xdebug.
 	 *
-	 * @returns {Promise} Promise<{message: string, restart: bool|undefined}> - The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async handleStatus() {
 
 		return {
-			message: await this.php.isXdebugEnable() ? 'Xdebug is enabled.' : 'Xdebug is disabled.',
-			restart: false
+			message: await this.php.isXdebugEnable() ? 'Xdebug is enabled.' : 'Xdebug is disabled.'
 		};
 	}
 

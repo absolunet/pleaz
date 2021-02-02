@@ -13,7 +13,7 @@ class PhpHandler extends Handler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['terminal', 'file', 'file.system.sync'];
+		return ['terminal', 'file.system.sync'];
 	}
 
 	/**
@@ -143,44 +143,26 @@ class PhpHandler extends Handler {
 	}
 
 	/**
-	 * Disable PHP extension Xdebug.
-	 *
-	 * @returns {Promise} The async process promise.
-	 */
-	async xdebugDisable() {
-		if (!this.isXdebugEnable()) {
-			throw new CustomError(`Xdebug has already been disabled.`);
-		}
-
-		await this.toggleXdebug(false);
-	}
-
-	/**
-	 * Enable PHP extension Xdebug.
-	 *
-	 * @returns {Promise} The async process promise.
-	 */
-	async xdebugEnable() {
-		if (this.isXdebugEnable()) {
-			throw new CustomError(`Xdebug has already been enabled.`);
-		}
-
-		await this.toggleXdebug(true);
-	}
-
-	/**
 	 * Toggle PHP extension Xdebug.
 	 *
 	 * @param {boolean} enable - Enable/Disable parameters.
 	 * @returns {Promise} The async process promise.
 	 */
 	async toggleXdebug(enable) {
+		if ((this.isXdebugEnable() && enable) ||
+			(!this.isXdebugEnable() && !enable)
+		) {
+			throw new CustomError(`Xdebug has already been ${enable ? 'enabled' : 'disabled'}.`);
+		}
+
 		const enableFile = `${this.getIniFilesPath()}/ext-xdebug.ini`;
 		const disableFile = `${enableFile}.dis`;
 
-		return await enable
+		await (enable
 			? this.fileSystemSync.rename(disableFile, enableFile)
-			: this.fileSystemSync.rename(enableFile, disableFile);
+			: this.fileSystemSync.rename(enableFile, disableFile));
+
+		await this.restart(this.getCurrentVersion());
 	}
 
 	/**
