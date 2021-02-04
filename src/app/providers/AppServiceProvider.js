@@ -7,6 +7,7 @@ import { ServiceProvider, Command } from '@absolunet/ioc';
 import NginxHandler                 from '../handlers/NginxHandler';
 import PhpHandler                   from '../handlers/PhpHandler';
 import DockerHandler                from '../handlers/DockerHandler';
+import DnsmasqHandler               from '../handlers/DnsmasqHandler';
 import MailHogHandler               from '../handlers/MailHogHandler';
 
 /**
@@ -74,6 +75,7 @@ class AppServiceProvider extends ServiceProvider {
 		this.app.bind('handler.nginx', NginxHandler);
 		this.app.bind('handler.php', PhpHandler);
 		this.app.bind('handler.docker', DockerHandler);
+		this.app.bind('handler.dnsmasq', DnsmasqHandler);
 		this.app.bind('handler.mailhog', MailHogHandler);
 	}
 
