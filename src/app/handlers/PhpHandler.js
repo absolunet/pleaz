@@ -13,7 +13,7 @@ class PhpHandler extends Handler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['terminal', 'file.system.sync'];
+		return ['terminal', 'file.system.sync', 'config'];
 	}
 
 	/**
@@ -45,7 +45,9 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async restart(version = null) {
-		await this.stop(version);
+		if (await this.isServiceRunning(version)) {
+			await this.stop(version);
+		}
 		await this.start(version);
 	}
 
@@ -56,7 +58,10 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async stop(version = null) {
-		await this.spawn('pkill -f', `${this.getBinaryPath(version)}/sbin/php-fpm`, true);
+		if (!await this.isServiceRunning(version)) {
+			throw new CustomError(`Service is not running.`);
+		}
+		await this.spawn('pkill', `-f ${this.getBinaryPath(version)}/sbin/php-fpm`, true);
 	}
 
 	/**
@@ -173,6 +178,19 @@ class PhpHandler extends Handler {
 	isXdebugEnable() {
 
 		return Boolean(this.terminal.process.runAndGet(`php -m | grep xdebug; true`));
+	}
+
+	/**
+	 * Is Service PHP-FPM running.
+	 *
+	 * @param {string|null} version - PHP Version.
+	 * @returns {Promise} - Return status of service.
+	 */
+	isServiceRunning(version) {
+		const unixSockPath = this.config.get('pleaz.unix_socket_path');
+		const socketFile = `php${version || this.getCurrentVersion()}-fpm.sock`;
+
+		return this.fileSystemSync.exists(`${unixSockPath}/${socketFile}`);
 	}
 
 	/**

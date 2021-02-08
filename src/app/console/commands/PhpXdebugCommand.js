@@ -50,7 +50,6 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-
 		const handler = this.getHandlerForStatus(this.parameter('status'));
 
 		const { message } = await handler();
