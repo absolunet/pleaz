@@ -23,9 +23,10 @@ class PhpHandler extends Handler {
 	 * @returns {string} - Return PHP binary path.
 	 */
 	getBinaryPath(version = null) {
-		this.ensureVersionExists(version);
+		const parameterVersion = version || this.getCurrentVersion();
+		this.ensureVersionExists(parameterVersion);
 
-		return this.terminal.process.runAndGet(`brew --prefix php@${version || this.getCurrentVersion()}`);
+		return this.terminal.process.runAndGet(`brew --prefix php@${parameterVersion}`);
 	}
 
 	/**
@@ -35,7 +36,7 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async start(version = null) {
-		await this.spawn(`${this.getBinaryPath(version)}/sbin/php-fpm`, '-D', true);
+		await this.spawn(`${this.getBinaryPath(version || this.getCurrentVersion())}/sbin/php-fpm`, '-D', true);
 	}
 
 	/**
@@ -45,10 +46,11 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async restart(version = null) {
-		if (await this.isServiceRunning(version)) {
-			await this.stop(version);
+		const parameterVersion = version || this.getCurrentVersion();
+		if (await this.isServiceRunning(parameterVersion)) {
+			await this.stop(parameterVersion);
 		}
-		await this.start(version);
+		await this.start(parameterVersion);
 	}
 
 	/**
@@ -58,10 +60,12 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async stop(version = null) {
-		if (!await this.isServiceRunning(version)) {
+		const parameterVersion = version || this.getCurrentVersion();
+
+		if (!await this.isServiceRunning(parameterVersion)) {
 			throw new CustomError(`Service is not running.`);
 		}
-		await this.spawn('pkill', `-f ${this.getBinaryPath(version)}/sbin/php-fpm`, true);
+		await this.spawn('pkill', `-f ${this.getBinaryPath(parameterVersion)}/sbin/php-fpm`, true);
 	}
 
 	/**

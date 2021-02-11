@@ -1,1 +1,2 @@
-unix_socket_path: /var/run
+services:
+  unix_socket_path: /var/run

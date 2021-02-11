@@ -1,9 +1,26 @@
+import { NotImplementedError } from '@absolunet/ioc';
+
 /**
  * Handler Class.
  *
  * @memberof app.handlers
  */
 class Handler {
+
+	// constructor() {
+	// 	if (!this.starts()) {
+	// 		throw new NotImplementedError(this, 'starts');
+	// 	}
+	// }
+
+	/**
+	 * Interface.
+	 *
+	 * @abstract
+	 */
+	startt() {
+		throw new NotImplementedError(this, 'startt');
+	}
 
 	/**
 	 * Spawn a process through the command instance.
@@ -15,7 +32,7 @@ class Handler {
 	 */
 	spawn(command, parameters = '', privileged = false) {
 		let spawnCommand = command;
-		const spawnParameters = Array.isArray(parameters) ? parameters : parameters.split(' ');
+		const spawnParameters = Array.isArray(parameters) ? parameters : parameters.trim().split(' ');
 
 		if (this.privileged || privileged === true) {
 			spawnCommand = 'sudo';

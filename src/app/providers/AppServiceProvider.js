@@ -9,6 +9,10 @@ import PhpHandler                   from '../handlers/PhpHandler';
 import DockerHandler                from '../handlers/DockerHandler';
 import DnsmasqHandler               from '../handlers/DnsmasqHandler';
 import MailHogHandler               from '../handlers/MailHogHandler';
+import DatabaseHandler              from '../handlers/DatabaseHandler';
+import ElasticsearchHandler 		from '../handlers/ElasticsearchHandler';
+import RedisHandler 		        from '../handlers/RedisHandler';
+import VarnishHandler 		        from '../handlers/VarnishHandler';
 
 /**
  * Application service provider.
@@ -77,6 +81,10 @@ class AppServiceProvider extends ServiceProvider {
 		this.app.bind('handler.docker', DockerHandler);
 		this.app.bind('handler.dnsmasq', DnsmasqHandler);
 		this.app.bind('handler.mailhog', MailHogHandler);
+		this.app.bind('handler.database', DatabaseHandler);
+		this.app.bind('handler.elasticsearch', ElasticsearchHandler);
+		this.app.bind('handler.redis', RedisHandler);
+		this.app.bind('handler.varnish', VarnishHandler);
 	}
 
 }

@@ -14,6 +14,7 @@ class NginxHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async start() {
+		await this.test();
 		await this.spawn('brew', 'services start nginx');
 	}
 

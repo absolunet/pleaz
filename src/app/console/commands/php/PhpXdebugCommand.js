@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 
 import PhpCommand  from './PhpCommand';
-import CustomError from '../../exceptions/CustomError';
+import CustomError from '../../../exceptions/CustomError';
 
 /**
  * PhpXdebugCommand.

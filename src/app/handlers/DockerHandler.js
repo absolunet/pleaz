@@ -9,43 +9,48 @@ import Handler from './Handler';
 class DockerHandler extends Handler {
 
 	/**
-	 * Start docker-compose containers.
+	 * Get Service name.
 	 *
-	 * @param {string|null} service - Service container name.
-	 * @returns {Promise} The async process promise.
+	 * @returns {string} - Return service name.
 	 */
-	async start(service = null) {
-		await this.spawn('docker-compose', `up --detach ${this.getService(service)}`);
+	get service() {
+		return '';
 	}
 
 	/**
-	 * Restart docker-compose containers.
+	 * Start docker-compose containers.
 	 *
-	 * @param {string|null} service - Service container name.
 	 * @returns {Promise} The async process promise.
 	 */
-	async restart(service = null) {
-		await this.spawn('docker-compose', `restart ${this.getService(service)}`);
+	async start() {
+		await this.spawn('docker-compose', `up --detach ${this.getService(this.service)}`);
 	}
 
 	/**
 	 * Stop docker-compose containers.
 	 *
-	 * @param {string|null} service - Service container name.
 	 * @returns {Promise} The async process promise.
 	 */
-	async stop(service = null) {
-		await this.spawn('docker-compose', `stop ${this.getService(service)}`);
+	async stop() {
+		await this.spawn('docker-compose', `stop ${this.getService(this.service)}`);
+	}
+
+	/**
+	 * Restart docker-compose containers.
+	 *
+	 * @returns {Promise} The async process promise.
+	 */
+	async restart() {
+		await this.spawn('docker-compose', `restart ${this.getService(this.service)}`);
 	}
 
 	/**
 	 * Clean docker-compose containers.
 	 *
-	 * @param {string|null} service - Service container name.
 	 * @returns {Promise} The async process promise.
 	 */
-	async clean(service = null) {
-		await this.spawn('docker-compose', service ? `rm --stop -v ${service}` : 'down');
+	async clean() {
+		await this.spawn('docker-compose', this.service ? `rm --stop -v ${this.service}` : 'down');
 	}
 
 	/**
