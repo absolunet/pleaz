@@ -171,8 +171,6 @@ class PhpHandler extends Handler {
 		await (enable
 			? this.fileSystemSync.rename(disableFile, enableFile)
 			: this.fileSystemSync.rename(enableFile, disableFile));
-
-		// await this.restart(this.getCurrentVersion());
 	}
 
 	/**
