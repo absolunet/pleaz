@@ -28,9 +28,9 @@ class PhpRestartCommand extends PhpCommand {
 	 */
 	async handle() {
 		const version = this.parameter('phpVersion') || this.php.getCurrentVersion();
-		await this.php.restart(version);
+		const { message } = await this.php.restart(version);
 
-		this.success(`php@${version} (${this.php.getFullVersion(version)}) has restarted.`);
+		this.success(message);
 	}
 
 }

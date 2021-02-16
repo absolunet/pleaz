@@ -25,15 +25,15 @@ class PhpXdebugCommand extends PhpCommand {
 	}
 
 	/**
-	 * Status Parameters.
+	 * Parameters.
 	 *
 	 * @returns {{enable: Function, disable: Function, status: Function}} - Status Parameters available.
 	 */
-	get STATUS() {
+	get PARAMETERS() {
 		return {
-			enable: this.handleEnable,
-			disable: this.handleDisable,
-			status: this.handleStatus
+			enable: this.handleEnable.bind(this),
+			disable: this.handleDisable.bind(this),
+			status: this.handleStatus.bind(this)
 		};
 	}
 
@@ -42,7 +42,7 @@ class PhpXdebugCommand extends PhpCommand {
 	 */
 	get parameters() {
 		return [
-			['status', false, 'status', `Get Xdebug status or enable/disable. [${Object.keys(this.STATUS)}]`]
+			['parameters', false, 'status', `Get Xdebug status or enable/disable. [${Object.keys(this.PARAMETERS)}]`]
 		];
 	}
 
@@ -50,28 +50,32 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		const handler = this.getHandlerForStatus(this.parameter('status'));
-
-		const { message } = await handler();
+		const handler = this.getHandlerForParameters(this.parameter('parameters'));
+		let { message } = await handler();
 
 		this.success(message);
 
+		if (await this.php.isServiceRunning(this.php.getCurrentVersion())) {
+			message = await this.php.restart(this.php.getCurrentVersion());
+
+			this.success(message);
+		}
 	}
 
 	/**
-	 * Handler for status.
+	 * Handler for parameters.
 	 *
-	 * @param {string} status - Status Parameters.
+	 * @param {string} parameters - Parameters.
 	 * @returns {Promise} Promise<{message: string}> - The async process promise.
 	 */
-	getHandlerForStatus(status) {
-		const handler = this.STATUS[status];
+	getHandlerForParameters(parameters) {
+		const handler = this.PARAMETERS[parameters];
 
 		if (!handler) {
-			throw new CustomError(`Only [${Object.keys(this.STATUS)}] parameters are available.`);
+			throw new CustomError(`Only [${Object.keys(this.PARAMETERS)}] parameters are available.`);
 		}
 
-		return handler.bind(this);
+		return handler;
 	}
 
 	/**

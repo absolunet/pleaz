@@ -42,13 +42,18 @@ class PhpHandler extends Handler {
 	 * Restart PHP-FPM service.
 	 *
 	 * @param {string|null} version - PHP Version.
-	 * @returns {Promise} The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async restart(version = null) {
 		if (await this.isServiceRunning(version)) {
 			await this.stop(version);
 		}
+
 		await this.start(version);
+
+		return {
+			message: `php@${version} (${this.getFullVersion(version)}) has restarted.`
+		};
 	}
 
 	/**
@@ -167,7 +172,7 @@ class PhpHandler extends Handler {
 			? this.fileSystemSync.rename(disableFile, enableFile)
 			: this.fileSystemSync.rename(enableFile, disableFile));
 
-		await this.restart(this.getCurrentVersion());
+		// await this.restart(this.getCurrentVersion());
 	}
 
 	/**
