@@ -169,8 +169,8 @@ class PhpHandler extends Handler {
 		const disableFile = `${enableFile}.dis`;
 
 		await (enable
-			? this.fileSystemSync.rename(disableFile, enableFile)
-			: this.fileSystemSync.rename(enableFile, disableFile));
+			? this.spawn('mv', [disableFile, enableFile], true)
+			: this.spawn('mv', [enableFile, disableFile], true));
 	}
 
 	/**

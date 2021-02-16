@@ -50,17 +50,21 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		const handler = this.getHandlerForParameters(this.parameter('parameters'));
-		// eslint-disable-next-line prefer-const
-		let { restart, message } = await handler();
-
-		this.success(message);
-
-		if (restart && await this.php.isServiceRunning(this.php.getCurrentVersion())) {
-			({ message } = await this.php.restart(this.php.getCurrentVersion()));
+		try {
+			const handler = this.getHandlerForParameters(this.parameter('parameters'));
+			const { restart, message } = await handler();
 
 			this.success(message);
+
+			if (restart && await this.php.isServiceRunning(this.php.getCurrentVersion())) {
+				const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
+
+				this.success(restartMessage);
+			}
+		} catch (error) {
+			this.warning(error.message);
 		}
+
 	}
 
 	/**
