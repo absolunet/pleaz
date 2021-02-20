@@ -4,15 +4,16 @@
 
 import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
-import NginxHandler                 from '../handlers/NginxHandler';
-import PhpHandler                   from '../handlers/PhpHandler';
-import DockerHandler                from '../handlers/DockerHandler';
-import DnsmasqHandler               from '../handlers/DnsmasqHandler';
-import MailHogHandler               from '../handlers/MailHogHandler';
-import DatabaseHandler              from '../handlers/DatabaseHandler';
-import ElasticsearchHandler 		from '../handlers/ElasticsearchHandler';
-import RedisHandler 		        from '../handlers/RedisHandler';
-import VarnishHandler 		        from '../handlers/VarnishHandler';
+import NginxHandler                 from '../handlers/brew/NginxHandler';
+import PhpHandler                   from '../handlers/brew/PhpHandler';
+import DockerHandler                from '../handlers/docker/DockerHandler';
+import BrewHandler                  from '../handlers/brew/Handler';
+import DnsmasqHandler               from '../handlers/brew/DnsmasqHandler';
+import MailHogHandler               from '../handlers/brew/MailHogHandler';
+import DatabaseHandler              from '../handlers/docker/DatabaseHandler';
+import ElasticsearchHandler 		from '../handlers/docker/ElasticsearchHandler';
+import RedisHandler 		        from '../handlers/docker/RedisHandler';
+import VarnishHandler 		        from '../handlers/docker/VarnishHandler';
 
 /**
  * Application service provider.
@@ -79,9 +80,10 @@ class AppServiceProvider extends ServiceProvider {
 		this.app.bind('handler.nginx', NginxHandler);
 		this.app.bind('handler.php', PhpHandler);
 		this.app.bind('handler.docker', DockerHandler);
+		this.app.bind('handler.brew', BrewHandler);
 		this.app.bind('handler.dnsmasq', DnsmasqHandler);
 		this.app.bind('handler.mailhog', MailHogHandler);
-		this.app.bind('handler.database', DatabaseHandler);
+		this.app.bind('handler.db', DatabaseHandler);
 		this.app.bind('handler.elasticsearch', ElasticsearchHandler);
 		this.app.bind('handler.redis', RedisHandler);
 		this.app.bind('handler.varnish', VarnishHandler);

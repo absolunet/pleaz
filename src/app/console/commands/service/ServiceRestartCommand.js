@@ -30,8 +30,8 @@ class ServiceRestartCommand extends ServiceCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.service.restart(this.parameter('optionParameters'));
-		this.success(`${this.parameter('service')} is restarted.`);
+		const { message } = await this.service.restart(this.parameter('serviceVersion'));
+		this.success(message);
 	}
 
 }

@@ -4,15 +4,15 @@ import DockerHandler from './DockerHandler';
  * Database Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.DockerHandler
  */
 class DatabaseHandler extends DockerHandler {
 
 	/**
 	 * @inheritdoc
 	 */
-	get privileged() {
-		return false;
+	get serviceName() {
+		return 'db';
 	}
 
 }

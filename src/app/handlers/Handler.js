@@ -4,22 +4,68 @@ import { NotImplementedError } from '@absolunet/ioc';
  * Handler Class.
  *
  * @memberof app.handlers
+ * @abstract
  */
 class Handler {
 
-	// constructor() {
-	// 	if (!this.starts()) {
-	// 		throw new NotImplementedError(this, 'starts');
-	// 	}
-	// }
-
 	/**
-	 * Interface.
+	 * Service Name.
 	 *
+	 * @returns {string} - The service name.
 	 * @abstract
 	 */
-	startt() {
-		throw new NotImplementedError(this, 'startt');
+	get serviceName() {
+		throw new NotImplementedError(this, 'serviceName');
+	}
+
+	/**
+	 * Start Services.
+	 *
+	 * @returns {Promise<{message:string}>} The async process promise.
+	 * @abstract
+	 */
+	start() {
+		throw new NotImplementedError(this, 'start');
+	}
+
+	/**
+	 * Stop Services.
+	 *
+	 * @returns {Promise<{message:string}>} The async process promise.
+	 * @abstract
+	 */
+	stop() {
+		throw new NotImplementedError(this, 'stop');
+	}
+
+	/**
+	 * Restart Services.
+	 *
+	 * @returns {Promise<{message:string}>} The async process promise.
+	 * @abstract
+	 */
+	restart() {
+		throw new NotImplementedError(this, 'restart');
+	}
+
+	/**
+	 * Get Status Services.
+	 *
+	 * @returns {Promise} The async process promise.
+	 * @abstract
+	 */
+	status() {
+		throw new NotImplementedError(this, 'status');
+	}
+
+	/**
+	 * Get Service container name.
+	 *
+	 * @returns {string} - Return service name.
+	 * @abstract
+	 */
+	getService() {
+		throw new NotImplementedError(this, 'getService');
 	}
 
 	/**
@@ -29,6 +75,7 @@ class Handler {
 	 * @param {string|Array} [parameters = ''] - The given parameters.
 	 * @param {boolean} [privileged = false] - Can be used to override the default class config.
 	 * @returns {Promise} The async process promise.
+	 * @protected
 	 */
 	spawn(command, parameters = '', privileged = false) {
 		let spawnCommand = command;
@@ -47,6 +94,7 @@ class Handler {
 	 *
 	 * @param {...*} parameters - The given parameters.
 	 * @returns {Promise} The async process promise.
+	 * @protected
 	 */
 	call(...parameters) {
 		return this.command.call(...parameters);
@@ -56,6 +104,7 @@ class Handler {
 	 * Verify if the commands required privileged permissions (sudo).
 	 *
 	 * @returns {boolean} True if the handler should spawn commands as privileged.
+	 * @protected
 	 */
 	get privileged() {
 		return false;

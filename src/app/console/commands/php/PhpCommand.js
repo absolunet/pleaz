@@ -25,14 +25,14 @@ class PhpCommand extends Command {
 	 */
 	get parameters() {
 		return [
-			['phpVersion', this.isPhpVersionRequired, null, 'Specify a PHP Version (ex. 7.2, 7.4).']
+			['serviceVersion', this.isPhpVersionRequired, null, 'Specify a PHP Version (ex. 7.3, 7.4).']
 		];
 	}
 
 	/**
 	 * Indicates if the PHP version parameter is required.
 	 *
-	 * @returns {boolean} True if the 'phpVersion' parameter is required.
+	 * @returns {boolean} True if the 'serviceVersion' parameter is required.
 	 */
 	get isPhpVersionRequired() {
 		return false;

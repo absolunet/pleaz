@@ -4,22 +4,15 @@ import DockerHandler from './DockerHandler';
  * Redis Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.DockerHandler
  */
 class RedisHandler extends DockerHandler {
 
 	/**
 	 * @inheritdoc
 	 */
-	get service() {
+	get serviceName() {
 		return 'redis';
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	get privileged() {
-		return false;
 	}
 
 }

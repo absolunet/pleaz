@@ -4,14 +4,14 @@ import DockerHandler from './DockerHandler';
  * Elasticsearch Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.DockerHandler
  */
 class ElasticsearchHandler extends DockerHandler {
 
 	/**
 	 * @inheritdoc
 	 */
-	get service() {
+	get serviceName() {
 		return 'elasticsearch';
 	}
 

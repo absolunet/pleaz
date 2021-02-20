@@ -4,22 +4,15 @@ import DockerHandler from './DockerHandler';
  * Varnish Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.DockerHandler
  */
 class VarnishHandler extends DockerHandler {
 
 	/**
 	 * @inheritdoc
 	 */
-	get service() {
+	get serviceName() {
 		return 'varnish';
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	get privileged() {
-		return false;
 	}
 
 }

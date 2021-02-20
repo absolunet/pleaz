@@ -30,8 +30,8 @@ class ServiceStopCommand extends ServiceCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.service.stop(this.parameter('optionParameters'));
-		this.success(`${this.parameter('service')} is stopped.`);
+		const { message } = await this.service.stop(this.parameter('serviceVersion'));
+		this.success(message);
 	}
 
 }

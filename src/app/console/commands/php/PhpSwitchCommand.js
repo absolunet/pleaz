@@ -34,7 +34,7 @@ class PhpSwitchCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		const version = this.parameter('phpVersion');
+		const version = this.parameter('serviceVersion');
 
 		await this.php.switch(version);
 

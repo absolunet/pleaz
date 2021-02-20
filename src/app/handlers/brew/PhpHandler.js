@@ -1,5 +1,5 @@
-import Handler     from './Handler';
-import CustomError from '../exceptions/CustomError';
+import BrewHandler from './Handler';
+import CustomError from '../../exceptions/CustomError';
 
 /**
  * PHP Handler Class.
@@ -7,13 +7,20 @@ import CustomError from '../exceptions/CustomError';
  * @memberof app.handlers
  * @augments app.handlers.Handler
  */
-class PhpHandler extends Handler {
+class PhpHandler extends BrewHandler {
 
 	/**
 	 * @inheritdoc
 	 */
 	static get dependencies() {
 		return ['terminal', 'file.system.sync', 'config'];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	get serviceName() {
+		return 'php';
 	}
 
 	/**
@@ -26,46 +33,61 @@ class PhpHandler extends Handler {
 		const parameterVersion = version || this.getCurrentVersion();
 		this.ensureVersionExists(parameterVersion);
 
-		return this.terminal.process.runAndGet(`brew --prefix php@${parameterVersion}`);
+		return this.terminal.process.runAndGet(`brew --prefix ${this.serviceName}@${parameterVersion}`);
 	}
 
 	/**
 	 * Start PHP-FPM service.
 	 *
 	 * @param {string|null} version - PHP Version.
-	 * @returns {Promise} The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async start(version = null) {
-		await this.spawn(`${this.getBinaryPath(version || this.getCurrentVersion())}/sbin/php-fpm`, '-D', true);
+		await super.start(version);
+
+		return {
+			message: `${this.getService(version)} (${this.getFullVersion(version)}) is started.`
+		};
+
 	}
 
 	/**
 	 * Restart PHP-FPM service.
 	 *
 	 * @param {string|null} version - PHP Version.
-	 * @returns {Promise} The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async restart(version = null) {
-		const parameterVersion = version || this.getCurrentVersion();
-		if (await this.isServiceRunning(parameterVersion)) {
-			await this.stop(parameterVersion);
-		}
-		await this.start(parameterVersion);
+		await super.restart(version);
+
+		return {
+			message: `${this.getService(version)} (${this.getFullVersion(version)}) is restarted.`
+		};
 	}
 
 	/**
 	 * Stop PHP-FPM service.
 	 *
 	 * @param {string|null} version - PHP Version.
-	 * @returns {Promise} The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async stop(version = null) {
-		const parameterVersion = version || this.getCurrentVersion();
+		await super.stop(version);
 
-		if (!await this.isServiceRunning(parameterVersion)) {
-			throw new CustomError(`Service is not running.`);
-		}
-		await this.spawn('pkill', `-f ${this.getBinaryPath(parameterVersion)}/sbin/php-fpm`, true);
+		return {
+			message: `${this.getService(version)} (${this.getFullVersion(version)}) is stopped.`
+		};
+	}
+
+	/**
+	 * Status PHP-FPM service.
+	 *
+	 * @param {string|null} version - PHP Version.
+	 * @returns {Promise} The async process promise.
+	 */
+	async status(version = null) {
+		this.ensureVersionExists(version);
+		await this.spawn('bash', ['-c', `brew services list | sed -e '1p' -e '/${version ? this.getService(version) : 'php@'}/!d'`], true);
 	}
 
 	/**
@@ -81,8 +103,8 @@ class PhpHandler extends Handler {
 
 		this.ensureVersionExists(version);
 
-		await this.spawn('brew', `unlink php@${this.getCurrentVersion()}`);
-		await this.spawn('brew', `link --overwrite --force php@${version}`);
+		await this.spawn('brew', `unlink ${this.serviceName}@${this.getCurrentVersion()}`);
+		await this.spawn('brew', `link --overwrite --force ${this.serviceName}@${version}`);
 	}
 
 	/**
@@ -98,7 +120,7 @@ class PhpHandler extends Handler {
 		}
 
 		return versionInstalled.split(' / ').map((version) => {
-			return `${version} (${this.getFullVersion(version.split('php@').pop())})`;
+			return `${version} (${this.getFullVersion(version.split(`${this.serviceName}@`).pop())})`;
 		});
 	}
 
@@ -109,7 +131,7 @@ class PhpHandler extends Handler {
 	 * @returns {string} - Return PHP Version.
 	 */
 	getFullVersion(version = null) {
-		const spawnVersion = version || this.command.parameter('phpVersion');
+		const spawnVersion = version || this.command.parameter('serviceVersion');
 
 		return this.terminal
 			.process
@@ -135,7 +157,7 @@ class PhpHandler extends Handler {
 	 */
 	ensureVersionExists(version) {
 		if (version && !this.terminal.process.runAndGet(`brew list --formula | grep "^php@${version}"; true`)) {
-			throw new CustomError(`PHP '${version}' installed via Homebrew, can't be found.`);
+			throw new CustomError(`PHP version '${version}' installed via Homebrew, can't be found.`);
 		}
 	}
 
@@ -145,7 +167,6 @@ class PhpHandler extends Handler {
 	 * @returns {string} - Return current PHP version.
 	 */
 	getCurrentVersion() {
-
 		return this.terminal
 			.process
 			.runAndGet(`php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;'`).trim();
@@ -168,10 +189,8 @@ class PhpHandler extends Handler {
 		const disableFile = `${enableFile}.dis`;
 
 		await (enable
-			? this.fileSystemSync.rename(disableFile, enableFile)
-			: this.fileSystemSync.rename(enableFile, disableFile));
-
-		await this.restart(this.getCurrentVersion());
+			? this.spawn('mv', [disableFile, enableFile], true)
+			: this.spawn('mv', [enableFile, disableFile], true));
 	}
 
 	/**
@@ -180,7 +199,6 @@ class PhpHandler extends Handler {
 	 * @returns {boolean} - Return status of Xdebug.
 	 */
 	isXdebugEnable() {
-
 		return Boolean(this.terminal.process.runAndGet(`php -m | grep xdebug; true`));
 	}
 
@@ -188,13 +206,13 @@ class PhpHandler extends Handler {
 	 * Is Service PHP-FPM running.
 	 *
 	 * @param {string|null} version - PHP Version.
-	 * @returns {Promise} - Return status of service.
+	 * @returns {boolean} - Return status of service.
 	 */
-	isServiceRunning(version) {
-		const unixSockPath = this.config.get('pleaz.unix_socket_path');
-		const socketFile = `php${version || this.getCurrentVersion()}-fpm.sock`;
+	async isServiceRunning(version) {
+		const spawnVersion = version || this.command.parameter('serviceVersion');
+		const output = await this.terminal.process.runAndGet(`sudo brew services list | grep ${this.serviceName}@${spawnVersion} | awk '{print $2}'`);
 
-		return this.fileSystemSync.exists(`${unixSockPath}/${socketFile}`);
+		return output === 'started';
 	}
 
 	/**
@@ -203,10 +221,19 @@ class PhpHandler extends Handler {
 	 * @returns {string} - Return Path .INI files.
 	 */
 	getIniFilesPath() {
-
 		return this.terminal
 			.process
 			.runAndGet(`php --ini | grep Scan | cut -d" " -f7`).trim();
+	}
+
+	/**
+	 * Get Service container name.
+	 *
+	 * @param {...*} parameters - The given parameters.
+	 * @returns {string} - Return service container name.
+	 */
+	getService(...parameters) {
+		return `${super.getService()}@${parameters.join(' ') || this.getCurrentVersion()}`;
 	}
 
 }

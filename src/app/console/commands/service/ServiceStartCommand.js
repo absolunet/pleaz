@@ -30,8 +30,8 @@ class ServiceStartCommand extends ServiceCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		await this.service.start(this.parameter('optionParameters'));
-		this.success(`${this.parameter('service')} is started.`);
+		const { message } = await this.service.start(this.parameter('serviceVersion'));
+		this.success(message);
 	}
 
 }
