@@ -14,6 +14,7 @@ import DatabaseHandler              from '../handlers/docker/DatabaseHandler';
 import ElasticsearchHandler 		from '../handlers/docker/ElasticsearchHandler';
 import RedisHandler 		        from '../handlers/docker/RedisHandler';
 import VarnishHandler 		        from '../handlers/docker/VarnishHandler';
+import MqHandler 		            from '../handlers/docker/MqHandler';
 
 /**
  * Application service provider.
@@ -87,6 +88,7 @@ class AppServiceProvider extends ServiceProvider {
 		this.app.bind('handler.elasticsearch', ElasticsearchHandler);
 		this.app.bind('handler.redis', RedisHandler);
 		this.app.bind('handler.varnish', VarnishHandler);
+		this.app.bind('handler.mq', MqHandler);
 	}
 
 }
