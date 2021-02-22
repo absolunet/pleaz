@@ -1,12 +1,12 @@
-import DockerHandler from './DockerHandler';
+import Handler from './Handler';
 
 /**
  * Database Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.DockerHandler
+ * @augments app.handlers.Handler
  */
-class DatabaseHandler extends DockerHandler {
+class DatabaseHandler extends Handler {
 
 	/**
 	 * @inheritdoc

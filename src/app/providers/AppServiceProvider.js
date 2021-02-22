@@ -4,12 +4,12 @@
 
 import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
+import BrewHandler                  from '../handlers/brew/Handler';
 import NginxHandler                 from '../handlers/brew/NginxHandler';
 import PhpHandler                   from '../handlers/brew/PhpHandler';
-import DockerHandler                from '../handlers/docker/DockerHandler';
-import BrewHandler                  from '../handlers/brew/Handler';
 import DnsmasqHandler               from '../handlers/brew/DnsmasqHandler';
 import MailHogHandler               from '../handlers/brew/MailHogHandler';
+import DockerHandler                from '../handlers/docker/Handler';
 import DatabaseHandler              from '../handlers/docker/DatabaseHandler';
 import ElasticsearchHandler 		from '../handlers/docker/ElasticsearchHandler';
 import RedisHandler 		        from '../handlers/docker/RedisHandler';
@@ -77,12 +77,12 @@ class AppServiceProvider extends ServiceProvider {
 	 * Register Console Handlers.
 	 */
 	registerConsoleHandlers() {
+		this.app.bind('handler.brew', BrewHandler);
 		this.app.bind('handler.nginx', NginxHandler);
 		this.app.bind('handler.php', PhpHandler);
-		this.app.bind('handler.docker', DockerHandler);
-		this.app.bind('handler.brew', BrewHandler);
 		this.app.bind('handler.dnsmasq', DnsmasqHandler);
 		this.app.bind('handler.mailhog', MailHogHandler);
+		this.app.bind('handler.docker', DockerHandler);
 		this.app.bind('handler.db', DatabaseHandler);
 		this.app.bind('handler.elasticsearch', ElasticsearchHandler);
 		this.app.bind('handler.redis', RedisHandler);

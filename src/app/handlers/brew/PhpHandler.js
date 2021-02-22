@@ -48,7 +48,6 @@ class PhpHandler extends BrewHandler {
 		return {
 			message: `${this.getService(version)} (${this.getFullVersion(version)}) is started.`
 		};
-
 	}
 
 	/**
@@ -144,7 +143,6 @@ class PhpHandler extends BrewHandler {
 	 * @returns {string} - Return PHP Version.
 	 */
 	getInstalledVersions() {
-
 		return this.terminal
 			.process
 			.runAndGet('brew list --formula | grep "^php@"; true');
@@ -179,10 +177,12 @@ class PhpHandler extends BrewHandler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async toggleXdebug(enable) {
-		if ((this.isXdebugEnable() && enable) ||
-			(!this.isXdebugEnable() && !enable)
-		) {
-			throw new CustomError(`Xdebug has already been ${enable ? 'enabled' : 'disabled'}.`);
+		if (this.isXdebugEnable() === enable) {
+			return {
+				hasWarning: true,
+				restart: false,
+				message: `Xdebug has already been ${enable ? 'enabled' : 'disabled'}.`
+			};
 		}
 
 		const enableFile = `${this.getIniFilesPath()}/ext-xdebug.ini`;
@@ -191,6 +191,11 @@ class PhpHandler extends BrewHandler {
 		await (enable
 			? this.spawn('mv', [disableFile, enableFile], true)
 			: this.spawn('mv', [enableFile, disableFile], true));
+
+		return {
+			hasWarning: false,
+			message: `Xdebug has been ${enable ? 'enabled' : 'disabled'}.`
+		};
 	}
 
 	/**

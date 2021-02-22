@@ -1,12 +1,12 @@
-import DockerHandler from './DockerHandler';
+import Handler from './Handler';
 
 /**
  * Redis Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.DockerHandler
+ * @augments app.handlers.Handler
  */
-class RedisHandler extends DockerHandler {
+class RedisHandler extends Handler {
 
 	/**
 	 * @inheritdoc

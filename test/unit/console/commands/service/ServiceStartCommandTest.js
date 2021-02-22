@@ -16,7 +16,7 @@ class ServiceStartCommandTest extends TestCase {
 	// On veut tester sans version et avec version
 	// Mocker le handler
 
-	testStartServiceThroughDedicatedHandler() {
+	testStartServiceWithoutSpecificVersionThroughDedicatedHandler() {
 		// thenShouldHaveStartedServiceThroughHandler
 	}
 

@@ -1,4 +1,4 @@
-import BaseHandler from '../Handler';
+import BaseHandler from './../Handler';
 
 
 /**

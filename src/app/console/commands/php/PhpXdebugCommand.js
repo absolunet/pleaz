@@ -50,19 +50,15 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @inheritdoc
 	 */
 	async handle() {
-		try {
-			const handler = this.getHandlerForParameters(this.parameter('parameters'));
-			const { restart, message } = await handler();
+		const handler = this.getHandlerForParameters(this.parameter('parameters'));
+		const { restart, message, hasWarning } = await handler();
 
-			this.success(message);
+		this[hasWarning ? 'warning' : 'success'](message);
 
-			if (restart && await this.php.isServiceRunning(this.php.getCurrentVersion())) {
-				const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
+		if (restart && await this.php.isServiceRunning(this.php.getCurrentVersion())) {
+			const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
 
-				this.success(restartMessage);
-			}
-		} catch (error) {
-			this.warning(error.message);
+			this.success(restartMessage);
 		}
 
 	}
@@ -89,11 +85,11 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
 	 */
 	async handleEnable() {
-		await this.php.toggleXdebug(true);
+		const result = await this.php.toggleXdebug(true);
 
 		return {
 			restart: true,
-			message: 'Xdebug has been enabled.'
+			...result
 		};
 	}
 
@@ -103,11 +99,11 @@ class PhpXdebugCommand extends PhpCommand {
 	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
 	 */
 	async handleDisable() {
-		await this.php.toggleXdebug(false);
+		const result =  await this.php.toggleXdebug(false);
 
 		return {
 			restart: true,
-			message: 'Xdebug has been disabled.'
+			...result
 		};
 	}
 

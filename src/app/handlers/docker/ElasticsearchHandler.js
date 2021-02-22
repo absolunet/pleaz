@@ -1,12 +1,12 @@
-import DockerHandler from './DockerHandler';
+import Handler from './Handler';
 
 /**
  * Elasticsearch Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.DockerHandler
+ * @augments app.handlers.Handler
  */
-class ElasticsearchHandler extends DockerHandler {
+class ElasticsearchHandler extends Handler {
 
 	/**
 	 * @inheritdoc

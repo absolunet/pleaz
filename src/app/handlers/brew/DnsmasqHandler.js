@@ -4,7 +4,7 @@ import BrewHandler from './Handler';
  * Dnsmasq Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BrewHandler
  */
 class DnsmasqHandler extends BrewHandler {
 

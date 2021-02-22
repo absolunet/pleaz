@@ -55,7 +55,16 @@ class Handler extends BaseHandler {
 	 * @inheritdoc
 	 */
 	async status() {
-		await this.spawn('docker', ['ps', '--all']);
+		await this.spawn('docker-compose', ['ps', '--all']);
+	}
+
+	/**
+	 * Test docker-compose service.
+	 *
+	 * @returns {Promise} The async process promise.
+	 */
+	async test() {
+		await this.spawn('docker-compose', 'config');
 	}
 
 	/**

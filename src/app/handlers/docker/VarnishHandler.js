@@ -1,12 +1,12 @@
-import DockerHandler from './DockerHandler';
+import Handler from './Handler';
 
 /**
  * Varnish Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.DockerHandler
+ * @augments app.handlers.Handler
  */
-class VarnishHandler extends DockerHandler {
+class VarnishHandler extends Handler {
 
 	/**
 	 * @inheritdoc

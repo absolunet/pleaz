@@ -33,7 +33,7 @@ class NginxHandler extends BrewHandler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async test() {
-		await this.spawn(`${this.serviceName}`, '-t', true);
+		await this.spawn(`nginx`, '-t', true);
 	}
 
 }
