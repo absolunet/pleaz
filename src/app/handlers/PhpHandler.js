@@ -13,7 +13,7 @@ class PhpHandler extends Handler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['terminal'];
+		return ['terminal', 'file.system.sync', 'config'];
 	}
 
 	/**
@@ -42,11 +42,18 @@ class PhpHandler extends Handler {
 	 * Restart PHP-FPM service.
 	 *
 	 * @param {string|null} version - PHP Version.
-	 * @returns {Promise} The async process promise.
+	 * @returns {Promise} Promise<{{message:string}}> - The async process promise.
 	 */
 	async restart(version = null) {
-		await this.stop(version);
+		if (await this.isServiceRunning(version)) {
+			await this.stop(version);
+		}
+
 		await this.start(version);
+
+		return {
+			message: `php@${version} (${this.getFullVersion(version)}) has restarted.`
+		};
 	}
 
 	/**
@@ -56,7 +63,10 @@ class PhpHandler extends Handler {
 	 * @returns {Promise} The async process promise.
 	 */
 	async stop(version = null) {
-		await this.spawn('pkill -f', `${this.getBinaryPath(version)}/sbin/php-fpm`, true);
+		if (!await this.isServiceRunning(version)) {
+			throw new CustomError(`Service is not running.`);
+		}
+		await this.spawn('pkill', `-f ${this.getBinaryPath(version)}/sbin/php-fpm`, true);
 	}
 
 	/**
@@ -140,6 +150,62 @@ class PhpHandler extends Handler {
 		return this.terminal
 			.process
 			.runAndGet(`php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;'`).trim();
+	}
+
+	/**
+	 * Toggle PHP extension Xdebug.
+	 *
+	 * @param {boolean} enable - Enable/Disable parameters.
+	 * @returns {Promise} The async process promise.
+	 */
+	async toggleXdebug(enable) {
+		if ((this.isXdebugEnable() && enable) ||
+			(!this.isXdebugEnable() && !enable)
+		) {
+			throw new CustomError(`Xdebug has already been ${enable ? 'enabled' : 'disabled'}.`);
+		}
+
+		const enableFile = `${this.getIniFilesPath()}/ext-xdebug.ini`;
+		const disableFile = `${enableFile}.dis`;
+
+		await (enable
+			? this.spawn('mv', [disableFile, enableFile], true)
+			: this.spawn('mv', [enableFile, disableFile], true));
+	}
+
+	/**
+	 * Is Xdebug Enable.
+	 *
+	 * @returns {boolean} - Return status of Xdebug.
+	 */
+	isXdebugEnable() {
+
+		return Boolean(this.terminal.process.runAndGet(`php -m | grep xdebug; true`));
+	}
+
+	/**
+	 * Is Service PHP-FPM running.
+	 *
+	 * @param {string|null} version - PHP Version.
+	 * @returns {Promise} - Return status of service.
+	 */
+	isServiceRunning(version) {
+		const unixSockPath = this.config.get('pleaz.unix_socket_path');
+		const socketFile = `php${version || this.getCurrentVersion()}-fpm.sock`;
+
+		return this.fileSystemSync.exists(`${unixSockPath}/${socketFile}`);
+	}
+
+	/**
+	 * Get Path .INI files.
+	 *
+	 * @returns {string} - Return Path .INI files.
+	 */
+	getIniFilesPath() {
+
+		return this.terminal
+			.process
+			.runAndGet(`php --ini | grep Scan | cut -d" " -f7`).trim();
 	}
 
 }

@@ -9,17 +9,17 @@ class Handler {
 	 * Spawn a process through the command instance.
 	 *
 	 * @param {string} command - The binary to call.
-	 * @param {string} [parameters = ''] - The given parameters.
+	 * @param {string|Array} [parameters = ''] - The given parameters.
 	 * @param {boolean} [privileged = false] - Can be used to override the default class config.
 	 * @returns {Promise} The async process promise.
 	 */
 	spawn(command, parameters = '', privileged = false) {
 		let spawnCommand = command;
-		let spawnParameters = parameters.trim();
+		const spawnParameters = Array.isArray(parameters) ? parameters : parameters.split(' ');
 
 		if (this.privileged || privileged === true) {
 			spawnCommand = 'sudo';
-			spawnParameters = `${command} ${parameters.trim()}`;
+			spawnParameters.unshift(command);
 		}
 
 		return this.command.spawn(spawnCommand, spawnParameters);

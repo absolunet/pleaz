@@ -19,35 +19,59 @@ class HandlerTest extends TestCase {
 
 	// TESTS
 	//--------------------------------------------------------
-	async testSpawnCommandIsCalledWithExpectedArguments() {
-		this.givenSpawnCommand('foo');
+	async testSpawnCommandIsCalledWithoutExpectedArguments() {
+		this.givenSpawnCommand('foo', []);
 		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('foo', '');
+		this.thenSpawnShouldHaveBeenCalledWith('foo', []);
+	}
 
+	async testSpawnCommandIsCalledWithExpectedArgumentsAsString() {
 		this.givenSpawnCommand('foo', 'param1 param2');
 		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('foo', 'param1 param2');
+		this.thenSpawnShouldHaveBeenCalledWith('foo', ['param1', 'param2']);
 	}
 
-	async testSpawnCommandIsCalledWithExpectedArgumentsWhenPrivileged() {
-		this.givenPrivilegedSpawnCommand('foo', '');
+	async testSpawnCommandIsCalledWithExpectedArgumentsAsArray() {
+		this.givenSpawnCommand('foo', ['param1', 'param2']);
 		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('sudo', 'foo ');
+		this.thenSpawnShouldHaveBeenCalledWith('foo', ['param1', 'param2']);
+	}
 
+	async testSpawnCommandIsCalledWithoutExpectedArgumentsWhenPrivileged() {
+		this.givenPrivilegedSpawnCommand('foo', []);
+		await this.whenSpawning();
+		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo']);
+	}
+
+	async testSpawnCommandIsCalledWithExpectedArgumentsWhenPrivilegedAsString() {
 		this.givenPrivilegedSpawnCommand('foo', 'param1 param2');
 		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('sudo', 'foo param1 param2');
+		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
 	}
 
-	async testSpawnCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivileged() {
-		this.givenPrivilegedFakeHandler();
-		this.givenSpawnCommand('foo');
+	async testSpawnCommandIsCalledWithExpectedArgumentsWhenPrivilegedAsArray() {
+		this.givenPrivilegedSpawnCommand('foo', ['param1', 'param2']);
 		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('sudo', 'foo ');
+		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
+	}
 
+	async testSpawnCommandIsCalledWithoutExpectedArgumentsWhenHandlerIsPrivileged() {
+		this.givenPrivilegedFakeHandler();
+		this.givenSpawnCommand('foo', []);
+		await this.whenSpawning();
+		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo']);
+	}
+
+	async testSpawnCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivilegedAsString() {
 		this.givenSpawnCommand('foo', 'param1 param2', true);
 		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('sudo', 'foo param1 param2');
+		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
+	}
+
+	async testSpawnCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivilegedAsArray() {
+		this.givenSpawnCommand('foo', ['param1', 'param2'], true);
+		await this.whenSpawning();
+		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
 	}
 
 	// GIVEN METHODS
