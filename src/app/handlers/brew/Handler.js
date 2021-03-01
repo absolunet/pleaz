@@ -9,10 +9,27 @@ import BaseHandler from './../Handler';
 class Handler extends BaseHandler {
 
 	/**
+	 * Service Base Name.
+	 *
+	 * @returns {string} - The service Base Name.
+	 * @abstract
+	 */
+	get name() {
+		return 'BrewHandler';
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	static get dependencies() {
+		return ['app'];
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	get serviceName() {
-		return '';
+		return 'brew';
 	}
 
 	/**
@@ -53,7 +70,8 @@ class Handler extends BaseHandler {
 	 */
 	async status(...parameters) {
 		const serviceName = this.getService(...parameters);
-		const serviceOptions = serviceName ? `| sed -e '1p' -e '/${serviceName}/!d'` : '';
+		const serviceOptions = serviceName !== 'brew' ? `| sed -e '1p' -e '/${serviceName}/!d'` : '';
+
 		await this.spawn('bash', ['-c', `brew services list ${serviceOptions}`], true);
 	}
 

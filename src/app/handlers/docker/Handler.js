@@ -9,10 +9,27 @@ import BaseHandler from './../Handler';
 class Handler extends BaseHandler {
 
 	/**
+	 * Service Base Name.
+	 *
+	 * @returns {string} - The service Base Name.
+	 * @abstract
+	 */
+	get name() {
+		return 'DockerHandler';
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	static get dependencies() {
+		return ['app'];
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	get serviceName() {
-		return '';
+		return 'docker';
 	}
 
 	/**
@@ -54,8 +71,10 @@ class Handler extends BaseHandler {
 	/**
 	 * @inheritdoc
 	 */
-	async status() {
-		await this.spawn('docker-compose', ['ps', '--all']);
+	async status(...parameters) {
+		const serviceName = this.getService(...parameters);
+		const serviceOptions = serviceName ? `| sed -e '1p' -e '/${serviceName}/!d'` : '';
+		await this.spawn('bash', ['-c', `docker-compose ps ${serviceOptions}`], false);
 	}
 
 	/**

@@ -3,12 +3,12 @@
 //--------------------------------------------------------
 'use strict';
 
-const Handler              = require('../../../../../dist/node/app/handlers/Handler');
-const ServiceStartCommand  = require('../../../../../dist/node/app/console/commands/service/ServiceStartCommand');
-const TestCase             = require('../../../../TestCase');
+const Handler                = require('../../../../../dist/node/app/handlers/Handler');
+const ServiceRestartCommand  = require('../../../../../dist/node/app/console/commands/service/ServiceRestartCommand');
+const TestCase               = require('../../../../TestCase');
 
 
-class ServiceStartCommandTest extends TestCase {
+class ServiceRestartCommandTest extends TestCase {
 
 	beforeEach() {
 		super.beforeEach();
@@ -23,31 +23,31 @@ class ServiceStartCommandTest extends TestCase {
 		super.afterEach();
 	}
 
-	async testStartServiceWithoutSpecificVersionThroughDedicatedHandler() {
+	async testRestartServiceWithoutSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('foo');
-		this.thenShouldHaveStartedServiceThroughHandler('foo');
+		this.thenShouldHaveRestartedServiceThroughHandler('foo');
 	}
 
-	async testStartServiceWithSpecificVersionThroughDedicatedHandler() {
+	async testRestartServiceWithSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceVersion('888');
 		await this.whenRunningCommandForService('foo');
-		this.thenShouldHaveStartedServiceThroughHandler('foo');
+		this.thenShouldHaveRestartedServiceThroughHandler('foo');
 	}
 
 	async testThrowErrorIfHandlerDoesNotExist() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('bar');
-		this.thenShouldNotHaveStartedServiceThroughHandler();
+		this.thenShouldNotHaveRestartedServiceThroughHandler();
 	}
 
 	// GIVEN METHODS
 	//--------------------------------------------------------
 	givenCommand() {
-		this.app.make('command.registrar').add(ServiceStartCommand);
+		this.app.make('command.registrar').add(ServiceRestartCommand);
 	}
 
 	givenEmptySpies() {
@@ -58,7 +58,7 @@ class ServiceStartCommandTest extends TestCase {
 
 	givenFakeServiceHandler(service) {
 		this.spies.handlers[service] = {};
-		this.spies.handlers[service].start = jest.fn(() =>  {
+		this.spies.handlers[service].restart = jest.fn(() =>  {
 			return { message: this.mockedTerminal.success(`${this.constructor.name} success`) };
 		});
 
@@ -66,8 +66,8 @@ class ServiceStartCommandTest extends TestCase {
 
 		this.app.bind(`handler.${service}`, class extends Handler {
 
-			start(...parameters) {
-				return self.spies.handlers[service].start(...parameters);
+			restart(...parameters) {
+				return self.spies.handlers[service].restart(...parameters);
 			}
 
 		});
@@ -103,22 +103,22 @@ class ServiceStartCommandTest extends TestCase {
 	async whenRunningCommandForService(service) {
 		await this.whenAttemptingAsync(async () => {
 			await this.app.make('command.registrar')
-				.resolve(`service:start ${service} ${this.version}`.trim());
+				.resolve(`service:restart ${service} ${this.version}`.trim());
 		});
 	}
 
 
 	// THEN METHODS
 	//--------------------------------------------------------
-	thenShouldHaveStartedServiceThroughHandler(service) {
-		this.expect(this.spies.handlers[service].start).toHaveBeenCalled();
+	thenShouldHaveRestartedServiceThroughHandler(service) {
+		this.expect(this.spies.handlers[service].restart).toHaveBeenCalled();
 	}
 
-	thenShouldNotHaveStartedServiceThroughHandler() {
+	thenShouldNotHaveRestartedServiceThroughHandler() {
 		this.thenShouldHaveThrown();
 	}
 
 }
 
 
-module.exports = ServiceStartCommandTest;
+module.exports = ServiceRestartCommandTest;

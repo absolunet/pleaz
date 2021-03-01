@@ -104,6 +104,10 @@ class PhpHandler extends BrewHandler {
 
 		await this.spawn('brew', `unlink ${this.serviceName}@${this.getCurrentVersion()}`);
 		await this.spawn('brew', `link --overwrite --force ${this.serviceName}@${version}`);
+
+		return {
+			message: `php@${version} (${this.getFullVersion(version)}) has switched.`
+		};
 	}
 
 	/**
