@@ -11,10 +11,10 @@ import DnsmasqHandler               from '../handlers/brew/DnsmasqHandler';
 import MailHogHandler               from '../handlers/brew/MailHogHandler';
 import DockerHandler                from '../handlers/docker/Handler';
 import DatabaseHandler              from '../handlers/docker/DatabaseHandler';
-import ElasticsearchHandler 		from '../handlers/docker/ElasticsearchHandler';
-import RedisHandler 		        from '../handlers/docker/RedisHandler';
-import VarnishHandler 		        from '../handlers/docker/VarnishHandler';
-import MqHandler 		            from '../handlers/docker/MqHandler';
+import ElasticsearchHandler         from '../handlers/docker/ElasticsearchHandler';
+import RedisHandler                 from '../handlers/docker/RedisHandler';
+import VarnishHandler               from '../handlers/docker/VarnishHandler';
+import MqHandler                    from '../handlers/docker/MqHandler';
 
 /**
  * Application service provider.
