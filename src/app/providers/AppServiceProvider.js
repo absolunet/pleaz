@@ -4,12 +4,12 @@
 
 import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
-import BrewHandler                  from '../handlers/brew/Handler';
+import BrewHandler                  from '../handlers/brew/BaseHandler';
 import NginxHandler                 from '../handlers/brew/NginxHandler';
 import PhpHandler                   from '../handlers/brew/PhpHandler';
 import DnsmasqHandler               from '../handlers/brew/DnsmasqHandler';
 import MailHogHandler               from '../handlers/brew/MailHogHandler';
-import DockerHandler                from '../handlers/docker/Handler';
+import DockerHandler                from '../handlers/docker/BaseHandler';
 import DatabaseHandler              from '../handlers/docker/DatabaseHandler';
 import ElasticsearchHandler         from '../handlers/docker/ElasticsearchHandler';
 import RedisHandler                 from '../handlers/docker/RedisHandler';

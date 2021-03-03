@@ -69,25 +69,6 @@ class Handler {
 	}
 
 	/**
-	 * Get Handling Services.
-	 *
-	 * @returns {[]} Return all services by Handler.
-	 */
-	getHandlingServices() {
-		let handler;
-		const services = [];
-
-		this.command.SERVICES.forEach((service) => {
-			handler = this.app.make(`handler.${service}`, { command: this.command });
-			if (handler.constructor.name !== 'Handler' && handler.name === this.name) {
-				services.push(service);
-			}
-		});
-
-		return services;
-	}
-
-	/**
 	 * Spawn a process through the command instance.
 	 *
 	 * @param {string} command - The binary to call.

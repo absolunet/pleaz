@@ -1,12 +1,12 @@
-import BrewHandler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * MailHog Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.BrewHandler
+ * @augments app.handlers.BaseHandler
  */
-class MailHogHandler extends BrewHandler {
+class MailHogHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

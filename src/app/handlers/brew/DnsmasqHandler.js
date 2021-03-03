@@ -1,12 +1,12 @@
-import BrewHandler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * Dnsmasq Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.BrewHandler
+ * @augments app.handlers.BaseHandler
  */
-class DnsmasqHandler extends BrewHandler {
+class DnsmasqHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

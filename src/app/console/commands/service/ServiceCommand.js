@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 
 import { Command } from '@absolunet/ioc';
-import __ from '@absolunet/private-registry';
+import __          from '@absolunet/private-registry';
 import CustomError from '../../../exceptions/CustomError';
 
 /**
@@ -11,7 +11,7 @@ import CustomError from '../../../exceptions/CustomError';
  *
  * @memberof app.console.commands
  * @augments ioc.console.Command
- *
+ * @abstract
  */
 class ServiceCommand extends Command {
 

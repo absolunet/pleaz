@@ -55,7 +55,8 @@ class PhpXdebugCommand extends PhpCommand {
 
 		this[hasWarning ? 'warning' : 'success'](message);
 
-		if (restart && await this.php.isServiceRunning(this.php.getCurrentVersion())) {
+		if (restart && this.php.isServiceRunning(this.php.getCurrentVersion())) {
+			// this.command.forward();
 			const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
 
 			this.success(restartMessage);

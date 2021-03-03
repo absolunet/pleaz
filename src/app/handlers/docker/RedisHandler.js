@@ -1,12 +1,12 @@
-import Handler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * Redis Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class RedisHandler extends Handler {
+class RedisHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

@@ -1,11 +1,11 @@
 //--------------------------------------------------------
-//-- Node IoC - Command - Stop Services Command
+//-- Node IoC - Command - Stop Service Command
 //--------------------------------------------------------
 
 import ServiceCommand from './ServiceCommand';
 
 /**
- * Stop Services Command.
+ * Stop Service Command.
  *
  * @memberof app.console.commands
  * @augments app.console.commands.ServiceCommand

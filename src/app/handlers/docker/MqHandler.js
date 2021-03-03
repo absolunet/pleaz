@@ -1,12 +1,12 @@
-import Handler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * Mq Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class MqHandler extends Handler {
+class MqHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

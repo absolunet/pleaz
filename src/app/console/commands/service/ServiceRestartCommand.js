@@ -1,11 +1,11 @@
 //--------------------------------------------------------
-//-- Node IoC - Command - Restart Services Command
+//-- Node IoC - Command - Restart Service Command
 //--------------------------------------------------------
 
 import ServiceCommand from './ServiceCommand';
 
 /**
- * Restart Services Command.
+ * Restart Service Command.
  *
  * @memberof app.console.commands
  * @augments app.console.commands.ServiceCommand

@@ -10,7 +10,7 @@ import CustomError          from './CustomError';
  * Application exception handler.
  *
  * @memberof app.exceptions
- * @augments ioc.foundation.exceptions.Handler
+ * @augments ioc.foundation.exceptions.BaseHandler
  * @hideconstructor
  */
 class Handler extends ExceptionHandler {

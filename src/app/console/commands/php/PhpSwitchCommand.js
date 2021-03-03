@@ -23,11 +23,14 @@ class PhpSwitchCommand extends PhpCommand {
 		return 'Switch current PHP version.';
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
-	get isPhpVersionRequired() {
-		return true;
+	get parameters() {
+		return [
+			['serviceVersion', true, null, 'Specify a PHP Version (ex. 7.3, 7.4).']
+		];
 	}
 
 	/**

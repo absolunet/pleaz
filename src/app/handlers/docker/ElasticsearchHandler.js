@@ -1,12 +1,12 @@
-import Handler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * Elasticsearch Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class ElasticsearchHandler extends Handler {
+class ElasticsearchHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

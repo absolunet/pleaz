@@ -1,4 +1,4 @@
-import BaseHandler from './../Handler';
+import Handler from './../Handler';
 
 
 /**
@@ -6,7 +6,7 @@ import BaseHandler from './../Handler';
  *
  * @memberof app.handlers
  */
-class Handler extends BaseHandler {
+class BaseHandler extends Handler {
 
 	/**
 	 * Service Base Name.
@@ -95,4 +95,4 @@ class Handler extends BaseHandler {
 
 }
 
-export default Handler;
+export default BaseHandler;

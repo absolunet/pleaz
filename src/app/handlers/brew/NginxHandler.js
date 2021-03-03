@@ -1,12 +1,12 @@
-import BrewHandler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * NGINX Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class NginxHandler extends BrewHandler {
+class NginxHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

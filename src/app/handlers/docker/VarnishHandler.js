@@ -1,12 +1,12 @@
-import Handler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * Varnish Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class VarnishHandler extends Handler {
+class VarnishHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

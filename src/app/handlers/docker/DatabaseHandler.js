@@ -1,12 +1,12 @@
-import Handler from './Handler';
+import BaseHandler from './BaseHandler';
 
 /**
  * Database Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class DatabaseHandler extends Handler {
+class DatabaseHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc

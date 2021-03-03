@@ -1,4 +1,4 @@
-import BaseHandler from './../Handler';
+import Handler from './../Handler';
 
 
 /**
@@ -6,7 +6,7 @@ import BaseHandler from './../Handler';
  *
  * @memberof app.handlers
  */
-class Handler extends BaseHandler {
+class BaseHandler extends Handler {
 
 	/**
 	 * Service Base Name.
@@ -84,11 +84,12 @@ class Handler extends BaseHandler {
 
 	/**
 	 * @inheritdoc
+	 * TODO rename getServiceCommand
 	 */
-	getService() {
-		return this.serviceName || '';
+	getService(...parameters) {
+		return (this.serviceName || '') + parameters.join(' ');
 	}
 
 }
 
-export default Handler;
+export default BaseHandler;

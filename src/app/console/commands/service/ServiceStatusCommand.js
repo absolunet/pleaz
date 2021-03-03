@@ -1,11 +1,11 @@
 //--------------------------------------------------------
-//-- Node IoC - Command - Status Services Command
+//-- Node IoC - Command - Status Service Command
 //--------------------------------------------------------
 
 import ServiceCommand from './ServiceCommand';
 
 /**
- * Status Services Command.
+ * Status Service Command.
  *
  * @memberof app.console.commands
  * @augments app.console.commands.ServiceCommand

@@ -1,13 +1,13 @@
-import BrewHandler from './Handler';
+import BaseHandler from './BaseHandler';
 import CustomError from '../../exceptions/CustomError';
 
 /**
  * PHP Handler Class.
  *
  * @memberof app.handlers
- * @augments app.handlers.Handler
+ * @augments app.handlers.BaseHandler
  */
-class PhpHandler extends BrewHandler {
+class PhpHandler extends BaseHandler {
 
 	/**
 	 * @inheritdoc
@@ -238,11 +238,12 @@ class PhpHandler extends BrewHandler {
 	/**
 	 * Get Service container name.
 	 *
+	 * @param {string|null} version - PHP Version.
 	 * @param {...*} parameters - The given parameters.
 	 * @returns {string} - Return service container name.
 	 */
-	getService(...parameters) {
-		return `${super.getService()}@${parameters.join(' ') || this.getCurrentVersion()}`;
+	getService(version, ...parameters) {
+		return `php@${version || this.getCurrentVersion()} ${parameters.join(' ')}`;
 	}
 
 }
