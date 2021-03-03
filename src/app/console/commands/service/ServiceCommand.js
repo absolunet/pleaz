@@ -40,7 +40,7 @@ class ServiceCommand extends Command {
 	 */
 	get parameters() {
 		return [
-			['service', true, null, `The service name [${Object.values(this.SERVICES)}].`],
+			['service', true, null, `The service name [${this.SERVICES.join(', ')}].`],
 			['serviceVersion', false, null, `The service version, if needed.`]
 		];
 	}

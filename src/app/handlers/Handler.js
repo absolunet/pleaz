@@ -64,8 +64,8 @@ class Handler {
 	 * @returns {string} - Return service name.
 	 * @abstract
 	 */
-	getService() {
-		throw new NotImplementedError(this, 'getService');
+	getServiceCommand() {
+		throw new NotImplementedError(this, 'getServiceCommand');
 	}
 
 	/**

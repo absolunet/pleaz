@@ -36,10 +36,10 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async start() {
-		await this.spawn('docker-compose', `up --detach ${this.getService()}`);
+		await this.spawn('docker-compose', `up --detach ${this.getServiceCommand()}`);
 
 		return {
-			message: `${this.getService() || 'docker'} is started.`
+			message: `${this.getServiceCommand() || 'docker'} is started.`
 		};
 	}
 
@@ -47,7 +47,7 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async stop() {
-		const serviceName = this.getService();
+		const serviceName = this.getServiceCommand();
 		await (serviceName
 			? this.spawn('docker-compose', `rm --stop --force -v ${serviceName}`)
 			: this.spawn('docker-compose', `down`));
@@ -61,10 +61,10 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async restart() {
-		await this.spawn('docker-compose', `restart ${this.getService()}`);
+		await this.spawn('docker-compose', `restart ${this.getServiceCommand()}`);
 
 		return {
-			message: `${this.getService() || 'docker'} is restarted.`
+			message: `${this.getServiceCommand() || 'docker'} is restarted.`
 		};
 	}
 
@@ -72,7 +72,7 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async status(...parameters) {
-		const serviceName = this.getService(...parameters);
+		const serviceName = this.getServiceCommand(...parameters);
 		const serviceOptions = serviceName ? `| sed -e '1p' -e '/${serviceName}/!d'` : '';
 		await this.spawn('bash', ['-c', `docker-compose ps ${serviceOptions}`], false);
 	}
@@ -89,7 +89,7 @@ class BaseHandler extends Handler {
 	/**
 	 * @inheritdoc
 	 */
-	getService() {
+	getServiceCommand() {
 		return this.serviceName || '';
 	}
 

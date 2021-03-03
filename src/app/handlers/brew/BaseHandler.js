@@ -36,10 +36,10 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async start(...parameters) {
-		await this.spawn('brew', `services start ${this.getService(...parameters)}`, true);
+		await this.spawn('brew', `services start ${this.getServiceCommand(...parameters)}`, true);
 
 		return {
-			message: `${this.getService(...parameters)} is started.`
+			message: `${this.getServiceCommand(...parameters)} is started.`
 		};
 	}
 
@@ -47,10 +47,10 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async restart(...parameters) {
-		await this.spawn('brew', `services restart ${this.getService(...parameters)}`, true);
+		await this.spawn('brew', `services restart ${this.getServiceCommand(...parameters)}`, true);
 
 		return {
-			message: `${this.getService(...parameters)} is restarted.`
+			message: `${this.getServiceCommand(...parameters)} is restarted.`
 		};
 	}
 
@@ -58,10 +58,10 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async stop(...parameters) {
-		await this.spawn('brew', `services stop ${this.getService(...parameters)}`, true);
+		await this.spawn('brew', `services stop ${this.getServiceCommand(...parameters)}`, true);
 
 		return {
-			message: `${this.getService(...parameters)} is stopped.`
+			message: `${this.getServiceCommand(...parameters)} is stopped.`
 		};
 	}
 
@@ -69,7 +69,7 @@ class BaseHandler extends Handler {
 	 * @inheritdoc
 	 */
 	async status(...parameters) {
-		const serviceName = this.getService(...parameters);
+		const serviceName = this.getServiceCommand(...parameters);
 		const serviceOptions = serviceName !== 'brew' ? `| sed -e '1p' -e '/${serviceName}/!d'` : '';
 
 		await this.spawn('bash', ['-c', `brew services list ${serviceOptions}`], true);
@@ -84,9 +84,8 @@ class BaseHandler extends Handler {
 
 	/**
 	 * @inheritdoc
-	 * TODO rename getServiceCommand
 	 */
-	getService(...parameters) {
+	getServiceCommand(...parameters) {
 		return (this.serviceName || '') + parameters.join(' ');
 	}
 

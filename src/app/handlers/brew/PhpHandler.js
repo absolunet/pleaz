@@ -46,7 +46,7 @@ class PhpHandler extends BaseHandler {
 		await super.start(version);
 
 		return {
-			message: `${this.getService(version)} (${this.getFullVersion(version)}) is started.`
+			message: `${this.getServiceCommand(version)} (${this.getFullVersion(version)}) is started.`
 		};
 	}
 
@@ -60,7 +60,7 @@ class PhpHandler extends BaseHandler {
 		await super.restart(version);
 
 		return {
-			message: `${this.getService(version)} (${this.getFullVersion(version)}) is restarted.`
+			message: `${this.getServiceCommand(version)} (${this.getFullVersion(version)}) is restarted.`
 		};
 	}
 
@@ -74,7 +74,7 @@ class PhpHandler extends BaseHandler {
 		await super.stop(version);
 
 		return {
-			message: `${this.getService(version)} (${this.getFullVersion(version)}) is stopped.`
+			message: `${this.getServiceCommand(version)} (${this.getFullVersion(version)}) is stopped.`
 		};
 	}
 
@@ -86,7 +86,7 @@ class PhpHandler extends BaseHandler {
 	 */
 	async status(version = null) {
 		this.ensureVersionExists(version);
-		await this.spawn('bash', ['-c', `brew services list | sed -e '1p' -e '/${version ? this.getService(version) : 'php@'}/!d'`], true);
+		await this.spawn('bash', ['-c', `brew services list | sed -e '1p' -e '/${version ? this.getServiceCommand(version) : 'php@'}/!d'`], true);
 	}
 
 	/**
@@ -242,7 +242,7 @@ class PhpHandler extends BaseHandler {
 	 * @param {...*} parameters - The given parameters.
 	 * @returns {string} - Return service container name.
 	 */
-	getService(version, ...parameters) {
+	getServiceCommand(version, ...parameters) {
 		return `php@${version || this.getCurrentVersion()} ${parameters.join(' ')}`;
 	}
 
