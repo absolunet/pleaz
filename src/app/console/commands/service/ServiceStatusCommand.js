@@ -31,7 +31,7 @@ class ServiceStatusCommand extends ServiceCommand {
 	 */
 	get parameters() {
 		return [
-			['service', false, 'default', `The service name [${Object.values(this.SERVICES)}].`],
+			['service', true, null, `The service name [${Object.values(this.SERVICES).join(', ')}].`],
 			['serviceVersion', false, null, `The service version, if needed.`]
 		];
 	}

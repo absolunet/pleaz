@@ -17,16 +17,10 @@ class ServiceStatusCommandTest extends TestCase {
 		this.givenCommand();
 	}
 
-	afterEach() {
-		jest.clearAllMocks();
-		super.afterEach();
-	}
-
 	async testGetStatusOfSpecificService() {
 		this.givenFakeServiceHandler('foo');
 		await this.whenRunningCommandForService('foo');
 		this.thenShouldGetStatusOfTheServiceThroughHandler('foo');
-
 	}
 
 	// GIVEN METHODS
@@ -56,14 +50,11 @@ class ServiceStatusCommandTest extends TestCase {
 			}
 
 		});
-
 	}
 
 	givenMockedTerminal() {
 		this.mockedTerminal = {
-			success: jest.fn((message) => {
-				return message;
-			})
+			success: jest.fn()
 		};
 	}
 

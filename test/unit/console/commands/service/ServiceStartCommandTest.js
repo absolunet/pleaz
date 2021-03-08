@@ -18,19 +18,14 @@ class ServiceStartCommandTest extends TestCase {
 		this.givenMockedExceptionHandler();
 	}
 
-	afterEach() {
-		jest.clearAllMocks();
-		super.afterEach();
-	}
-
-	async testStartServiceWithoutSpecificVersionThroughDedicatedHandler() {
+	async testServiceStartWithoutSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('foo');
 		this.thenShouldHaveStartedServiceThroughHandler('foo');
 	}
 
-	async testStartServiceWithSpecificVersionThroughDedicatedHandler() {
+	async testServiceStartWithSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceVersion('888');
 		await this.whenRunningCommandForService('foo');
@@ -41,7 +36,7 @@ class ServiceStartCommandTest extends TestCase {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('bar');
-		this.thenShouldNotHaveStartedServiceThroughHandler();
+		this.thenShouldNotHaveStartedServiceThroughHandler('foo');
 	}
 
 	// GIVEN METHODS
@@ -103,7 +98,7 @@ class ServiceStartCommandTest extends TestCase {
 	async whenRunningCommandForService(service) {
 		await this.whenAttemptingAsync(async () => {
 			await this.app.make('command.registrar')
-				.resolve(`service:start ${service} ${this.version}`.trim());
+				.resolve(`service:start ${service} ${this.version}`);
 		});
 	}
 
@@ -114,7 +109,8 @@ class ServiceStartCommandTest extends TestCase {
 		this.expect(this.spies.handlers[service].start).toHaveBeenCalled();
 	}
 
-	thenShouldNotHaveStartedServiceThroughHandler() {
+	thenShouldNotHaveStartedServiceThroughHandler(service) {
+		this.expect(this.spies.handlers[service].start).not.toHaveBeenCalled();
 		this.thenShouldHaveThrown();
 	}
 

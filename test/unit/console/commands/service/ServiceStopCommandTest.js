@@ -18,19 +18,14 @@ class ServiceStopCommandTest extends TestCase {
 		this.givenMockedExceptionHandler();
 	}
 
-	afterEach() {
-		jest.clearAllMocks();
-		super.afterEach();
-	}
-
-	async testStopServiceWithoutSpecificVersionThroughDedicatedHandler() {
+	async testServiceStopWithoutSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('foo');
 		this.thenShouldHaveStoppedServiceThroughHandler('foo');
 	}
 
-	async testStopServiceWithSpecificVersionThroughDedicatedHandler() {
+	async testServiceStopWithSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceVersion('888');
 		await this.whenRunningCommandForService('foo');
@@ -41,7 +36,7 @@ class ServiceStopCommandTest extends TestCase {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('bar');
-		this.thenShouldNotHaveStoppedServiceThroughHandler();
+		this.thenShouldNotHaveStoppedServiceThroughHandler('foo');
 	}
 
 	// GIVEN METHODS
@@ -84,9 +79,7 @@ class ServiceStopCommandTest extends TestCase {
 
 	givenMockedTerminal() {
 		this.mockedTerminal = {
-			success: jest.fn((message) => {
-				return message;
-			})
+			success: jest.fn()
 		};
 	}
 
@@ -114,7 +107,8 @@ class ServiceStopCommandTest extends TestCase {
 		this.expect(this.spies.handlers[service].stop).toHaveBeenCalled();
 	}
 
-	thenShouldNotHaveStoppedServiceThroughHandler() {
+	thenShouldNotHaveStoppedServiceThroughHandler(service) {
+		this.expect(this.spies.handlers[service].stop).not.toHaveBeenCalled();
 		this.thenShouldHaveThrown();
 	}
 

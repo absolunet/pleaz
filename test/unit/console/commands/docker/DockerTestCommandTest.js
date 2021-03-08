@@ -16,11 +16,6 @@ class DockerTestCommandTest extends TestCase {
 		this.givenCommand();
 	}
 
-	afterEach() {
-		jest.clearAllMocks();
-		super.afterEach();
-	}
-
 	async testValidateDockerComposeConfiguration() {
 		this.givenFakeDockerHandler();
 		await this.whenRunningTestCommand();
@@ -41,7 +36,9 @@ class DockerTestCommandTest extends TestCase {
 
 	givenFakeDockerHandler() {
 		this.spies.handlers.docker = {};
-		this.spies.handlers.docker.test = jest.fn(() =>  {
+		this.spies.handlers.docker.test = jest.fn(async () =>  {
+			await new Promise(setTimeout);
+
 			return {};
 		});
 

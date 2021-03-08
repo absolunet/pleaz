@@ -28,13 +28,6 @@ class BaseHandler extends Handler {
 	/**
 	 * @inheritdoc
 	 */
-	get serviceName() {
-		return 'brew';
-	}
-
-	/**
-	 * @inheritdoc
-	 */
 	async start(...parameters) {
 		await this.spawn('brew', `services start ${this.getServiceCommand(...parameters)}`, true);
 
@@ -72,7 +65,7 @@ class BaseHandler extends Handler {
 		const serviceName = this.getServiceCommand(...parameters);
 		const serviceOptions = serviceName !== 'brew' ? `| sed -e '1p' -e '/${serviceName}/!d'` : '';
 
-		await this.spawn('bash', ['-c', `brew services list ${serviceOptions}`], true);
+		await this.spawn('bash', ['-c', `brew services list ${serviceOptions}`.trim()], true);
 	}
 
 	/**

@@ -28,13 +28,6 @@ class BaseHandler extends Handler {
 	/**
 	 * @inheritdoc
 	 */
-	get serviceName() {
-		return 'docker';
-	}
-
-	/**
-	 * @inheritdoc
-	 */
 	async start() {
 		await this.spawn('docker-compose', `up --detach ${this.getServiceCommand()}`);
 

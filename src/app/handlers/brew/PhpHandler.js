@@ -13,7 +13,7 @@ class PhpHandler extends BaseHandler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['terminal', 'file.system.sync', 'config'];
+		return ['terminal'];
 	}
 
 	/**
@@ -134,11 +134,9 @@ class PhpHandler extends BaseHandler {
 	 * @returns {string} - Return PHP Version.
 	 */
 	getFullVersion(version = null) {
-		const spawnVersion = version || this.command.parameter('serviceVersion');
-
 		return this.terminal
 			.process
-			.runAndGet(`${this.getBinaryPath(spawnVersion)}/sbin/php-fpm -v | awk '/^PHP/{print $2}'`);
+			.runAndGet(`${this.getBinaryPath(version)}/sbin/php-fpm -v | awk '/^PHP/{print $2}'`);
 	}
 
 	/**
@@ -180,7 +178,7 @@ class PhpHandler extends BaseHandler {
 	 * @param {boolean} enable - Enable/Disable parameters.
 	 * @returns {Promise} The async process promise.
 	 */
-	async toggleXdebug(enable) {
+	async toggleXdebug(enable = true) {
 		if (this.isXdebugEnable() === enable) {
 			return {
 				hasWarning: true,
@@ -218,8 +216,7 @@ class PhpHandler extends BaseHandler {
 	 * @returns {boolean} - Return status of service.
 	 */
 	async isServiceRunning(version) {
-		const spawnVersion = version || this.command.parameter('serviceVersion');
-		const output = await this.terminal.process.runAndGet(`sudo brew services list | grep ${this.serviceName}@${spawnVersion} | awk '{print $2}'`);
+		const output = await this.terminal.process.runAndGet(`sudo brew services list | grep ${this.serviceName}@${version} | awk '{print $2}'`);
 
 		return output === 'started';
 	}

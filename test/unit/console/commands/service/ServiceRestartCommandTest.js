@@ -18,19 +18,14 @@ class ServiceRestartCommandTest extends TestCase {
 		this.givenMockedExceptionHandler();
 	}
 
-	afterEach() {
-		jest.clearAllMocks();
-		super.afterEach();
-	}
-
-	async testRestartServiceWithoutSpecificVersionThroughDedicatedHandler() {
+	async testServiceRestartWithoutSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('foo');
 		this.thenShouldHaveRestartedServiceThroughHandler('foo');
 	}
 
-	async testRestartServiceWithSpecificVersionThroughDedicatedHandler() {
+	async testServiceRestartWithSpecificVersionThroughDedicatedHandler() {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceVersion('888');
 		await this.whenRunningCommandForService('foo');
@@ -41,7 +36,7 @@ class ServiceRestartCommandTest extends TestCase {
 		this.givenFakeServiceHandler('foo');
 		this.givenServiceEmptyVersion();
 		await this.whenRunningCommandForService('bar');
-		this.thenShouldNotHaveRestartedServiceThroughHandler();
+		this.thenShouldNotHaveRestartedServiceThroughHandler('foo');
 	}
 
 	// GIVEN METHODS
@@ -59,7 +54,7 @@ class ServiceRestartCommandTest extends TestCase {
 	givenFakeServiceHandler(service) {
 		this.spies.handlers[service] = {};
 		this.spies.handlers[service].restart = jest.fn(() =>  {
-			return { message: this.mockedTerminal.success(`${this.constructor.name} success`) };
+			return { message: 'restart success' };
 		});
 
 		const self = this;
@@ -71,7 +66,6 @@ class ServiceRestartCommandTest extends TestCase {
 			}
 
 		});
-
 	}
 
 	givenServiceEmptyVersion() {
@@ -84,9 +78,7 @@ class ServiceRestartCommandTest extends TestCase {
 
 	givenMockedTerminal() {
 		this.mockedTerminal = {
-			success: jest.fn((message) => {
-				return message;
-			})
+			success: jest.fn()
 		};
 	}
 
@@ -114,7 +106,8 @@ class ServiceRestartCommandTest extends TestCase {
 		this.expect(this.spies.handlers[service].restart).toHaveBeenCalled();
 	}
 
-	thenShouldNotHaveRestartedServiceThroughHandler() {
+	thenShouldNotHaveRestartedServiceThroughHandler(service) {
+		this.expect(this.spies.handlers[service].restart).not.toHaveBeenCalled();
 		this.thenShouldHaveThrown();
 	}
 

@@ -38,7 +38,6 @@ class PhpSwitchCommand extends PhpCommand {
 	 */
 	async handle() {
 		const version = this.parameter('serviceVersion');
-
 		const { message } = await this.php.switch(version);
 
 		this.success(message);

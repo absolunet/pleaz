@@ -52,13 +52,12 @@ class PhpXdebugCommand extends PhpCommand {
 	async handle() {
 		const handler = this.getHandlerForParameters(this.parameter('parameters'));
 		const { restart, message, hasWarning } = await handler();
-
 		this[hasWarning ? 'warning' : 'success'](message);
 
-		if (restart && this.php.isServiceRunning(this.php.getCurrentVersion())) {
-			// this.command.forward();
-			const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
+		const isServiceRunning = await this.php.isServiceRunning(this.php.getCurrentVersion());
 
+		if (restart && isServiceRunning) {
+			const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
 			this.success(restartMessage);
 		}
 
@@ -74,7 +73,7 @@ class PhpXdebugCommand extends PhpCommand {
 		const handler = this.PARAMETERS[parameters];
 
 		if (!handler) {
-			throw new CustomError(`Only [${Object.keys(this.PARAMETERS)}] parameters are available.`);
+			throw new CustomError(`Only [${Object.keys(this.PARAMETERS).join(', ')}] parameters are available.`);
 		}
 
 		return handler;

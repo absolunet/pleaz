@@ -14,6 +14,11 @@ class TestCase extends BaseTestCase {
 		this.givenNoError();
 	}
 
+	afterEach() {
+		jest.clearAllMocks();
+		super.afterEach();
+	}
+
 	mock(abstract, factory) {
 		return this.app.singleton(abstract, factory);
 	}
