@@ -31,8 +31,8 @@ class PhpXdebugCommand extends PhpCommand {
 	 */
 	get PARAMETERS() {
 		return {
-			enable: this.handleEnable.bind(this),
-			disable: this.handleDisable.bind(this),
+			enable: this.handleToggleXdebug.bind(this, true),
+			disable: this.handleToggleXdebug.bind(this),
 			status: this.handleStatus.bind(this)
 		};
 	}
@@ -51,16 +51,7 @@ class PhpXdebugCommand extends PhpCommand {
 	 */
 	async handle() {
 		const handler = this.getHandlerForParameters(this.parameter('parameters'));
-		const { restart, message, hasWarning } = await handler();
-		this[hasWarning ? 'warning' : 'success'](message);
-
-		const isServiceRunning = await this.php.isServiceRunning(this.php.getCurrentVersion());
-
-		if (restart && isServiceRunning) {
-			const { message: restartMessage } = await this.php.restart(this.php.getCurrentVersion());
-			this.success(restartMessage);
-		}
-
+		await handler();
 	}
 
 	/**
@@ -80,31 +71,21 @@ class PhpXdebugCommand extends PhpCommand {
 	}
 
 	/**
-	 * Enable PHP Xdebug.
-	 *
-	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
-	 */
-	async handleEnable() {
-		const result = await this.php.toggleXdebug(true);
-
-		return {
-			restart: true,
-			...result
-		};
-	}
-
-	/**
 	 * Disable PHP Xdebug.
 	 *
 	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
 	 */
-	async handleDisable() {
-		const result =  await this.php.toggleXdebug(false);
+	async handleToggleXdebug(state = false) {
+		const { hasWarning, message, restart } =  await this.php.toggleXdebug(state);
+		this[hasWarning ? 'warning' : 'success'](message);
 
-		return {
-			restart: true,
-			...result
-		};
+		const version = this.php.getCurrentVersion()
+		const isServiceRunning = await this.php.isServiceRunning(version);
+
+		if (restart && isServiceRunning) {
+			await this.call(`service:restart php ${version}`)
+		}
+
 	}
 
 	/**
@@ -112,12 +93,10 @@ class PhpXdebugCommand extends PhpCommand {
 	 *
 	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
 	 */
-	async handleStatus() {
+	handleStatus() {
+		const message = this.php.isXdebugEnable() ? 'Xdebug is enabled.' : 'Xdebug is disabled.'
 
-		return {
-			restart: false,
-			message: await this.php.isXdebugEnable() ? 'Xdebug is enabled.' : 'Xdebug is disabled.'
-		};
+		this.success(message);
 	}
 
 }

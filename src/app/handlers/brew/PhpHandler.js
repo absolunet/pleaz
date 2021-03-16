@@ -196,6 +196,7 @@ class PhpHandler extends BaseHandler {
 
 		return {
 			hasWarning: false,
+			restart: true,
 			message: `Xdebug has been ${enable ? 'enabled' : 'disabled'}.`
 		};
 	}

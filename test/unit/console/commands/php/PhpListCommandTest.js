@@ -3,17 +3,27 @@
 //--------------------------------------------------------
 'use strict';
 
-const Handler         = require('../../../../../dist/node/app/handlers/Handler');
-const PhpListCommand = require('../../../../../dist/node/app/console/commands/php/PhpListCommand');
-const TestCase       = require('../../../../TestCase');
+const PhpListCommand 		 = require('../../../../../dist/node/app/console/commands/php/PhpListCommand');
+const TestCase       		 = require('../../../../TestCase');
+const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler')
 
+const testData = {
+	mockedHandler: {
+		list: {
+			output: ['v1','v2', 'v3']
+		}
+	},
+	mockedCommand: {
+		name: 'php:list'
+	}
+}
 
 class PhpListCommandTest extends TestCase {
 
 	beforeEach() {
 		super.beforeEach();
+		this.givenMockedPhpHandler();
 		this.givenMockedTerminal();
-		this.givenEmptySpies();
 		this.givenCommand();
 	}
 
@@ -22,46 +32,42 @@ class PhpListCommandTest extends TestCase {
 		super.afterEach();
 	}
 
-	async testShoulListTheVersionsOfPhpInstalled() {
-		this.givenFakePhpHandler();
+	async testShouldListMultipleVersionsReturnedByPhpHandler() {
+		this.givenMockedPhpHandler({
+			list: ['v1','v2', 'v3']
+		})
 		await this.whenRunningCommand();
+		this.thenShouldHaveCalledPhpHandler();
+		this.thenShouldListedAllPhpVersionInstalled();
+	}
+
+	async testShouldListVersionReturnedByPhpHandler() {
+		await this.whenRunningCommand();
+		this.thenShouldHaveCalledPhpHandler();
 		this.thenShouldListedAllPhpVersionInstalled();
 	}
 
 	// GIVEN METHODS
-	givenCommand() {
-		this.app.make('command.registrar').add(PhpListCommand);
-	}
+	//-------------------------------------------------------
+	givenMockedPhpHandler(config  = {}) {
+		this.mockedHandler = createMockedPhpHandler(config);
 
-	givenEmptySpies() {
-		this.spies = {
-			handlers: {}
-		};
-	}
-
-	givenFakePhpHandler() {
-		this.spies.handlers.php = {};
-		this.spies.handlers.php.list = jest.fn(() =>  {
-			return [`${this.constructor.name} 7.3`, `${this.constructor.name} 7.4`];
-		});
-
-		const self = this;
-
-		this.app.bind(`handler.php`, class extends Handler {
-
-			list() {
-				return self.spies.handlers.php.list();
-			}
-
-		});
+		this.app.bind('handler.php', this.mockedHandler);
 	}
 
 	givenMockedTerminal() {
 		this.mockedTerminal = {
-			success: jest.fn((message) => {
-				return message;
-			})
+			success: jest.fn()
 		};
+	}
+
+	givenCommand() {
+		this.app.make('command').add(() => {
+			return this.make(PhpListCommand, {
+				app: this.app,
+				terminal: this.mockedTerminal
+			});
+		});
 	}
 
 	// WHEN METHODS
@@ -70,16 +76,21 @@ class PhpListCommandTest extends TestCase {
 
 		await this.whenAttemptingAsync(async () => {
 			await this.app.make('command.registrar')
-				.resolve(`php:list`.trim());
+				.resolve(testData.mockedCommand.name);
 		});
 	}
 
 	// THEN METHODS
 	//--------------------------------------------------------
-	thenShouldListedAllPhpVersionInstalled() {
-		this.expect(this.spies.handlers.php.list).toHaveBeenCalled();
+	thenShouldHaveCalledPhpHandler() {
+		this.expect(this.mockedHandler.list).toHaveBeenCalled();
 	}
 
+	thenShouldListedAllPhpVersionInstalled() {
+		this.mockedHandler.returnValues.list.forEach((version, index) => {
+			this.expect(this.mockedTerminal.success).toHaveBeenNthCalledWith(index+1, `${version}.`);
+		});
+	}
 }
 
 

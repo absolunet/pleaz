@@ -3,17 +3,24 @@
 //--------------------------------------------------------
 'use strict';
 
-const Handler          = require('../../../../../dist/node/app/handlers/Handler');
-const PhpSwitchCommand = require('../../../../../dist/node/app/console/commands/php/PhpSwitchCommand');
-const TestCase         = require('../../../../TestCase');
+const PhpSwitchCommand 		 = require('../../../../../dist/node/app/console/commands/php/PhpSwitchCommand');
+const TestCase         		 = require('../../../../TestCase');
+const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler')
+const { YError } 			 = require('yargs/build/index.cjs')
 
+const testData = {
+	command: {
+		name: 'php:switch',
+		version: '7.4'
+	}
+}
 
 class PhpSwitchCommandTest extends TestCase {
 
 	beforeEach() {
 		super.beforeEach();
+		this.givenMockedPhpHandler();
 		this.givenMockedTerminal();
-		this.givenEmptySpies();
 		this.givenCommand();
 	}
 
@@ -22,91 +29,64 @@ class PhpSwitchCommandTest extends TestCase {
 		super.afterEach();
 	}
 
-	async testSwitchCurrentPhpVersionToAnotherPhpVersion() {
-		this.givenFakePhpHandler();
-		this.givenPhpVersionToSwitch('7.3');
-		await this.whenRunningCommand();
-		this.thenShouldHaveSwitchPhpVersion();
+	async testSwitchCommandCallPhpHandlerSwitch() {
+		await this.whenRunningCommand(testData.command.version);
+		this.thenShouldHaveCalledPhpHandlerSwitch();
+		this.thenShouldHaveOutputSuccessMessage();
+
 	}
 
 	async testThrowErrorIfPhpVersionIsEmpty() {
-		this.givenFakePhpHandler();
-		this.givenEmptyPhpVersion();
 		await this.whenRunningCommand();
 		this.thenShouldNotSwitchedPhpVersion();
 	}
 
 	// GIVEN METHODS
 	//--------------------------------------------------------
-	givenCommand() {
-		this.app.make('command.registrar').add(PhpSwitchCommand);
-	}
+	givenMockedPhpHandler(config = {}) {
+		this.mockedHandler = createMockedPhpHandler(config);
 
-	givenEmptySpies() {
-		this.spies = {
-			handlers: {}
-		};
-	}
+		this.app.bind('handler.php', this.mockedHandler);
 
-	givenFakePhpHandler() {
-		this.spies.handlers.php = {};
-		this.spies.handlers.php.switch = jest.fn(() =>  {
-			return { message: this.mockedTerminal.success(`${this.constructor.name} success`) };
-		});
-		this.spies.handlers.php.getFullVersion = jest.fn(() =>  {
-			return {};
-		});
-
-		const self = this;
-
-		this.app.bind(`handler.php`, class extends Handler {
-
-			getFullVersion(...parameters) {
-				return self.spies.handlers.php.getFullVersion(...parameters);
-			}
-
-			switch(...parameters) {
-				return self.spies.handlers.php.switch(...parameters);
-			}
-
-		});
 	}
 
 	givenMockedTerminal() {
 		this.mockedTerminal = {
-			success: jest.fn((message) => {
-				return message;
-			})
+			success: jest.fn()
 		};
 	}
 
-	givenEmptyPhpVersion() {
-		this.version = '';
-	}
-
-	givenPhpVersionToSwitch(version) {
-		this.version = version;
+	givenCommand() {
+		this.app.make('command').add(() => {
+			return this.make(PhpSwitchCommand, {
+				app: this.app,
+				terminal: this.mockedTerminal
+			});
+		});
 	}
 
 	// WHEN METHODS
 	//--------------------------------------------------------
-	async whenRunningCommand() {
-
+	async whenRunningCommand(parameters = '') {
 		await this.whenAttemptingAsync(async () => {
 			await this.app.make('command.registrar')
-				.resolve(`php:switch ${this.version}`.trim());
+				.resolve(`${testData.command.name} ${parameters}`.trim());
 		});
 	}
 
 
 	// THEN METHODS
 	//--------------------------------------------------------
-	thenShouldHaveSwitchPhpVersion() {
-		this.expect(this.spies.handlers.php.switch).toHaveBeenCalled();
+	thenShouldNotSwitchedPhpVersion() {
+		this.expect(this.error).toBeInstanceOf(YError);
 	}
 
-	thenShouldNotSwitchedPhpVersion() {
-		this.thenShouldHaveThrown();
+	thenShouldHaveCalledPhpHandlerSwitch() {
+		this.expect(this.mockedHandler.switch).toHaveBeenCalledWith(testData.command.version);
+	}
+
+	thenShouldHaveOutputSuccessMessage() {
+		this.expect(this.mockedTerminal.success).toHaveBeenCalledWith(this.mockedHandler.returnValues.switch.message)
 	}
 
 }
