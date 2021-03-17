@@ -3,17 +3,17 @@
 //--------------------------------------------------------
 'use strict';
 
-const PhpSwitchCommand 		 = require('../../../../../dist/node/app/console/commands/php/PhpSwitchCommand');
-const TestCase         		 = require('../../../../TestCase');
-const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler')
-const { YError } 			 = require('yargs/build/index.cjs')
+const PhpSwitchCommand       = require('../../../../../dist/node/app/console/commands/php/PhpSwitchCommand');
+const TestCase               = require('../../../../TestCase');
+const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler');
+const { YError }             = require('yargs/build/index.cjs');
 
 const testData = {
 	command: {
 		name: 'php:switch',
 		version: '7.4'
 	}
-}
+};
 
 class PhpSwitchCommandTest extends TestCase {
 
@@ -86,7 +86,7 @@ class PhpSwitchCommandTest extends TestCase {
 	}
 
 	thenShouldHaveOutputSuccessMessage() {
-		this.expect(this.mockedTerminal.success).toHaveBeenCalledWith(this.mockedHandler.returnValues.switch.message)
+		this.expect(this.mockedTerminal.success).toHaveBeenCalledWith(this.mockedHandler.returnValues.switch.message);
 	}
 
 }

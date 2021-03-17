@@ -3,20 +3,15 @@
 //--------------------------------------------------------
 'use strict';
 
-const PhpListCommand 		 = require('../../../../../dist/node/app/console/commands/php/PhpListCommand');
-const TestCase       		 = require('../../../../TestCase');
-const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler')
+const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler');
+const TestCase               = require('../../../../TestCase');
+const PhpListCommand         = require('../../../../../dist/node/app/console/commands/php/PhpListCommand');
 
 const testData = {
-	mockedHandler: {
-		list: {
-			output: ['v1','v2', 'v3']
-		}
-	},
 	mockedCommand: {
 		name: 'php:list'
 	}
-}
+};
 
 class PhpListCommandTest extends TestCase {
 
@@ -34,8 +29,8 @@ class PhpListCommandTest extends TestCase {
 
 	async testShouldListMultipleVersionsReturnedByPhpHandler() {
 		this.givenMockedPhpHandler({
-			list: ['v1','v2', 'v3']
-		})
+			list: ['v1', 'v2', 'v3']
+		});
 		await this.whenRunningCommand();
 		this.thenShouldHaveCalledPhpHandler();
 		this.thenShouldListedAllPhpVersionInstalled();
@@ -88,10 +83,10 @@ class PhpListCommandTest extends TestCase {
 
 	thenShouldListedAllPhpVersionInstalled() {
 		this.mockedHandler.returnValues.list.forEach((version, index) => {
-			this.expect(this.mockedTerminal.success).toHaveBeenNthCalledWith(index+1, `${version}.`);
+			this.expect(this.mockedTerminal.success).toHaveBeenNthCalledWith(index + 1, `${version}.`);
 		});
 	}
-}
 
+}
 
 module.exports = PhpListCommandTest;

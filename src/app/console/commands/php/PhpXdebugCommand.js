@@ -32,7 +32,7 @@ class PhpXdebugCommand extends PhpCommand {
 	get PARAMETERS() {
 		return {
 			enable: this.handleToggleXdebug.bind(this, true),
-			disable: this.handleToggleXdebug.bind(this),
+			disable: this.handleToggleXdebug.bind(this, false),
 			status: this.handleStatus.bind(this)
 		};
 	}
@@ -71,30 +71,29 @@ class PhpXdebugCommand extends PhpCommand {
 	}
 
 	/**
-	 * Disable PHP Xdebug.
+	 * Toggle PHP Xdebug.
 	 *
+	 * @param {boolean} state - Which state to toggle (true -> enable).
 	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
 	 */
 	async handleToggleXdebug(state = false) {
 		const { hasWarning, message, restart } =  await this.php.toggleXdebug(state);
 		this[hasWarning ? 'warning' : 'success'](message);
 
-		const version = this.php.getCurrentVersion()
+		const version = this.php.getCurrentVersion();
 		const isServiceRunning = await this.php.isServiceRunning(version);
 
 		if (restart && isServiceRunning) {
-			await this.call(`service:restart php ${version}`)
+			await this.call(`service:restart php ${version}`);
 		}
 
 	}
 
 	/**
 	 * Get Status of PHP Xdebug.
-	 *
-	 * @returns {Promise} Promise<{{restart:bool, message:string}}> - The async process promise.
 	 */
 	handleStatus() {
-		const message = this.php.isXdebugEnable() ? 'Xdebug is enabled.' : 'Xdebug is disabled.'
+		const message = `Xdebug is ${this.php.isXdebugEnable() ? 'enabled' : 'disabled'}.`;
 
 		this.success(message);
 	}

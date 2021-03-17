@@ -3,23 +3,23 @@
 //--------------------------------------------------------
 'use strict';
 
-const PhpXdebugCommand 	   = require('../../../../../dist/node/app/console/commands/php/PhpXdebugCommand');
-const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler')
-const TestCase         	   = require('../../../../TestCase');
+const PhpXdebugCommand       = require('../../../../../dist/node/app/console/commands/php/PhpXdebugCommand');
+const createMockedPhpHandler = require('../../../mocks/createMockedPhpHandler');
+const TestCase               = require('../../../../TestCase');
 
 const testData = {
 	command: {
-		name: 'php:xdebug',
+		name: 'php:xdebug'
 	}
-}
+};
 
 class PhpXdebugCommandTest extends TestCase {
 
-   beforeEach() {
+	beforeEach() {
 		super.beforeEach();
 		this.givenMockedTerminal();
-	   	this.givenMockedCommandCall();
-	   	this.givenMockedPhpHandler();
+		this.givenMockedCommandCall();
+		this.givenMockedPhpHandler();
 		this.givenCommand();
 	}
 
@@ -30,20 +30,20 @@ class PhpXdebugCommandTest extends TestCase {
 
 	async testXdebugCommandShowsStatusByDefault() {
 		await this.whenRunningCommand();
-		this.thenShouldHaveOutputSuccessMessages('Xdebug is disabled.')
+		this.thenShouldHaveOutputSuccessMessages('Xdebug is disabled.');
 	}
 
 	// status
 	//--------------------------
 	async testXDebugCommandStatusWhenIsEnabled() {
-		this.givenMockedPhpHandler({isXdebugEnable: true});
+		this.givenMockedPhpHandler({ isXdebugEnable: true });
 		await this.whenRunningCommand('status');
-		this.thenShouldHaveOutputSuccessMessages('Xdebug is enabled.')
+		this.thenShouldHaveOutputSuccessMessages('Xdebug is enabled.');
 	}
 
 	async testXDebugCommandStatusWhenIsDisabled() {
 		await this.whenRunningCommand('status');
-		this.thenShouldHaveOutputSuccessMessages('Xdebug is disabled.')
+		this.thenShouldHaveOutputSuccessMessages('Xdebug is disabled.');
 	}
 
 	// toggle: enable/disable
@@ -68,7 +68,7 @@ class PhpXdebugCommandTest extends TestCase {
 			}
 		});
 		await this.whenRunningCommand('enable');
-		this.thenShouldHaveOutputWarningMessages(this.mockedHandler.returnValues.toggleXdebug.message)
+		this.thenShouldHaveOutputWarningMessages(this.mockedHandler.returnValues.toggleXdebug.message);
 	}
 
 	// restart false && isRunning = false
@@ -78,17 +78,17 @@ class PhpXdebugCommandTest extends TestCase {
 	}
 
 	// restart false && isRunning = true
-	async testXdebugToggleIsNotRestartingServiceWhenIsNotRunningAndNotRequired() {
-		this.givenMockedPhpHandler( {
+	async testXdebugToggleIsNotRestartingServiceWhenIsRunningAndNotRequired() {
+		this.givenMockedPhpHandler({
 			isServiceRunning: true
 		});
-   		await this.whenRunningCommand('enable');
+		await this.whenRunningCommand('enable');
 		this.thenShouldNotHaveCalledCommand();
 	}
 
 	// restart true && isRunning = false
-	async testXdebugToggleIsNotRestartingServiceWhenIsNotRunningAndNotRequired() {
-		this.givenMockedPhpHandler( {
+	async testXdebugToggleIsNotRestartingServiceWhenIsNotRunningAndRequired() {
+		this.givenMockedPhpHandler({
 			toggleXdebug: {
 				restart: true
 			}
@@ -98,8 +98,8 @@ class PhpXdebugCommandTest extends TestCase {
 	}
 
 	// restart true && isRunning = true
-	async testXdebugToggleIsNotRestartingServiceWhenIsNotRunningAndNotRequired() {
-		this.givenMockedPhpHandler( {
+	async testXdebugToggleIsNotRestartingServiceWhenIsRunningAndRequired() {
+		this.givenMockedPhpHandler({
 			isServiceRunning: true,
 			toggleXdebug: {
 				restart: true
@@ -120,7 +120,7 @@ class PhpXdebugCommandTest extends TestCase {
 	}
 
 	givenMockedCommandCall() {
-   		this.mockedCommandCall = jest.fn()
+		this.mockedCommandCall = jest.fn();
 	}
 
 	givenCommand() {
@@ -134,7 +134,7 @@ class PhpXdebugCommandTest extends TestCase {
 	}
 
 	givenMockedPhpHandler(config = {}) {
-   		this.mockedHandler = createMockedPhpHandler(config);
+		this.mockedHandler = createMockedPhpHandler(config);
 
 		this.app.bind('handler.php', this.mockedHandler);
 	}
@@ -151,38 +151,30 @@ class PhpXdebugCommandTest extends TestCase {
 
 	// THEN METHODS
 	//--------------------------------------------------------
-	thenShouldNotSwitchedPhpVersion() {
-		this.expect(this.error).toBeInstanceOf(YError);
-	}
-
-	thenShouldHaveCalledPhpHandlerSwitch() {
-		this.expect(this.mockedHandler.switch).toHaveBeenCalledWith(testData.command.version);
-	}
-
 	thenShouldHaveCalledPhpHandlerToggleXdebug(state) {
 		this.expect(this.mockedHandler.toggleXdebug).toHaveBeenCalledWith(state);
 	}
 
 	thenShouldHaveOutputSuccessMessages(...messages) {
-   		messages.forEach((message, index) => {
-			this.expect(this.mockedTerminal.success).toHaveBeenNthCalledWith(index + 1, message)
+		messages.forEach((message, index) => {
+			this.expect(this.mockedTerminal.success).toHaveBeenNthCalledWith(index + 1, message);
 		});
 	}
 
 	thenShouldHaveOutputWarningMessages(...messages) {
 		messages.forEach((message, index) => {
-			this.expect(this.mockedTerminal.warning).toHaveBeenNthCalledWith(index + 1, message)
+			this.expect(this.mockedTerminal.warning).toHaveBeenNthCalledWith(index + 1, message);
 		});
 	}
 
 	thenShouldHaveCalledCommand(command) {
-   		this.expect(this.mockedCommandCall).toHaveBeenCalledWith(command);
+		this.expect(this.mockedCommandCall).toHaveBeenCalledWith(command);
 	}
 
 	thenShouldNotHaveCalledCommand() {
 		this.expect(this.mockedCommandCall).not.toHaveBeenCalled();
 	}
-}
 
+}
 
 module.exports = PhpXdebugCommandTest;

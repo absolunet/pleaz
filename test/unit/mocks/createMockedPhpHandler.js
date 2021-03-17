@@ -1,6 +1,8 @@
-const deepmerge = require('deepmerge')
-const __ 		= require('@absolunet/private-registry')
+'use strict';
 
+const deepmerge = require('deepmerge');
+
+/* eslint-disable quote-props */
 const mockedReturnValues = {
 	getCurrentVersion: 'getCurrentVersion',
 	isServiceRunning: false,
@@ -17,19 +19,21 @@ const mockedReturnValues = {
 		restart: false,
 		message: 'toggleXdebug'
 	}
-}
+};
+/* eslint-enable quote-props */
 
-function createMockedPhpHandler(config) {
+const createMockedPhpHandler = (config) => {
 	const returnValues = deepmerge(mockedReturnValues, config);
 
 	const mockFn = (name) => {
 		return jest.fn(() => {
-			return returnValues[name]
-		})
-	}
+			return returnValues[name];
+		});
+	};
 
+	/* eslint-disable quote-props */
 	const mockedHandler = {
-		returnValues: 	   returnValues,
+		returnValues,
 		getCurrentVersion: mockFn('getCurrentVersion'),
 		isServiceRunning:  mockFn('isServiceRunning'),
 		isXdebugEnable:    mockFn('isXdebugEnable'),
@@ -37,12 +41,10 @@ function createMockedPhpHandler(config) {
 		restart: 		   mockFn('restart'),
 		switch:			   mockFn('switch'),
 		toggleXdebug: 	   mockFn('toggleXdebug')
-
-	}
+	};
+	/* eslint-enable quote-props */
 
 	return mockedHandler;
-}
+};
 
 module.exports = createMockedPhpHandler;
-
-
