@@ -4,11 +4,17 @@
 
 import __                           from '@absolunet/private-registry';
 import { ServiceProvider, Command } from '@absolunet/ioc';
-import NginxHandler                 from '../handlers/NginxHandler';
-import PhpHandler                   from '../handlers/PhpHandler';
-import DockerHandler                from '../handlers/DockerHandler';
-import DnsmasqHandler               from '../handlers/DnsmasqHandler';
-import MailHogHandler               from '../handlers/MailHogHandler';
+import BrewHandler                  from '../handlers/brew/BaseHandler';
+import NginxHandler                 from '../handlers/brew/NginxHandler';
+import PhpHandler                   from '../handlers/brew/PhpHandler';
+import DnsmasqHandler               from '../handlers/brew/DnsmasqHandler';
+import MailHogHandler               from '../handlers/brew/MailHogHandler';
+import DockerHandler                from '../handlers/docker/BaseHandler';
+import DatabaseHandler              from '../handlers/docker/DatabaseHandler';
+import ElasticsearchHandler         from '../handlers/docker/ElasticsearchHandler';
+import RedisHandler                 from '../handlers/docker/RedisHandler';
+import VarnishHandler               from '../handlers/docker/VarnishHandler';
+import MqHandler                    from '../handlers/docker/MqHandler';
 
 /**
  * Application service provider.
@@ -72,11 +78,17 @@ class AppServiceProvider extends ServiceProvider {
 	 * Register Console Handlers.
 	 */
 	registerConsoleHandlers() {
+		this.app.bind('handler.brew', BrewHandler);
 		this.app.bind('handler.nginx', NginxHandler);
 		this.app.bind('handler.php', PhpHandler);
-		this.app.bind('handler.docker', DockerHandler);
 		this.app.bind('handler.dnsmasq', DnsmasqHandler);
 		this.app.bind('handler.mailhog', MailHogHandler);
+		this.app.bind('handler.docker', DockerHandler);
+		this.app.bind('handler.db', DatabaseHandler);
+		this.app.bind('handler.elasticsearch', ElasticsearchHandler);
+		this.app.bind('handler.redis', RedisHandler);
+		this.app.bind('handler.varnish', VarnishHandler);
+		this.app.bind('handler.mq', MqHandler);
 	}
 
 }
