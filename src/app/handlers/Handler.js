@@ -8,21 +8,6 @@ import { NotImplementedError } from '@absolunet/ioc';
  */
 class Handler {
 
-	// constructor() {
-	// 	if (!this.starts()) {
-	// 		throw new NotImplementedError(this, 'starts');
-	// 	}
-	// }
-
-	/**
-	 * Interface.
-	 *
-	 * @abstract
-	 */
-	startt() {
-		throw new NotImplementedError(this, 'startt');
-	}
-
 	/**
 	 * Service Name.
 	 *
