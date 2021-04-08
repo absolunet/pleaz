@@ -3,8 +3,8 @@
 > [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [Docker](./docker.md)
 
 ## Table of Contents
-1. [Project setup](#project-setup)
-2. [Usage](#usage)
+1. [Project setup](#markdown-header-project-setup)
+2. [Usage](#markdown-header-usage)
 
 ==============================================================================
 

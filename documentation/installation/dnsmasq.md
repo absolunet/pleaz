@@ -5,11 +5,11 @@
 [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) is free software providing Domain Name System (DNS) caching, a Dynamic Host Configuration Protocol (DHCP) server, router advertisement and network boot features, intended for small computer networks.
 
 ## Table of Contents
-1. [Installation (macOS)](#installing-dnsmasq-on-mac)
-	* [Step 1: Download Homebrew](#installing-dnsmasq-on-mac-step1)
-	* [Step 2: Update the Homebrew repository index](#installing-dnsmasq-on-mac-step2)
-	* [Step 3: Install dnsmasq](#installing-dnsmasq-on-mac-step3)
-2. [Configuration](#configuration)
+1. [Installation (macOS)](#markdown-header-installing-dnsmasq-on-mac)
+	* [Step 1: Download Homebrew](#markdown-header-installing-dnsmasq-on-mac-step1)
+	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-dnsmasq-on-mac-step2)
+	* [Step 3: Install dnsmasq](#markdown-header-installing-dnsmasq-on-mac-step3)
+2. [Configuration](#markdown-header-configuration)
 
 ==============================================================================
 

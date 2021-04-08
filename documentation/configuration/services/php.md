@@ -3,9 +3,9 @@
 > [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [PHP](./php.md)
 
 ## Table of Contents
-1. [Configuration](#configuration)
-1. [Installation - Xdebug](#installation-xdebug)
-2. [Usage](#usage)
+1. [Configuration](#markdown-header-configuration)
+1. [Installation - Xdebug](#markdown-header-installation-xdebug)
+2. [Usage](#markdown-header-usage)
 
 ==============================================================================
 

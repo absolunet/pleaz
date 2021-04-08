@@ -3,13 +3,13 @@
 > [Documentation](../readme.md) > [Installation for macOS](./readme.md) > [PHP](./php.md)
 
 ## Table of Contents
-1. [Installation (macOS)](#installation)
-	* [Step 1: Download Homebrew](#step1)
-	* [Step 2: Update the Homebrew repository index](#installing-php-on-mac-step2)
-	* [Step 3: PHP Installation](#installing-php-on-mac-step3)
-		* [Installation PHP versions](#installing-php-on-mac-step3-php-versions)
-		* [Installation PHP extensions](#installing-php-on-mac-step3-php-extensions)
-2. [Configuration](#configuration)
+1. [Installation (macOS)](#markdown-header-installation)
+	* [Step 1: Download Homebrew](#markdown-header-step1)
+	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-php-on-mac-step2)
+	* [Step 3: PHP Installation](#markdown-header-installing-php-on-mac-step3)
+		* [Installation PHP versions](#markdown-header-installing-php-on-mac-step3-php-versions)
+		* [Installation PHP extensions](#markdown-header-installing-php-on-mac-step3-php-extensions)
+2. [Configuration](#markdown-header-configuration)
 
 ==============================================================================
 

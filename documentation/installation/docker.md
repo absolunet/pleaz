@@ -5,9 +5,9 @@
 [Docker Desktop](https://docs.docker.com/) is an easy-to-install application for your Mac or Windows environment that enables you to build and share containerized applications and microservices
 
 ## Table of Contents
-1. [Installation Docker Desktop on macOS](#installation)
-2. [Configuration](#configuration)
-3. [Create service containers](#create-service-container)
+1. [Installation Docker Desktop on macOS](#markdown-header-installation)
+2. [Configuration](#markdown-header-configuration)
+3. [Create service containers](#markdown-header-create-service-container)
 
 ==============================================================================
 

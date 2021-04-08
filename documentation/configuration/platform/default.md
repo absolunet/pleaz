@@ -3,8 +3,8 @@
 > [Documentation](./../../readme.md) > [Configuration](./../readme.md) > [default](./default.md)
 
 ## Table of Contents
-1. [Configuration](#configuration)
-2. [Important Locations](#important-locations)
+1. [Configuration](#markdown-header-configuration)
+2. [Important Locations](#markdown-header-important-locations)
 
 ## 1. Configuration
 

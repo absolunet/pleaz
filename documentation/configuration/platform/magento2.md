@@ -3,9 +3,9 @@
 > [Documentation](./../../readme.md) > [Configuration](./../readme.md) > [Magento2](./magento2.md)
 
 ## Table of Contents
-1. [Configuration](#configuration)
-2. [Create service containers with Docker](#service-containers-docker)
-3. [Important Locations](#important-locations)
+1. [Configuration](#markdown-header-configuration)
+2. [Create service containers with Docker](#markdown-header-service-containers-docker)
+3. [Important Locations](#markdown-header-important-locations)
 
 ## 1. Configuration
 

@@ -2,8 +2,6 @@
 
 > [Documentation](./readme.md)
 
-Pleaz (PHP Local Environment from A to Z), a more efficient solution to develop applications.
-
 ## Overview
 
 ### [Installation for macOS](./installation/readme.md)
@@ -32,32 +30,13 @@ Pleaz (PHP Local Environment from A to Z), a more efficient solution to develop 
 ##### Database
 - [Backup/Restore](./configuration/database-backup-restore.md)
 
----
-
-### FAQ
-
-> How to cleanup Homebrew PHP properly ?
->
-Follow instruction here: [Cleanup Homebrew PHP](./upgrading/cleanup-homebew-php.md)
-
-> PECL: Bug in PHP formula which creates broken link in `/usr/local/lib/php/pecl` ?
->
-
-```bash
-$ ls /usr/local/lib/php/pecl/201*/
-opcache.a opcache.so xdebug.so
-```
-
-If you see error, you might need to fix it:
-```bash
-cd /usr/local/lib/php
-rm pecl
-ln -s . pecl
-```
+### [Support](./support/readme.md)
+- [PHP](./support/php.md)
 
 ---
+
 
 ## Contributing
 
-Before contributing, refer to [Contribution Guidelines](./contributing.md)
+Before contributing, refer to [Contribution Guidelines](./../CONTRIBUTING.md)
 

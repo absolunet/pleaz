@@ -3,13 +3,13 @@
 > [Documentation](./../readme.md) > [Configuration](./readme.md) > [Project setup](./project-setup.md)
 
 ## Table of Contents
-1. [Configuring a web server with PHP-FPM and SSL](#configuring-a-web-server)
-    * [Step 1: Build a structure](#step1)
-    * [Step 2: Park you project into the global configuration of NGINX](#step2)
-    * [Step 3: Create a configuration](#step3)
-    * [Step 4: Create locally trusted SSL Certificates with mkcert](#step4)
-2. [Create service containers with Docker](#service-containers-docker)
-3. [Important Locations](#important-locations)
+1. [Configuring a web server with PHP-FPM and SSL](#markdown-header-configuring-a-web-server)
+    * [Step 1: Build a structure](#markdown-header-step1)
+    * [Step 2: Park you project into the global configuration of NGINX](#markdown-header-step2)
+    * [Step 3: Create a configuration](#markdown-header-step3)
+    * [Step 4: Create locally trusted SSL Certificates with mkcert](#markdown-header-step4)
+2. [Create service containers with Docker](#markdown-header-service-containers-docker)
+3. [Important Locations](#markdown-header-important-locations)
 
 ==============================================================================
 

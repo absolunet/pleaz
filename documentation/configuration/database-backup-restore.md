@@ -3,8 +3,8 @@
 > [Documentation](./../readme.md) > [Configuration](./readme.md) > [Database Backup/Restore](./database-backup-restore.md)
 
 ## Table of Contents
-1. [Database Backup](#Database-Backup)
-1. [Database Restore](#Database-Restore)
+1. [Database Backup](#markdown-header-database-Backup)
+1. [Database Restore](#markdown-header-database-Restore)
 
 Since the database runs on Docker, the backup and restore process is different from a local setup.
 The data on docker containers is non-persistent. Therefore, the database data is stored on docker volumes.

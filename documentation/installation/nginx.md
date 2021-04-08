@@ -3,11 +3,11 @@
 > [Documentation](../readme.md) > [Installation for macOS](./readme.md) > [NGINX](./nginx.md)
 
 ## Table of Contents
-1. [Installing NGINX on macOS](#installing-nginx-on-mac)
-	* [Step 1: Download Homebrew](#installing-nginx-on-mac-step1)
-	* [Step 2: Update the Homebrew repository index](#installing-nginx-on-mac-step2)
-	* [Step 3: Install NGINX](#installing-nginx-on-mac-step3)
-2. [Configuration](#configuration)
+1. [Installing NGINX on macOS](#markdown-header-installing-nginx-on-mac)
+	* [Step 1: Download Homebrew](#markdown-header-installing-nginx-on-mac-step1)
+	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-nginx-on-mac-step2)
+	* [Step 3: Install NGINX](#markdown-header-installing-nginx-on-mac-step3)
+2. [Configuration](#markdown-header-configuration)
 
 ==============================================================================
 

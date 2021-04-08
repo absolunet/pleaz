@@ -9,11 +9,11 @@ It encapsulates the SMTP protocol with extensions and does not require specific 
 MailHog runs a super simple SMTP server that hogs outgoing emails sent to it.
 
 ## Table of Contents
-1. [Installation (macOS)](#installing-mailhog-on-mac)
-	* [Step 1: Download Homebrew](#installing-mailhog-on-mac-step1)
-	* [Step 2: Update the Homebrew repository index](#installing-mailhog-on-mac-step2)
-	* [Step 3: Install MailHog](#installing-mailhog-on-mac-step3)
-2. [Configuration](#configuration-mailhog)
+1. [Installation (macOS)](#markdown-header-installing-mailhog-on-mac)
+	* [Step 1: Download Homebrew](#markdown-header-installing-mailhog-on-mac-step1)
+	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-mailhog-on-mac-step2)
+	* [Step 3: Install MailHog](#markdown-header-installing-mailhog-on-mac-step3)
+2. [Configuration](#markdown-header-configuration-mailhog)
 
 ==============================================================================
 

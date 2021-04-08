@@ -3,9 +3,9 @@
 > [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [MailHog](./mailhog.md)
 
 ## Table of Contents
-1. [Configuration](#configuration)
-2. [Starting MailHog](#starting)
-3. [Usage](#usage)
+1. [Configuration](#markdown-header-configuration)
+2. [Starting MailHog](#markdown-header-starting)
+3. [Usage](#markdown-header-usage)
 
 ==============================================================================
 
