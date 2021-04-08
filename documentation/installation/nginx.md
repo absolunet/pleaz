@@ -7,7 +7,7 @@
 	* [Step 1. Install Homebrew](#markdown-header-step-1-install-homebrew)
 	* [Step 2. Update the Homebrew repository index](#markdown-header-step-2-update-the-homebrew-repository-index)
 	* [Step 3. Install NGINX](#markdown-header-step-3-install-nginx)
-2. [Configuration](#markdown-header-configuration)
+2. [Configuration](#markdown-header-2-configuration)
 
 ==============================================================================
 
