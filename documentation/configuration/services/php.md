@@ -3,9 +3,9 @@
 > [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [PHP](./php.md)
 
 ## Table of Contents
-1. [Configuration](#markdown-header-configuration)
-1. [Installation - Xdebug](#markdown-header-installation-xdebug)
-2. [Usage](#markdown-header-usage)
+1. [Configuration](#markdown-header-1-configuration)
+1. [Installation Xdebug](#markdown-header-2-installation-xdebug)
+2. [Usage](#markdown-header-3-usage)
 
 ==============================================================================
 
@@ -51,7 +51,7 @@ For each version of PHP installed, you should add the following optimized config
 
 ---
 
-## 2. Installation - Xdebug
+## 2. Installation Xdebug
 - Installation of Xdebug extension for PHP [7.3|7.4|<MAJOR.MINOR>].
 
 ```bash

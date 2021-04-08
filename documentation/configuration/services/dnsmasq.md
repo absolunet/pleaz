@@ -3,10 +3,10 @@
 > [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [dnsmasq](./dnsmasq.md)
 
 ## Table of Contents
-1. [Configuration](#markdown-header-configuration)
-2. [Starting dnsmasq](#markdown-header-starting)
-3. [Important Locations](#markdown-header-important-locations)
-4. [Usage](#markdown-header-usage)
+1. [Configuration](#markdown-header-1-configuration)
+2. [Starting dnsmasq](#markdown-header-2-starting-dnsmasq)
+3. [Important Locations](#markdown-header-3-important-locations)
+4. [Usage](#markdown-header-4-usage)
 
 ==============================================================================
 

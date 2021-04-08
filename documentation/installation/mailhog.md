@@ -9,23 +9,23 @@ It encapsulates the SMTP protocol with extensions and does not require specific 
 MailHog runs a super simple SMTP server that hogs outgoing emails sent to it.
 
 ## Table of Contents
-1. [Installation (macOS)](#markdown-header-installing-mailhog-on-mac)
-	* [Step 1: Download Homebrew](#markdown-header-installing-mailhog-on-mac-step1)
-	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-mailhog-on-mac-step2)
-	* [Step 3: Install MailHog](#markdown-header-installing-mailhog-on-mac-step3)
-2. [Configuration](#markdown-header-configuration-mailhog)
+1. [Installation on macOS](#markdown-header-1-installation-on-macos)
+	* [Step 1. Install Homebrew](#markdown-header-step-1-install-homebrew)
+	* [Step 2. Update the Homebrew repository index](#markdown-header-step-2-update-the-homebrew-repository-index)
+	* [Step 3. Install MailHog](#markdown-header-step-3-install-mailhog)
+2. [Configuration](#markdown-header-2-configuration-mailhog)
 
 ==============================================================================
 
 ==============================================================================
 
-## 1. Installation (macOS)
+## 1. Installation on macOS
 
 There are following steps to install MailHog on macOS:
 
 ---
 
-### Step 1: Download Homebrew
+### Step 1. Install Homebrew
 
 To install MailHog on macOS, Homebrew must be installed on the system.
 
@@ -37,7 +37,7 @@ To install or update Homebrew, use the following link: [https://brew.sh/](https:
 
 ---
 
-### Step 2: Update the Homebrew repository index
+### Step 2. Update the Homebrew repository index
 
 Update the repository index of the Homebrew package installer.
 
@@ -47,7 +47,7 @@ brew update
 
 ---
 
-### Step 3: Install MailHog
+### Step 3. Install MailHog
 
 The Homebrew package installer will help install the MailHog on macOS.
 

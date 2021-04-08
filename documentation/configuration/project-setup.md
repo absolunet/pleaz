@@ -3,13 +3,13 @@
 > [Documentation](./../readme.md) > [Configuration](./readme.md) > [Project setup](./project-setup.md)
 
 ## Table of Contents
-1. [Configuring a web server with PHP-FPM and SSL](#markdown-header-configuring-a-web-server)
-    * [Step 1: Build a structure](#markdown-header-step1)
-    * [Step 2: Park you project into the global configuration of NGINX](#markdown-header-step2)
-    * [Step 3: Create a configuration](#markdown-header-step3)
-    * [Step 4: Create locally trusted SSL Certificates with mkcert](#markdown-header-step4)
-2. [Create service containers with Docker](#markdown-header-service-containers-docker)
-3. [Important Locations](#markdown-header-important-locations)
+1. [Configuring a simple web server with PHP-FPM and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
+    * [Step 1. Build a structure](#markdown-header-step-1-build-a-structure)
+    * [Step 2. Park you project into the global configuration of NGINX](#markdown-header-step-2-park-you-project-into-the-global-configuration-of-nginx)
+    * [Step 3. Create a configuration](#markdown-header-step-3-create-a-configuration)
+    * [Step 4. Create locally trusted SSL Certificates with `mkcert`](#markdown-header-step-4-create-locally-trusted-ssl-certificates-with-mkcert)
+2. [Create service containers with Docker](#markdown-header-2-create-service-containers-with-docker)
+3. [Important Locations](#markdown-header-3-important-locations)
 
 ==============================================================================
 
@@ -17,14 +17,14 @@
 
 ## 1. Configuring a simple web server with PHP-FPM and SSL
 
-### Step 1: Build a structure
+### Step 1. Build a structure
 
 * Build a structure into the directory `config` used for configuration into your root directory of your project.
 ```bash
 mkdir -p config/docker/services/nginx/includes
 ```
 
-### Step 2: Park you project into the global configuration of NGINX
+### Step 2. Park you project into the global configuration of NGINX
 
 > For easier maintenance, we will centralize the point of entry of projects in the configuration of NGINX.
 
@@ -43,13 +43,13 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ---
 
-### Step 3: Create a configuration
+### Step 3. Create a configuration
 
 > For a specific platform project, please see [Configuration](./readme.md)
 
 ---
 
-### Step 4: Create locally trusted SSL Certificates with `mkcert`
+### Step 4. Create locally trusted SSL Certificates with `mkcert`
 
 > [mkcert](https://github.com/FiloSottile/mkcert) is a simple zero-config tool that is used to make locally trusted development certificates.
 >

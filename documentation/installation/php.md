@@ -3,25 +3,25 @@
 > [Documentation](../readme.md) > [Installation for macOS](./readme.md) > [PHP](./php.md)
 
 ## Table of Contents
-1. [Installation (macOS)](#markdown-header-installation)
-	* [Step 1: Download Homebrew](#markdown-header-step1)
-	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-php-on-mac-step2)
-	* [Step 3: PHP Installation](#markdown-header-installing-php-on-mac-step3)
-		* [Installation PHP versions](#markdown-header-installing-php-on-mac-step3-php-versions)
-		* [Installation PHP extensions](#markdown-header-installing-php-on-mac-step3-php-extensions)
-2. [Configuration](#markdown-header-configuration)
+1. [Installation on macOS](#markdown-header-1-installation-on-macos)
+	* [Step 1. Install Homebrew](#markdown-header-step-1-install-homebrew)
+	* [Step 2. Update the Homebrew repository index](#markdown-header-step-2-update-the-homebrew-repository-index)
+	* [Step 3. PHP Installation](#markdown-header-step-3-php-installation)
+		* [Installation PHP versions](#markdown-header-installation-php-versions)
+		* [Installation PHP extensions](#markdown-header-installation-php-extensions)
+2. [Configuration](#markdown-header-2-configuration)
 
 ==============================================================================
 
 ==============================================================================
 
-## 1. Installation (macOS)
+## 1. Installation on macOS
 
 There are following steps to install multiple version of PHP on macOS:
 
 ---
 
-### Step 1: Install Homebrew
+### Step 1. Install Homebrew
 
 Homebrew is a package manager for macOS that allows us to install various Unix applications easily.
 
@@ -30,7 +30,7 @@ If you don't have Homebrew, use the following link to install: [https://brew.sh/
 
 ---
 
-### Step 2: Update the Homebrew repository index
+### Step 2. Update the Homebrew repository index
 
 Update the repository index of the Homebrew package installer.
 
@@ -40,7 +40,7 @@ brew update
 
 ---
 
-### Step 3: PHP Installation
+### Step 3. PHP Installation
 
 > **_NOTE:_**  **If you have existing PHP installations via Homebrew, you need to first cleanup your setup with our [Upgrading Homebrew cleanup guide](./../upgrading/cleanup-homebew-php.md) before continuing with this section.**
 
@@ -61,7 +61,7 @@ The versions of PHP installed by Homebrew will be in the directory `/usr/local/e
 
 ---
 
-#### Installation PHP extensions (Optional)
+#### Installation PHP extensions
 
 To install an PHP extension for a specific version with [PECL](https://pecl.php.net/).
 

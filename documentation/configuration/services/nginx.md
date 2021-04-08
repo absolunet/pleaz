@@ -3,11 +3,11 @@
 > [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [NGINX](./nginx.md)
 
 ## Table of Contents
-1. [Configuration](#markdown-header-configuration)
-2. [Starting NGINX](#markdown-header-starting)
-3. [Environment setup](#markdown-header-environment-setup)
-4. [Important Locations](#markdown-header-important-locations)
-5. [Usage](#markdown-header-usage)
+1. [Configuration](#markdown-header-1-configuration)
+2. [Starting NGINX](#markdown-header-2-starting)
+3. [Environment setup](#markdown-header-3-environment-setup)
+4. [Important Locations](#markdown-header-4-important-locations)
+5. [Usage](#markdown-header-5-usage)
 
 ==============================================================================
 

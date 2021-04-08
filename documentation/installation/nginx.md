@@ -3,23 +3,23 @@
 > [Documentation](../readme.md) > [Installation for macOS](./readme.md) > [NGINX](./nginx.md)
 
 ## Table of Contents
-1. [Installing NGINX on macOS](#markdown-header-installing-nginx-on-mac)
-	* [Step 1: Download Homebrew](#markdown-header-installing-nginx-on-mac-step1)
-	* [Step 2: Update the Homebrew repository index](#markdown-header-installing-nginx-on-mac-step2)
-	* [Step 3: Install NGINX](#markdown-header-installing-nginx-on-mac-step3)
+1. [Installation on macOS](#markdown-header-1-installation-on-macos)
+	* [Step 1. Install Homebrew](#markdown-header-step-1-install-homebrew)
+	* [Step 2. Update the Homebrew repository index](#markdown-header-step-2-update-the-homebrew-repository-index)
+	* [Step 3. Install NGINX](#markdown-header-step-3-install-nginx)
 2. [Configuration](#markdown-header-configuration)
 
 ==============================================================================
 
 ==============================================================================
 
-## 1. Installation (macOS)
+## 1. Installation on macOS
 
 There are following steps to install NGINX on macOS:
 
 ---
 
-### Step 1: Install Homebrew
+### Step 1. Install Homebrew
 
 To install NGINX on macOS, Homebrew must be installed on the system.
 
@@ -31,7 +31,7 @@ To install or update Homebrew, use the following link: [https://brew.sh/](https:
 
 ---
 
-### Step 2: Update the Homebrew repository index
+### Step 2. Update the Homebrew repository index
 
 Update the repository index of the Homebrew package installer.
 
@@ -41,7 +41,7 @@ brew update
 
 ---
 
-### Step 3: Install NGINX
+### Step 3. Install NGINX
 
 The Homebrew package installer will help install the NGINX web server on macOS.
 
