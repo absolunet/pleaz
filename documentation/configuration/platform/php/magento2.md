@@ -19,6 +19,7 @@
 
 ### Stack Requirement
 Install and configure the following services
+
 - [NGINX](../../../installation/macos/nginx.md)
 
 - [PHP](../../../installation/macos/php.md)
@@ -180,7 +181,8 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/includes /usr/l
 
 ## 2. Start project
 
-###### macOS
+#### macOS
+
 ```bash
 $ cd config/pleaz
 

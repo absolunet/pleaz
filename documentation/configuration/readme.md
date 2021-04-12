@@ -4,7 +4,7 @@
 
 ## Table of Contents
 
-###### macOS
+#### macOS
 - [Project setup PHP default](platform/php/default.md)
 - [Project setup Magento2](platform/php/magento2.md)
 

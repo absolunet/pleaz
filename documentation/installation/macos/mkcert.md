@@ -17,6 +17,7 @@ It automatically creates and installs a local CA in the system root store, and g
 
 ### Stack Requirement
 Install and configure the following services
+
 - [Homebrew](homebrew.md)
 
 ## 1. Installation on macOS

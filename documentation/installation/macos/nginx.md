@@ -12,6 +12,7 @@
 
 ### Stack Requirement
 Install and configure the following services
+
 - [Homebrew](homebrew.md)
 
 ## 1. Installation on macOS

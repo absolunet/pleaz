@@ -73,7 +73,7 @@ At last, we start NGINX to activate the changes:
 
 > NGINX must be started as root `(sudo)` to have the necessary permissions.
 
-###### macOS
+#### macOS
 ```bash
 sudo brew services start nginx
 ```
@@ -82,7 +82,7 @@ sudo brew services start nginx
 
 ## 3. Important locations
 
-###### macOS
+#### macOS
 * `Server Block` directory -> `/usr/local/etc/nginx/sites-enabled`
 * Default config -> `/usr/local/etc/nginx/nginx.conf`
 * Logs will be in -> `/usr/local/etc/nginx/logs`
@@ -91,7 +91,7 @@ sudo brew services start nginx
 
 ## 4. Usage
 
-###### macOS
+#### macOS
 * Start service:
 ```bash
 sudo brew services start nginx

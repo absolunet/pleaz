@@ -72,7 +72,7 @@ To access the web interface, enter : `http://mailhog.test` or `http://localhost:
 
 ## 3. Usage
 
-###### macOS
+#### macOS
 * Start service:
 ```bash
 brew services start mailhog

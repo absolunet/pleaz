@@ -5,7 +5,8 @@
 ## Overview
 
 ### Usage
-###### macOS
+
+#### macOS
 
 - [Project setup PHP default](configuration/platform/php/default.md)
 - [Project setup Magento2](configuration/platform/php/magento2.md)
@@ -16,7 +17,8 @@
 
 ### [Services installation](installation/readme.md)
 
-###### macOS
+#### macOS
+
 - [NGINX](installation/macos/nginx.md)
 - [PHP](installation/macos/php.md)
 - [dnsmasq](installation/macos/dnsmasq.md)
@@ -33,7 +35,9 @@
 - [Docker](configuration/services/docker.md)
 
 ### [Support](support/readme.md)
-###### macOS
+
+#### macOS
+
 - [PHP](support/php.md)
 
 ---

@@ -18,6 +18,7 @@ MailHog runs a super simple SMTP server that hogs outgoing emails sent to it.
 
 ### Stack Requirement
 Install and configure the following services
+
 - [Homebrew](homebrew.md)
 
 ## 1. Installation on macOS

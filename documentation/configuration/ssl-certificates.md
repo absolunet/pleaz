@@ -11,6 +11,7 @@
 
 ### Stack Requirement
 Install and configure the following services
+
 - [Homebrew](../installation/macos/homebrew.md)
 
 - [NGINX](../installation/macos/nginx.md)
@@ -19,7 +20,7 @@ Install and configure the following services
 
 ## 1. Generate locally trusted SSL Certificates
 
-###### macOS
+#### macOS
 By default, SSL certificates are located in `/usr/local/etc/nginx/certs/ssl/`.
 
 > Locally trusted SSL certificates must be generated within this directory.
