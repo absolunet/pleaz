@@ -20,9 +20,13 @@
 ### Stack Requirement
 Install and configure the following services
 - [NGINX](../../../installation/macos/nginx.md)
+
 - [PHP](../../../installation/macos/php.md)
+
 - [dnsmasq](../../../installation/macos/dnsmasq.md)
+
 - [MailHog](../../../installation/macos/mailhog.md)
+
 - [Docker](../../../installation/macos/docker.md)
 
 ## 1. Configuring a simple web server with PHP and SSL

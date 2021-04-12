@@ -12,7 +12,9 @@
 ### Stack Requirement
 Install and configure the following services
 - [Homebrew](../installation/macos/homebrew.md)
+
 - [NGINX](../installation/macos/nginx.md)
+
 - [mkcert](../installation/macos/mkcert.md)
 
 ## 1. Generate locally trusted SSL Certificates
