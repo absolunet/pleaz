@@ -1,6 +1,6 @@
 # Services configuration - PHP
 
-> [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [PHP](./php.md)
+> [Documentation](../../readme.md) > [Services configuration](../readme.md) > [PHP](php.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
@@ -20,7 +20,7 @@
 for each version of installed PHP Version:
 
 * edit the the file `/usr/local/etc/php/<PHP_VERSION>/php-fpm.d/www.conf` and
-* replace all content by the following configuration : [www.conf](./../../stubs/php-fpm/context/php-fpm.d/www.conf)
+* replace all content by the following configuration : [www.conf](../../stubs/php-fpm/context/php-fpm.d/www.conf)
 
 > We will have to give to PHP the permission to access our files and avoid an error on server start.
 
@@ -47,7 +47,7 @@ For each version of PHP installed, you should add the following optimized config
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
 * Create the file `/usr/local/etc/php/<PHP_VERSION>/conf.d/z-performance.ini`
-* Add the following configuration: [z-performance.ini](./../../stubs/php-fpm/context/conf.d/z-performance.ini)
+* Add the following configuration: [z-performance.ini](../../stubs/php-fpm/context/conf.d/z-performance.ini)
 
 ---
 
@@ -69,7 +69,7 @@ For each version of PHP installed, you should add the following configuration.
 ---
 
 * Create the file `/usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini`
-* Add the following configuration: [ext-xdebug.ini](./../../stubs/php-fpm/context/conf.d/ext-xdebug.ini)
+* Add the following configuration: [ext-xdebug.ini](../../stubs/php-fpm/context/conf.d/ext-xdebug.ini)
 
 ---
 
@@ -108,4 +108,14 @@ sudo brew services start php@7.4
 # Stop services
 sudo brew services stop php@7.3
 sudo brew services stop php@7.4
+```
+
+- Disable xdebug
+```bash
+mv /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini.dis
+```
+
+- Enable xdebug
+```bash
+mv /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini.dis /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini
 ```

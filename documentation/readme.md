@@ -1,42 +1,43 @@
 # Pleaz - Documentation
 
-> [Documentation](./readme.md)
+> [Documentation](readme.md)
 
 ## Overview
 
-### [Installation for macOS](./installation/readme.md)
-1. [NGINX](./installation/nginx.md)
-1. [PHP](./installation/php.md)
-1. [dnsmasq](./installation/dnsmasq.md)
-1. [MailHog](./installation/mailhog.md)
-1. [Docker](./installation/docker.md)
+### Usage
+###### macOS
 
-### [Configuration](./configuration/readme.md)
+- [Project setup PHP default](configuration/platform/php/default.md)
+- [Project setup Magento2](configuration/platform/php/magento2.md)
 
-##### Platforms
-- [Default](./configuration/platform/default.md)
-- [Magento 2](./configuration/platform/magento2.md)
+### Procedure
 
-##### Services
-- [NGINX](./configuration/services/nginx.md)
-- [PHP](./configuration/services/php.md)
-- [dnsmasq](./configuration/services/dnsmasq.md)
-- [MailHog](./configuration/services/mailhog.md)
-- [Docker](./configuration/services/docker.md)
+- [Database Backup/Restore](configuration/database-backup-restore.md)
 
-##### Project Setup
-- [Project Setup](./configuration/project-setup.md)
+### [Services installation](installation/readme.md)
 
-##### Database
-- [Backup/Restore](./configuration/database-backup-restore.md)
+###### macOS
+- [NGINX](installation/macos/nginx.md)
+- [PHP](installation/macos/php.md)
+- [dnsmasq](installation/macos/dnsmasq.md)
+- [MailHog](installation/macos/mailhog.md)
+- [Docker](installation/macos/docker.md)
+- [Homebrew](installation/macos/homebrew.md)
 
-### [Support](./support/readme.md)
-- [PHP](./support/php.md)
+### [Service configuration](configuration/readme.md)
+
+- [NGINX](configuration/services/nginx.md)
+- [PHP](configuration/services/php.md)
+- [dnsmasq](configuration/services/dnsmasq.md)
+- [MailHog](configuration/services/mailhog.md)
+- [Docker](configuration/services/docker.md)
+
+### [Support](support/readme.md)
+###### macOS
+- [PHP](support/php.md)
 
 ---
 
-
 ## Contributing
 
-Before contributing, refer to [Contribution Guidelines](./../CONTRIBUTING.md)
-
+Before contributing, refer to [Contribution Guidelines](../CONTRIBUTING.md)

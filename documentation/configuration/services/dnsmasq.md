@@ -1,12 +1,11 @@
 # Services configuration - dnsmasq
 
-> [Documentation](./../../readme.md) > [Services configuration](./../readme.md) > [dnsmasq](./dnsmasq.md)
+> [Documentation](../../readme.md) > [Services configuration](../readme.md) > [dnsmasq](dnsmasq.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
-2. [Starting dnsmasq](#markdown-header-2-starting-dnsmasq)
-3. [Important Locations](#markdown-header-3-important-locations)
-4. [Usage](#markdown-header-4-usage)
+1. [Important Locations](#markdown-header-2-important-locations)
+1. [Usage](#markdown-header-3-usage)
 
 ==============================================================================
 
@@ -56,26 +55,19 @@ nameserver 127.0.0.1
 
 > If you want to add multiple domain, you should create another file with the same content.
 
----
-
-## 2. Starting dnsmasq
-
-> dnsmasq must be started as root `(sudo)` to have the necessary permissions.
-
-```bash
-sudo brew services start dnsmasq
-```
 
 ---
 
-## 3. Important Locations
+## 2. Important Locations
+###### macOS
 * Default config -> `/usr/local/etc/dnsmasq.conf`
 * Resolver configs -> `/etc/resolver/`
 
 ---
 
-## 4. Usage
+## 3. Usage
 
+###### macOS
 * Start service:
 ```bash
 sudo brew services start dnsmasq
