@@ -63,7 +63,9 @@ config/
 
 ### Step 2. Configure Docker environment file
 
-#### 1. Edit the environment's file `config/pleaz/.env` and replace all content by: [.env](../../stubs/docker/.env)
+#### 1. Configure the environment
+
+Edit the file `config/pleaz/.env` and replace all content by:
 
 > Variables must be completed
 
@@ -98,7 +100,9 @@ REDIS_IMAGE=redis:latest
 RABBITMQ_IMAGE=rabbitmq:3-management
 ```
 
-#### 2. Configure services containers file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.yml](../../stubs/docker/docker-compose.yml)
+#### 2. Configure services containers
+
+Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.yml](../../stubs/docker/docker-compose.yml)
 
 ---
 

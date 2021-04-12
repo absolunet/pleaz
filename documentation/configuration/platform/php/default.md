@@ -57,7 +57,9 @@ config/
 
 ### Step 2. Configure Docker environment file
 
-#### 1. Edit the environment's file `config/pleaz/.env` and replace all content by:
+#### 1. Configure the environment
+
+Edit the file `config/pleaz/.env` and replace all content by:
 
 > Variables must be completed
 
@@ -80,7 +82,9 @@ DOMAIN_URL=myproject.test
 DATABASE_IMAGE=mysql:5.7
 ```
 
-#### 2. Configure services containers file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.php.yml](../../../stubs/docker/docker-compose.php.yml)
+#### 2. Configure services containers
+
+Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.php.yml](../../../stubs/docker/docker-compose.php.yml)
 
 ---
 
