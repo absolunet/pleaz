@@ -1,6 +1,6 @@
 # Installation for macOS - dnsmasq
 
-> [Documentation](../../readme.md) > [Installation for macOS](../readme.md) > [dnsmasq](     dnsmasq.md)
+> [Documentation](./../../readme.md) > [Installation for macOS](./../readme.md) > [dnsmasq](./dnsmasq.md)
 
 [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) is free software providing Domain Name System (DNS) caching, a Dynamic Host Configuration Protocol (DHCP) server, router advertisement and network boot features, intended for small computer networks.
 
@@ -15,7 +15,7 @@
 ### Stack Requirement
 Install and configure the following services
 
-- [Homebrew](homebrew.md)
+- [Homebrew](./homebrew.md)
 
 ## 1. Installation on macOS
 
@@ -29,5 +29,5 @@ brew install dnsmasq
 
 ## 2. Configuration
 
-> Follow instruction here: [Services configuration - dnsmasq](../../configuration/services/dnsmasq.md)
+> Follow instruction here: [Service Configuration - dnsmasq](./../../configuration/services/dnsmasq.md)
 

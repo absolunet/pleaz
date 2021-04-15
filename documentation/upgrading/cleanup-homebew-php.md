@@ -1,6 +1,6 @@
 # Cleanup Homebrew PHP
 
-> [Documentation](../readme.md) > [Cleanup Homebrew PHP](cleanup-homebew-php.md)
+> [Documentation](./../readme.md) > [Cleanup Homebrew PHP](./cleanup-homebew-php.md)
 
 With the deprecation of Homebrew/php tap, many of the prior formulaes we used in this guide are no longer available
 

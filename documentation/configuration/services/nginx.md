@@ -1,6 +1,6 @@
-# Services configuration - NGINX
+# Service Configuration - NGINX
 
-> [Documentation](../../readme.md) > [Services configuration](../readme.md) > [NGINX](nginx.md)
+> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [NGINX](./nginx.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
@@ -16,7 +16,7 @@
 
 The default location of the `nginx.conf` on macOS after installing with Homebrew is `/usr/local/etc/nginx/nginx.conf`.
 
-Edit the configuration file and replace all content by: [nginx.conf](../../stubs/nginx/context/nginx.conf)
+Edit the configuration file and replace all content by: [nginx.conf](./../../stubs/nginx/context/nginx.conf)
 
 We will have to give to NGINX the permission to access our files and avoid a nasty 403 Forbidden error.
 
@@ -73,7 +73,7 @@ At last, we start NGINX to activate the changes:
 
 > NGINX must be started as root `(sudo)` to have the necessary permissions.
 
-#### macOS
+#### (macOS)
 ```bash
 sudo brew services start nginx
 ```
@@ -82,7 +82,7 @@ sudo brew services start nginx
 
 ## 3. Important locations
 
-#### macOS
+#### (macOS)
 * `Server Block` directory -> `/usr/local/etc/nginx/sites-enabled`
 * Default config -> `/usr/local/etc/nginx/nginx.conf`
 * Logs will be in -> `/usr/local/etc/nginx/logs`
@@ -91,7 +91,7 @@ sudo brew services start nginx
 
 ## 4. Usage
 
-#### macOS
+#### (macOS)
 * Start service:
 ```bash
 sudo brew services start nginx

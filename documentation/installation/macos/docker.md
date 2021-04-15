@@ -1,6 +1,6 @@
 # Installation for macOS - Docker Desktop
 
-> [Documentation](../../readme.md) > [Installation for macOS](../readme.md) > [Docker](docker.md)
+> [Documentation](./../../readme.md) > [Installation for macOS](./../readme.md) > [Docker](./docker.md)
 
 [Docker Desktop](https://docs.docker.com/) is an easy-to-install application for your Mac or Windows environment that enables you to build and share containerized applications and microservices
 
@@ -18,4 +18,4 @@
 
 ## 2. Configuration
 
-See [Services configuration - Docker](../../configuration/services/docker.md)
+See [Service Configuration - Docker](./../../configuration/services/docker.md)

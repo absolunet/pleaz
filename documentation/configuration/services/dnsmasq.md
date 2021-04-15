@@ -1,6 +1,6 @@
-# Services configuration - dnsmasq
+# Service Configuration - dnsmasq
 
-> [Documentation](../../readme.md) > [Services configuration](../readme.md) > [dnsmasq](dnsmasq.md)
+> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [dnsmasq](./dnsmasq.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
@@ -60,7 +60,7 @@ nameserver 127.0.0.1
 
 ## 2. Important Locations
 
-#### macOS
+#### (macOS)
 * Default config -> `/usr/local/etc/dnsmasq.conf`
 * Resolver configs -> `/etc/resolver/`
 
@@ -68,7 +68,7 @@ nameserver 127.0.0.1
 
 ## 3. Usage
 
-#### macOS
+#### (macOS)
 * Start service:
 ```bash
 sudo brew services start dnsmasq

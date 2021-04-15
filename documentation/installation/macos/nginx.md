@@ -1,6 +1,6 @@
 # Installation for macOS - NGINX
 
-> [Documentation](../../readme.md) > [Installation for macOS](../readme.md) > [NGINX](nginx.md)
+> [Documentation](./../../readme.md) > [Installation for macOS](./../readme.md) > [NGINX](./nginx.md)
 
 ## Table of Contents
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
@@ -29,4 +29,4 @@ After running this command, the default NGINX configuration files will be locate
 
 ## 2. Configuration
 
-See [Services configuration - NGINX](../../configuration/services/nginx.md)
+See [Service Configuration - NGINX](./../../configuration/services/nginx.md)

@@ -1,6 +1,6 @@
 # Installation for macOS - PHP
 
-> [Documentation](../../readme.md) > [Installation for macOS](../readme.md) > [PHP](php.md)
+> [Documentation](./../../readme.md) > [Installation for macOS](./../readme.md) > [PHP](./php.md)
 
 ## Table of Contents
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
@@ -20,7 +20,7 @@ Install and configure the following services
 
 ## 1. Installation on macOS
 
-> **_NOTE:_**  **If you have existing PHP installations via Homebrew, you need to first cleanup your setup with our [Upgrading Homebrew cleanup guide](../../upgrading/cleanup-homebew-php.md) before continuing with this section.**
+> **_NOTE:_**  **If you have existing PHP installations via Homebrew, you need to first cleanup your setup with our [Upgrading Homebrew cleanup guide](./../../upgrading/cleanup-homebew-php.md) before continuing with this section.**
 
 Remember only PHP 7.3 through 8.x are officially supported by Homebrew, but these also have to be built which is pretty slow.
 
@@ -55,4 +55,4 @@ $(brew --prefix php@<PHP_VERSION>)/bin/pecl install <PHP_EXTENSION>
 
 ## 2. Configuration
 
-> Follow instruction here: [Services configuration - PHP](../../configuration/services/php.md)
+> Follow instruction here: [Service Configuration - PHP](./../../configuration/services/php.md)

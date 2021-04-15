@@ -1,6 +1,6 @@
-# Project Setup
+# Project Setup: Magento2
 
-> [Documentation](../../../readme.md) > [Configuration](../../readme.md) > [Magento2](magento2.md)
+> [Documentation](./../../../readme.md) > [Project setup](./../../readme.md) > [Magento2](./magento2.md)
 
 ## Table of Contents
 1. [Configuring a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
@@ -20,15 +20,15 @@
 ### Stack Requirement
 Install and configure the following services
 
-- [NGINX](../../../installation/macos/nginx.md)
+- [NGINX](./../../../installation/macos/nginx.md)
 
-- [PHP](../../../installation/macos/php.md)
+- [PHP](./../../../installation/macos/php.md)
 
-- [dnsmasq](../../../installation/macos/dnsmasq.md)
+- [dnsmasq](./../../../installation/macos/dnsmasq.md)
 
-- [MailHog](../../../installation/macos/mailhog.md)
+- [MailHog](./../../../installation/macos/mailhog.md)
 
-- [Docker](../../../installation/macos/docker.md)
+- [Docker](./../../../installation/macos/docker.md)
 
 ## 1. Configuring magento2 project
 
@@ -102,7 +102,7 @@ RABBITMQ_IMAGE=rabbitmq:3-management
 
 #### 2. Configure services containers
 
-Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.yml](../../stubs/docker/docker-compose.yml)
+Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.magento.yml](./../../../stubs/docker/docker-compose.magento.yml)
 
 ---
 
@@ -110,11 +110,11 @@ Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [doc
 
 For each services, edit the file and replace content:
 
-- **MySQL/MariaDB:** Edit `config/pleaz/services/mysql/custom.cnf` and replace all content by: [custom.cnf](../../stubs/docker/services/mysql/custom.cnf)
+- **MySQL/MariaDB:** Edit `config/pleaz/services/mysql/custom.cnf` and replace all content by: [custom.cnf](./../../../stubs/docker/services/mysql/custom.cnf)
 
-- **Elasticsearch:** Edit `config/pleaz/services/elasticsearch/elasticsearch.yml` and replace all content by: [elasticsearch.yml](../../stubs/docker/services/elasticsearch/elasticsearch.yml)
+- **Elasticsearch:** Edit `config/pleaz/services/elasticsearch/elasticsearch.yml` and replace all content by: [elasticsearch.yml](./../../../stubs/docker/services/elasticsearch/elasticsearch.yml)
 
-- **RabbitMQ:** Edit `config/pleaz/services/rabbitmq/enabled_plugins` and replace all content by: [enabled_plugins](../../stubs/docker/services/rabbitmq/enabled_plugins)
+- **RabbitMQ:** Edit `config/pleaz/services/rabbitmq/enabled_plugins` and replace all content by: [enabled_plugins](./../../../stubs/docker/services/rabbitmq/enabled_plugins)
 
 
 ---
@@ -179,13 +179,13 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/includes /usr/l
 
 ### Step 6. Create locally trusted SSL Certificates with `mkcert`
 
-> Please see instruction here: [SSL certificates](../../../configuration/ssl-certificates.md)
+> Please see instruction here: [SSL certificates](./../../../procedure/ssl-certificates.md)
 
 ---
 
 ## 2. Start project
 
-#### macOS
+#### (macOS)
 
 ```bash
 $ cd config/pleaz

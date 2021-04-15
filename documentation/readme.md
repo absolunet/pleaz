@@ -1,32 +1,33 @@
 # Pleaz - Documentation
 
-> [Documentation](readme.md)
+> [Documentation](./readme.md)
 
 ## Overview
 
-### Usage
+### Project setup
 
-#### macOS
+#### (macOS)
 
-- [Project setup PHP default](configuration/platform/php/default.md)
-- [Project setup Magento2](configuration/platform/php/magento2.md)
+- [PHP](./project-setup/platform/php/default.md)
+- [Magento2](./project-setup/platform/php/magento2.md)
 
 ### Procedure
 
-- [Database Backup/Restore](configuration/database-backup-restore.md)
+- [Database Backup/Restore](./procedure/database-backup-restore.md)
+- [Generate SSL Certificate](./procedure/ssl-certificates.md)
 
-### [Services installation](installation/readme.md)
+### Service installation
 
-#### macOS
+#### (macOS)
 
-- [NGINX](installation/macos/nginx.md)
-- [PHP](installation/macos/php.md)
-- [dnsmasq](installation/macos/dnsmasq.md)
-- [MailHog](installation/macos/mailhog.md)
-- [Docker](installation/macos/docker.md)
-- [Homebrew](installation/macos/homebrew.md)
+- [NGINX](./installation/macos/nginx.md)
+- [PHP](./installation/macos/php.md)
+- [dnsmasq](./installation/macos/dnsmasq.md)
+- [MailHog](./installation/macos/mailhog.md)
+- [Docker](./installation/macos/docker.md)
+- [Homebrew](./installation/macos/homebrew.md)
 
-### [Service configuration](configuration/readme.md)
+### Service configuration
 
 - [NGINX](configuration/services/nginx.md)
 - [PHP](configuration/services/php.md)
@@ -34,9 +35,9 @@
 - [MailHog](configuration/services/mailhog.md)
 - [Docker](configuration/services/docker.md)
 
-### [Support](support/readme.md)
+### Support
 
-#### macOS
+#### (macOS)
 
 - [PHP](support/php.md)
 
@@ -44,4 +45,4 @@
 
 ## Contributing
 
-Before contributing, refer to [Contribution Guidelines](../CONTRIBUTING.md)
+Before contributing, refer to [Contribution Guidelines](./../CONTRIBUTING.md)

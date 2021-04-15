@@ -1,6 +1,6 @@
 ### Support - PHP
 
-> [Documentation](../readme.md) > [Support](readme.md) > [PHP](php.md)
+> [Documentation](./../readme.md) > [Support](./readme.md) > [PHP](./php.md)
 
 ## Frequently Asked Question
 
@@ -8,7 +8,7 @@
 
 > How to cleanup Homebrew PHP properly ?
 >
-Follow instruction here: [Cleanup Homebrew PHP](../upgrading/cleanup-homebew-php.md)
+Follow instruction here: [Cleanup Homebrew PHP](./../upgrading/cleanup-homebew-php.md)
 
 > PECL: Bug in PHP formula which creates broken link in `/usr/local/lib/php/pecl` ?
 >

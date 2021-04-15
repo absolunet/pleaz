@@ -1,6 +1,6 @@
 # Installation for macOS - Homebrew
 
-> [Documentation](../../readme.md) > [Installation for macOS](../readme.md) > [Homebrew](homebrew.md)
+> [Documentation](./../../readme.md) > [Installation for macOS](./../readme.md) > [Homebrew](./homebrew.md)
 
 [Homebrew](https://brew.sh/) is a package manager for macOS that allows us to install various Unix applications easily.
 

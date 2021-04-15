@@ -1,6 +1,6 @@
-# Configuration - Docker Desktop
+# Service Configuration - Docker Desktop
 
-> [Documentation](../../readme.md) > [Services Configuration](../readme.md) > [Docker](docker.md)
+> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [Docker](./docker.md)
 
 [Docker Desktop](https://docs.docker.com/) is an easy-to-install application for your Mac or Windows environment that enables you to build and share containerized applications and microservices
 

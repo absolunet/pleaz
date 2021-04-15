@@ -1,6 +1,6 @@
 # Create SSL Certificates
 
-> [Documentation](../readme.md) > [Configuration](readme.md) > [SSL Certificates](ssl-certificates.md)
+> [Documentation](./../readme.md) > [Configuration](./../configuration/readme.md) > [SSL Certificates](./ssl-certificates.md)
 
 ## Table of Contents
 1. [Generate locally trusted SSL Certificates](#markdown-header-1-generate-locally-trusted-ssl-certificates)
@@ -20,7 +20,7 @@ Install and configure the following services
 
 ## 1. Generate locally trusted SSL Certificates
 
-#### macOS
+#### (macOS)
 By default, SSL certificates are located in `/usr/local/etc/nginx/certs/ssl/`.
 
 > Locally trusted SSL certificates must be generated within this directory.

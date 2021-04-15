@@ -1,6 +1,6 @@
-# Project Setup
+# Project Setup: PHP
 
-> [Documentation](../../../readme.md) > [Configuration](../../readme.md) > [Default](default.md)
+> [Documentation](./../../../readme.md) > [Project setup](./../../readme.md) > [PHP](./default.md)
 
 ## Table of Contents
 1. [Configuring a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
@@ -152,13 +152,13 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/includes /usr/l
 
 ### Step 6. Create locally trusted SSL Certificates with `mkcert`
 
-> Please see instruction here: [SSL certificates](../../../configuration/ssl-certificates.md)
+> Please see instruction here: [SSL certificates](./../../../procedure/ssl-certificates.md)
 
 ---
 
 ## 2. Start project
 
-#### macOS
+#### (macOS)
 
 ```bash
 $ cd config/pleaz

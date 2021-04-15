@@ -1,6 +1,6 @@
 # Installation for macOS - mkcert
 
-> [Documentation](../../readme.md) > [Installation for macOS](../readme.md) > [MailHog](mailhog.md)
+> [Documentation](./../../readme.md) > [Installation for macOS](./../readme.md) > [MailHog](./mailhog.md)
 
 [mkcert](https://github.com/FiloSottile/mkcert) is a simple zero-config tool that is used to make locally trusted development certificates.
 
@@ -38,5 +38,5 @@ mkcert -install
 
 ## 2. Generate locally trusted SSL Certificates
 
-> Follow instruction here: [SSL certificates](../../configuration/ssl-certificates.md)
+> Follow instruction here: [SSL certificates](./../../procedure/ssl-certificates.md)
 

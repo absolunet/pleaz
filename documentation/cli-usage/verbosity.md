@@ -1,6 +1,6 @@
 # Verbosity
 
-> [Documentation](../readme.md) > [CLI usage](readme.md)
+> [Documentation](./../readme.md) > [CLI usage](./readme.md)
 
 To enable the verbose mode, the `--verbose` flag (or its alias, `-v`) can be added to any command.
 

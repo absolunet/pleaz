@@ -1,6 +1,6 @@
-# Services configuration - Docker - Configuring service containers
+# Service Configuration - Docker - Configuring service containers
 
-> [Documentation](../../readme.md) > [Services configuration](../readme.md) > [Docker](docker.md)
+> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [Docker](./docker.md)
 
 ## Table of Contents
 1. [Usage](#markdown-header-1-usage)

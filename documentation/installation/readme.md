@@ -1,6 +1,6 @@
 # Pleaz
 
-> [Documentation](../readme.md) > [Installation](readme.md)
+> [Documentation](./../readme.md) > [Installation](./readme.md)
 
 ## Table of Contents
 ### Installation for macOS

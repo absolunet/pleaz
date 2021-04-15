@@ -1,6 +1,6 @@
 # Database: Backup/Restore with Docker Volumes
 
-> [Documentation](../readme.md) > [Services Configuration](readme.md) > [Database Backup/Restore](database-backup-restore.md)
+> [Documentation](../readme.md) > [Service Configuration](../configuration/readme.md) > [Database Backup/Restore](database-backup-restore.md)
 
 ## Table of Contents
 1. [Database Backup](#markdown-header-1-database-backup)

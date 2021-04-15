@@ -33,5 +33,5 @@ brew install mailhog
 
 ## 2. Configuration
 
-> Follow instruction here: [Services configuration - MailHog](../../configuration/services/mailhog.md)
+> Follow instruction here: [Service Configuration - MailHog](./../../configuration/services/mailhog.md)
 
