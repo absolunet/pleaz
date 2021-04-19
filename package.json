@@ -1,37 +1,35 @@
 {
-  "name": "@absolunet/ioc-app",
-  "version": "2.1.0",
-  "description": "The perfect IoC framework for Node.js lovers",
+  "name": "@absolunet/pleaz",
+  "version": "0.1.0",
+  "description": "Pleaz (Project Local Environment from A to Z), a more efficient solution to develop applications.",
   "definition": "",
-  "homepage": "https://github.com/absolunet/node-ioc-app",
+  "homepage": "https://github.com/absolunet/pleaz",
   "author": {
     "name": "Absolunet",
     "url": "https://absolunet.com"
   },
   "keywords": [
-    "node",
-    "absolunet",
     "cli",
-    "web",
-    "ioc",
-    "solid",
-    "container",
-    "di",
-    "framework"
+    "docker",
+    "php",
+    "nginx",
+    "local",
+    "development",
+    "magento"
   ],
   "license": "MIT",
   "repository": {
-    "url": "git://github.com/absolunet/node-ioc-app.git",
+    "url": "git://github.com/absolunet/pleaz.git",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/absolunet/node-ioc-app/issues"
+    "url": "https://github.com/absolunet/pleaz/issues"
   },
   "bin": {
     "pleaz": "ioc"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 14"
   },
   "main": "dist/node/index.js",
   "scripts": {
