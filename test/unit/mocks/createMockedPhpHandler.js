@@ -25,7 +25,7 @@ const mockedReturnValues = {
 const createMockedPhpHandler = (config) => {
 	const returnValues = deepmerge(mockedReturnValues, config);
 
-	const mockFn = (name) => {
+	const mockFunction = (name) => {
 		return jest.fn(() => {
 			return returnValues[name];
 		});
@@ -34,13 +34,13 @@ const createMockedPhpHandler = (config) => {
 	/* eslint-disable quote-props */
 	const mockedHandler = {
 		returnValues,
-		getCurrentVersion: mockFn('getCurrentVersion'),
-		isServiceRunning:  mockFn('isServiceRunning'),
-		isXdebugEnable:    mockFn('isXdebugEnable'),
-		list:			   mockFn('list'),
-		restart: 		   mockFn('restart'),
-		switch:			   mockFn('switch'),
-		toggleXdebug: 	   mockFn('toggleXdebug')
+		getCurrentVersion: mockFunction('getCurrentVersion'),
+		isServiceRunning:  mockFunction('isServiceRunning'),
+		isXdebugEnable:    mockFunction('isXdebugEnable'),
+		list:              mockFunction('list'),
+		restart:           mockFunction('restart'),
+		switch:            mockFunction('switch'),
+		toggleXdebug:      mockFunction('toggleXdebug')
 	};
 	/* eslint-enable quote-props */
 

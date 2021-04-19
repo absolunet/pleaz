@@ -58,6 +58,7 @@ class PhpXdebugCommand extends PhpCommand {
 	 * Handler for parameters.
 	 *
 	 * @param {string} parameters - Parameters.
+	 * @throws {CustomError} If receives invalid parameters.
 	 * @returns {Promise} Promise<{message: string}> - The async process promise.
 	 */
 	getHandlerForParameters(parameters) {

@@ -85,7 +85,7 @@ class HandlerTest extends TestCase {
 	givenFakeHandler() {
 		this.spies.handler.spawn = jest.fn();
 
-		const self = this;
+		const self = this;  // eslint-disable-line unicorn/no-this-assignment
 
 		this.fakeHandler = this.app.make(class extends Handler {
 

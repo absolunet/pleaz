@@ -10,7 +10,7 @@ const bootstrap               = require('../../dist/node/bootstrap');
 
 
 // Retrieve environment variables to pass to the tester instance.
-const { TEST_ENGINE, TEST_REPOSITORY } = process.env; // eslint-disable-line no-process-env
+const { TEST_ENGINE, TEST_REPOSITORY } = process.env; // eslint-disable-line node/no-process-env
 
 
 // Create new application.

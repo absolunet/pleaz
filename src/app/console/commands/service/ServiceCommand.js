@@ -54,7 +54,7 @@ class ServiceCommand extends Command {
 		if (!__(this).get('service')) {
 			try {
 				__(this).set('service', this.app.make(`handler.${this.parameter('service')}`, { command: this }));
-			} catch (error) {
+			} catch {
 				throw new CustomError(`'${this.parameter('service')}' does not exist. Specify a service [${this.SERVICES.join(', ')}].`);
 			}
 		}

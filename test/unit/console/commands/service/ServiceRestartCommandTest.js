@@ -57,7 +57,7 @@ class ServiceRestartCommandTest extends TestCase {
 			return { message: 'restart success' };
 		});
 
-		const self = this;
+		const self = this;  // eslint-disable-line unicorn/no-this-assignment
 
 		this.app.bind(`handler.${service}`, class extends Handler {
 

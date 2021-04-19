@@ -1,5 +1,5 @@
 # Your application name.
-name: '{{APP_NAME|Node IoC}}'
+name: '{{APP_NAME|Pleaz}}'
 
 
 # The current environment the application is running on

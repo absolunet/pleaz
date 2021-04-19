@@ -42,7 +42,7 @@ class DockerTestCommandTest extends TestCase {
 			return {};
 		});
 
-		const self = this;
+		const self = this;  // eslint-disable-line unicorn/no-this-assignment
 
 		this.app.bind(`handler.docker`, class extends Handler {
 

@@ -41,7 +41,7 @@ class ServiceStatusCommandTest extends TestCase {
 			return { message: this.mockedTerminal.success(`${this.constructor.name} success`) };
 		});
 
-		const self = this;
+		const self = this;  // eslint-disable-line unicorn/no-this-assignment
 
 		this.app.bind(`handler.${service}`, class extends Handler {
 

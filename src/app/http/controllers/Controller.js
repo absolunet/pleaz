@@ -14,7 +14,7 @@ import { Controller as BaseController } from '@absolunet/ioc';
  * @abstract
  */
 class Controller extends BaseController {
-
+	//
 }
 
 

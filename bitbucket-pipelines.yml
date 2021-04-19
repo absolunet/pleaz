@@ -3,17 +3,19 @@ pipelines:
     - parallel:
         - step:
             name: Test latest Node.js version
-            image: 'node:latest'
+            image: node:latest
             caches:
               - node
             script:
-              - npm install --unsafe-perm
+              - npm ci --unsafe-perm
+              - npm run manager:build
               - npm test
         - step:
-            name: Test latest stable Node.js version
-            image: 'node:12'
+            name: Test LTS 14 Node.js version
+            image: node:14
             caches:
               - node
             script:
-              - npm install --unsafe-perm
+              - npm ci --unsafe-perm
+              - npm run manager:build
               - npm test

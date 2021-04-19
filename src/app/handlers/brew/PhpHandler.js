@@ -93,6 +93,7 @@ class PhpHandler extends BaseHandler {
 	 * Switch PHP-FPM version.
 	 *
 	 * @param {string|null} version - PHP Version.
+	 * @throws {CustomError} If no PHP version.
 	 * @returns {Promise} The async process promise.
 	 */
 	async switch(version = null) {
@@ -113,7 +114,8 @@ class PhpHandler extends BaseHandler {
 	/**
 	 * List PHP full version.
 	 *
-	 * @returns {[]} - Return List of PHP version installed.
+	 * @throws {CustomError} If no installed PHP version found.
+	 * @returns {Array<string>} - Return List of PHP version installed.
 	 */
 	list() {
 		const versionInstalled = this.getInstalledVersions();
@@ -154,6 +156,7 @@ class PhpHandler extends BaseHandler {
 	 * Ensure Homebrew Version Exists.
 	 *
 	 * @param {string} version - PHP Version.
+	 * @throws {CustomError} If PHP version can not be found.
 	 */
 	ensureVersionExists(version) {
 		if (version && !this.terminal.process.runAndGet(`brew list --formula | grep "^php@${version}"; true`)) {
