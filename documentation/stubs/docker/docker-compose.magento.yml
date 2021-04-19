@@ -1,0 +1,70 @@
+version: '3.7'
+services:
+  db:
+    image: ${DATABASE_IMAGE}
+    container_name: ${COMPOSE_PROJECT_NAME}-db
+    ports:
+      - "8001:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./services/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:delegated
+    environment:
+      - MYSQL_HOST=${COMPOSE_PROJECT_NAME}-db
+      - MYSQL_ROOT_PASSWORD=${COMPOSE_PROJECT_NAME}1234
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
+      - MYSQL_USER=${COMPOSE_PROJECT_NAME}
+      - MYSQL_PASSWORD=${COMPOSE_PROJECT_NAME}1234
+    networks:
+      - backend
+
+  mq:
+    image: ${RABBITMQ_IMAGE}
+    container_name: ${COMPOSE_PROJECT_NAME}-mq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    hostname: ${COMPOSE_PROJECT_NAME}-mq
+    environment:
+      RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - ./services/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:delegated
+    networks:
+      - backend
+
+  elasticsearch:
+    image: ${ELASTICSEARCH_IMAGE}
+    container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /usr/share/elasticsearch/data
+      - ./services/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:delegated
+    networks:
+      - backend
+
+  redis:
+    container_name: ${COMPOSE_PROJECT_NAME}-redis
+    image: ${REDIS_IMAGE}
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+volumes:
+  dbdata:
+    name: ${COMPOSE_PROJECT_NAME}-dbdata
+
+networks:
+  backend:
+    name: backend
