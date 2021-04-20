@@ -3,14 +3,13 @@
 //--------------------------------------------------------
 'use strict';
 
-const fs = require('fs');
+const fs   = require('fs');
+const path = require('path');
 
 //-- Ensure there is an .env
-const ENV     = `${__dirname}/../.env`;
-const EXAMPLE = `${__dirname}/../.env.example`;
+const ENV     = path.join(__dirname, '..', '.env');
+const EXAMPLE = path.join(__dirname, '..', '.env.example');
 
-fs.access(ENV, fs.constants.F_OK, (error) => {
-	if (error) {
-		fs.copyFileSync(EXAMPLE, ENV);
-	}
+fs.promises.access(ENV, fs.constants.F_OK).catch(() => {
+	return fs.promises.copyFile(EXAMPLE, ENV);
 });
