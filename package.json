@@ -33,6 +33,7 @@
   },
   "main": "dist/node/index.js",
   "scripts": {
+    "postinstall": "node scripts/postinstall.js",
     "test": "node test --scope=all",
     "test:standards": "node test --scope=standards",
     "test:unit": "node test --scope=unit",
