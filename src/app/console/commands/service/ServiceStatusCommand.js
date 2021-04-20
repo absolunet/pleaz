@@ -23,7 +23,7 @@ class ServiceStatusCommand extends ServiceCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return `Get status services.`;
+		return `Get specific service status.`;
 	}
 
 	/**
