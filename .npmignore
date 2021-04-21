@@ -10,8 +10,12 @@ CONTRIBUTING.md
 manager.js
 SECURITY.md
 SUPPORT.md
+documentation
 docs
+resources
 src
+storage
 test
 !dist/**
 .env
+.env.example

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [0.1.0] - 9999-01-01
+## [0.1.0] - 2021-04-21
 
 ### Added
 - Complete documentation regarding installation and configuration on macOS.
@@ -37,7 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `-v, --verbose` - Adjust the verbosity of the command.
 - `--version` - Show version number.
 - `--help` - Show help.
-
 
 
 

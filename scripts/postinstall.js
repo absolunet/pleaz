@@ -10,6 +10,8 @@ const path = require('path');
 const ENV     = path.join(__dirname, '..', '.env');
 const EXAMPLE = path.join(__dirname, '..', '.env.example');
 
-fs.promises.access(ENV, fs.constants.F_OK).catch(() => {
-	return fs.promises.copyFile(EXAMPLE, ENV);
-});
+fs.promises.access(EXAMPLE, fs.constants.F_OK).then(() => {
+	fs.promises.access(ENV, fs.constants.F_OK).catch(() => {
+		return fs.promises.copyFile(EXAMPLE, ENV);
+	});
+}).catch(() => { /**/ });
