@@ -27,12 +27,12 @@ Summary:
 > Replace `<FILENAME>` by a file name (backup tarball).
 
 ```bash
-docker run --rm --volumes-from <CONTAINER_DB_NAME> -v $(pwd):/backup ubuntu tar zcvf /backup/<FILENAME>.tar.gz /var/lib/mysql
+docker run --rm --volumes-from <CONTAINER_DB_NAME> -v $(pwd):/backup ubuntu tar zcvf /backup/<FILENAME>.tar.gz -C /var/lib/mysql .
 ```
 
 Example:
 ```bash
-docker run --rm --volumes-from foo-db -v $(pwd):/backup ubuntu tar zcvf /backup/foo-db-1234.tar.gz /var/lib/mysql
+docker run --rm --volumes-from foo-db -v $(pwd):/backup ubuntu tar zcvf /backup/foo-db-1234.tar.gz -C /var/lib/mysql .
 ```
 
 ## 2. Database Restore
@@ -52,12 +52,12 @@ Summary:
 > Replace `<FILENAME>` by a file name.
 
 ```bash
-docker run --rm --volumes-from <CONTAINER_DB_NAME> -v $(pwd):/backup ubuntu bash -c "rm -fr /var/lib/mysql/* && cd /var/lib/mysql && tar zxvf /backup/<FILENAME>.tar.gz --strip 3"
+docker run --rm --volumes-from <CONTAINER_DB_NAME> -v $(pwd):/backup ubuntu bash -c "rm -fr /var/lib/mysql/* && cd /var/lib/mysql && tar zxvf /backup/<FILENAME>.tar.gz"
 docker restart <CONTAINER_DB_NAME>
 ```
 
 Example:
 ```bash
-docker run --rm --volumes-from foo-db -v $(pwd):/backup ubuntu bash -c "rm -fr /var/lib/mysql/* && cd /var/lib/mysql && tar zxvf /backup/foo-db-1234.tar.gz --strip 3"
+docker run --rm --volumes-from foo-db -v $(pwd):/backup ubuntu bash -c "rm -fr /var/lib/mysql/* && cd /var/lib/mysql && tar zxvf /backup/foo-db-1234.tar.gz"
 docker restart foo-db
 ```
