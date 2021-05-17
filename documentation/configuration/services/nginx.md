@@ -67,10 +67,6 @@ sed -i "" "s/<USER>/${USER}/" /usr/local/etc/nginx/nginx.conf
 
 ---
 
-- Change the `fastcgi_backend` with the correct variable for the PHP version used:
-
----
-
 ### Create log directory
 
 The log directory is not created by default. We have to create it manually to avoid errors at startup.
