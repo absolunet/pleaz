@@ -18,6 +18,28 @@ The default location of the `nginx.conf` on macOS after installing with Homebrew
 
 Edit the configuration file and replace all content by: [nginx.conf](./../../stubs/nginx/context/nginx.conf)
 
+To have different version of PHP upstream, we have created variables in the nginx.conf file, inside `http` services.
+
+```bash
+   upstream fastcgi_backend73 {
+      server unix:/var/run/php7.3-fpm.sock;
+   }
+
+   upstream fastcgi_backend74 {
+      server unix:/var/run/php7.4-fpm.sock;
+   }
+```
+
+If you install a new version of PHP, you will have to add a new variable to the file.
+
+ie:
+```bash
+   upstream fastcgi_backend<XY> {
+      server unix:/var/run/php<PHP_VERSION>-fpm.sock;
+   }
+```
+---
+
 We will have to give to NGINX the permission to access our files and avoid a nasty 403 Forbidden error.
 
 To do so, we will change the first line, where `<USER>` is your username.
@@ -29,7 +51,9 @@ $ echo $USER
 johndoe
 ```
 
-Edit the file `/usr/local/etc/nginx/nginx.conf` and change the following parameter to:
+Edit the file `/usr/local/etc/nginx/nginx.conf`
+
+- Change the following parameter to:
 
 ```bash
 user <USER> staff;
@@ -40,6 +64,10 @@ or you can use this one line command:
 ```bash
 sed -i "" "s/<USER>/${USER}/" /usr/local/etc/nginx/nginx.conf
 ```
+
+---
+
+- Change the `fastcgi_backend` with the correct variable for the PHP version used:
 
 ---
 

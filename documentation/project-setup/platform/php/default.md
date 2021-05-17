@@ -129,13 +129,34 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 * Create the configuration file `config/pleaz/services/nginx/includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
 
+* Modify the `upstream fastcgi_backend` into the file `config/pleaz/services/nginx/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+
+> Replace `fastcgi_backend` by `fastcgi_backend<XY>`
+
+ie:
+
+Your PHP version is 7.3.
+> Replace `fastcgi_backend` by `fastcgi_backend73`
+
+```bash
+sed -i "" "s/fastcgi_backend/fastcgi_backend73/" config/pleaz/services/nginx/includes/sites.conf
+```
+
+Your PHP version is 7.4.
+> Replace `fastcgi_backend` by `fastcgi_backend74`
+
+```bash
+sed -i "" "s/fastcgi_backend/fastcgi_backend74/" config/pleaz/services/nginx/includes/sites.conf
+```
+
+---
+
 The `sites-enabled` directory of the NGINX by default is `/usr/local/etc/nginx/sites-enabled`.
 We are going to create a symbolic link from our project to this directory.
 
 ```bash
-mkdir /usr/local/etc/nginx/sites-enabled/<DOMAIN_NAME>
 ln -s <PROJET_DIRECTORY>/config/pleaz/services/nginx/server.conf /usr/local/etc/nginx/sites-enabled/<DOMAIN_NAME>.conf
-ln -s <PROJET_DIRECTORY>/config/pleaz/services/nginx/includes /usr/local/etc/nginx/sites-enabled/<DOMAIN_NAME>/
+ln -s <PROJET_DIRECTORY>/config/pleaz/services/nginx /usr/local/etc/nginx/sites-enabled/<DOMAIN_NAME>
 ```
 
 Example:
@@ -143,9 +164,8 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-mkdir  /usr/local/etc/nginx/sites-enabled/myproject.test
 ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/server.conf /usr/local/etc/nginx/sites-enabled/myproject.test.conf
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/includes /usr/local/etc/nginx/sites-enabled/myproject.test/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx /usr/local/etc/nginx/sites-enabled/myproject.test
 ```
 
 ---
