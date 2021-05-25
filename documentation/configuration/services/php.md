@@ -75,6 +75,8 @@ For each version of PHP installed, you should add the following configuration.
 
 ## 3. Usage
 
+> You can either use the native command or the `Pleaz` CLI.
+
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
 * To start service:

@@ -21,11 +21,11 @@ Edit the configuration file and replace all content by: [nginx.conf](./../../stu
 To have different version of PHP upstream, we have created variables in the nginx.conf file, inside `http` services.
 
 ```bash
-   upstream fastcgi_backend73 {
+   upstream fastcgi_backend7.3 {
       server unix:/var/run/php7.3-fpm.sock;
    }
 
-   upstream fastcgi_backend74 {
+   upstream fastcgi_backend7.4 {
       server unix:/var/run/php7.4-fpm.sock;
    }
 ```
@@ -34,7 +34,7 @@ If you install a new version of PHP, you will have to add a new variable to the 
 
 ie:
 ```bash
-   upstream fastcgi_backend<XY> {
+   upstream fastcgi_backend<PHP_VERSION> {
       server unix:/var/run/php<PHP_VERSION>-fpm.sock;
    }
 ```
@@ -106,6 +106,8 @@ sudo brew services start nginx
 ---
 
 ## 4. Usage
+
+> You can either use the native command or the `Pleaz` CLI.
 
 #### (macOS)
 * Start service:

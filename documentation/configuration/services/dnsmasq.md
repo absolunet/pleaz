@@ -68,18 +68,32 @@ nameserver 127.0.0.1
 
 ## 3. Usage
 
+> You can either use the native command or the `Pleaz` CLI.
+
 #### (macOS)
 * Start service:
 ```bash
+## Native
 sudo brew services start dnsmasq
+
+## Pleaz CLI
+pleaz service:start dnsmasq
 ```
 
 * Stop service:
 ```bash
+## Native
 sudo brew services stop dnsmasq
+
+## Pleaz CLI
+pleaz service:stop dnsmasq
 ```
 
 * Restart service:
 ```bash
+## Native
 sudo brew services restart dnsmasq
+
+## Pleaz CLI
+pleaz service:restart dnsmasq
 ```

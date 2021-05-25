@@ -36,8 +36,16 @@ Install and configure the following services
 
 * Build a structure into the directory `config/pleaz` used for configuration into your root directory of your project
 ```bash
-mkdir -p config/pleaz/services/{mysql,nginx/includes}
+mkdir -p config/pleaz/services/{mysql,nginx}
 touch config/pleaz/{.env,docker-compose.yml,services/mysql/custom.cnf}
+```
+
+* Create the directory for the NGINX `server block`.
+
+> Replace `<DOMAIN_NAME>` by your domain name
+
+```bash
+mkdir -p config/pleaz/services/nginx/<DOMAIN_NAME>/includes
 ```
 
 The structure should look like this:
@@ -50,9 +58,10 @@ config/
       mysql/
         custom.cnf
       nginx/
-        sites.conf
-        includes/
-          server.conf
+        <DOMAIN_NAME>/
+          sites.conf
+          includes/
+            server.conf
 ```
 
 ### Step 2. Configure Docker environment file
@@ -129,34 +138,35 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 * Create the configuration file `config/pleaz/services/nginx/includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
 
-* Modify the `upstream fastcgi_backend` into the file `config/pleaz/services/nginx/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+* Modify the upstream `fastcgi_backend` into the file `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
 
-> Replace `fastcgi_backend` by `fastcgi_backend<XY>`
+> Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
 
 ie:
 
 Your PHP version is 7.3.
-> Replace `fastcgi_backend` by `fastcgi_backend73`
+> Replace `fastcgi_backend` by `fastcgi_backend7.3`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend73/" config/pleaz/services/nginx/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 Your PHP version is 7.4.
-> Replace `fastcgi_backend` by `fastcgi_backend74`
+> Replace `fastcgi_backend` by `fastcgi_backend7.4`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend74/" config/pleaz/services/nginx/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 ---
 
-The `sites-enabled` directory of the NGINX by default is `/usr/local/etc/nginx/sites-enabled`.
+The `servers` directory of the NGINX by default is `/usr/local/etc/nginx/servers`.
 We are going to create a symbolic link from our project to this directory.
 
+> Replace `<DOMAIN_NAME>` by your domain name
+
 ```bash
-ln -s <PROJET_DIRECTORY>/config/pleaz/services/nginx/server.conf /usr/local/etc/nginx/sites-enabled/<DOMAIN_NAME>.conf
-ln -s <PROJET_DIRECTORY>/config/pleaz/services/nginx /usr/local/etc/nginx/sites-enabled/<DOMAIN_NAME>
+ln -s <PROJET_ROOT>/config/pleaz/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
 
 Example:
@@ -164,8 +174,7 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/server.conf /usr/local/etc/nginx/sites-enabled/myproject.test.conf
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx /usr/local/etc/nginx/sites-enabled/myproject.test
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---
@@ -183,14 +192,22 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx /usr/local/etc/
 ```bash
 $ cd config/pleaz
 
-# Start docker services (MySQL)
+## Start docker services (MySQL)
 $ docker-compose up -d
 
-# Start Native services
+> You can either use the native command or the `Pleaz` CLI.
+
+## Native
 sudo brew services start nginx
 sudo brew services start dnsmasq
 sudo brew services start mailhog
 sudo brew services start php@<PHP_VERSION>
+
+## Pleaz CLI
+pleaz service:start nginx
+pleaz service:start dnsmasq
+pleaz service:start mailhog
+pleaz service:start php <PHP_VERSION>
 ```
 
 ---
@@ -199,6 +216,6 @@ sudo brew services start php@<PHP_VERSION>
 
 * Document Project Root in -> `/usr/local/var/www/`
 * Locally trusted SSL Certificates in -> `/usr/local/etc/nginx/certs/ssl/`
-* `Server Block` directory -> `/usr/local/etc/nginx/sites-enabled`
-* `pleaz` Configuration directory -> `<PROJECT_ROOT>/config/pleaz`
+* `Server Block` directory -> `/usr/local/etc/nginx/servers`
+* `pleaz` Configuration directory -> `<PROJET_ROOT>/config/pleaz`
 
