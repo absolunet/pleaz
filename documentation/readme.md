@@ -35,7 +35,7 @@
 - [MailHog](configuration/services/mailhog.md)
 - [Docker](configuration/services/docker.md)
 
-### Workflow diagram
+### Workflow Diagram - PHP
 
 - [macOS](./workflow/macos/workflow.md)
 

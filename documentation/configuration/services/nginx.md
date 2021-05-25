@@ -75,14 +75,6 @@ The log directory is not created by default. We have to create it manually to av
 mkdir -p /usr/local/etc/nginx/logs
 ```
 
-### Create `Server Block` directory
-
-The `Server Block` directory is not created by default.
-
-````bash
-mkdir -p /usr/local/etc/nginx/sites-enabled
-````
-
 ---
 
 ## 2. Starting NGINX
@@ -107,7 +99,7 @@ sudo brew services start nginx
 ## 3. Important locations
 
 #### (macOS)
-* `Server Block` directory -> `/usr/local/etc/nginx/sites-enabled`
+* `Server Block` directory -> `/usr/local/etc/nginx/servers`
 * Default config -> `/usr/local/etc/nginx/nginx.conf`
 * Logs will be in -> `/usr/local/etc/nginx/logs`
 
@@ -118,17 +110,29 @@ sudo brew services start nginx
 #### (macOS)
 * Start service:
 ```bash
+## Native
 sudo brew services start nginx
+
+## Pleaz CLI
+pleaz service:start nginx
 ```
 
 * Stop service:
 ```bash
+## Native
 sudo brew services stop nginx
+
+## Pleaz CLI
+pleaz service:restart nginx
 ```
 
 * Restart service:
 ```bash
+## Native
 sudo brew services restart nginx
+
+## Pleaz CLI
+pleaz service:restart nginx
 ```
 
 * Check configuration file

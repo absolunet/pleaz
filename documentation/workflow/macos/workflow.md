@@ -1,4 +1,4 @@
-# Workflow diagram - macOS
+# Workflow Diagram - PHP (macOS)
 
 > [Documentation](./../../readme.md) > [Workflow diagram macOS](./workflow.md)
 
