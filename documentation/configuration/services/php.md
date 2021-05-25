@@ -75,22 +75,36 @@ For each version of PHP installed, you should add the following configuration.
 
 ## 3. Usage
 
+> You can either use the native command or the `Pleaz` CLI.
+
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
 * To start service:
 ```bash
+## Native
 sudo brew services start php@<PHP_VERSION>
+
+## Pleaz CLI
+pleaz service:start php <PHP_VERSION>
 ```
 
 * To stop service:
 ```bash
 # For current version
-sudo brew services stop php@<PHP_VERSION>
+## Native
+sudo brew services stop php
+
+## Pleaz CLI
+pleaz service:start stop php
 ```
 
 * To restart service:
 ```bash
+## Native
 sudo brew services restart php@<PHP_VERSION>
+
+## Pleaz CLI
+pleaz service:start restart php <PHP_VERSION>
 ```
 
 
@@ -102,12 +116,20 @@ sudo brew services restart php@<PHP_VERSION>
 Example:
 ```bash
 # Start services
+## Native
 sudo brew services start php@7.3
 sudo brew services start php@7.4
+## Pleaz CLI
+pleaz service:start php 7.3
+pleaz service:start php 7.4
 
 # Stop services
+## Native
 sudo brew services stop php@7.3
 sudo brew services stop php@7.4
+## Pleaz CLI
+pleaz service:stop php 7.3
+pleaz service:stop php 7.4
 ```
 
 - Disable xdebug
