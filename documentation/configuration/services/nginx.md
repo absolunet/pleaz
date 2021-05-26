@@ -18,6 +18,28 @@ The default location of the `nginx.conf` on macOS after installing with Homebrew
 
 Edit the configuration file and replace all content by: [nginx.conf](./../../stubs/nginx/context/nginx.conf)
 
+To have different version of PHP upstream, we have created variables in the nginx.conf file, inside `http` services.
+
+```bash
+   upstream fastcgi_backend7.3 {
+      server unix:/var/run/php7.3-fpm.sock;
+   }
+
+   upstream fastcgi_backend7.4 {
+      server unix:/var/run/php7.4-fpm.sock;
+   }
+```
+
+If you install a new version of PHP, you will have to add a new variable to the file.
+
+ie:
+```bash
+   upstream fastcgi_backend<PHP_VERSION> {
+      server unix:/var/run/php<PHP_VERSION>-fpm.sock;
+   }
+```
+---
+
 We will have to give to NGINX the permission to access our files and avoid a nasty 403 Forbidden error.
 
 To do so, we will change the first line, where `<USER>` is your username.
@@ -29,7 +51,9 @@ $ echo $USER
 johndoe
 ```
 
-Edit the file `/usr/local/etc/nginx/nginx.conf` and change the following parameter to:
+Edit the file `/usr/local/etc/nginx/nginx.conf`
+
+- Change the following parameter to:
 
 ```bash
 user <USER> staff;
@@ -50,14 +74,6 @@ The log directory is not created by default. We have to create it manually to av
 ```bash
 mkdir -p /usr/local/etc/nginx/logs
 ```
-
-### Create `Server Block` directory
-
-The `Server Block` directory is not created by default.
-
-````bash
-mkdir -p /usr/local/etc/nginx/sites-enabled
-````
 
 ---
 
@@ -83,7 +99,7 @@ sudo brew services start nginx
 ## 3. Important locations
 
 #### (macOS)
-* `Server Block` directory -> `/usr/local/etc/nginx/sites-enabled`
+* `Server Block` directory -> `/usr/local/etc/nginx/servers`
 * Default config -> `/usr/local/etc/nginx/nginx.conf`
 * Logs will be in -> `/usr/local/etc/nginx/logs`
 
@@ -91,20 +107,34 @@ sudo brew services start nginx
 
 ## 4. Usage
 
+> You can either use the native command or the `Pleaz` CLI.
+
 #### (macOS)
 * Start service:
 ```bash
+## Native
 sudo brew services start nginx
+
+## Pleaz CLI
+pleaz service:start nginx
 ```
 
 * Stop service:
 ```bash
+## Native
 sudo brew services stop nginx
+
+## Pleaz CLI
+pleaz service:restart nginx
 ```
 
 * Restart service:
 ```bash
+## Native
 sudo brew services restart nginx
+
+## Pleaz CLI
+pleaz service:restart nginx
 ```
 
 * Check configuration file

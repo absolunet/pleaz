@@ -40,9 +40,9 @@ To configure a `Server Block` (like "VirtualHost" Apache term), please make sure
 
 Otherwise, follow the instructions at [Documentation > Installation > NGINX](./../../installation/macos/nginx.md)
 
-The default directory location of the `Server Block` is `/usr/local/etc/nginx/sites-enabled/`.
+The default directory location of the `Server Block` is `/usr/local/etc/nginx/servers/`.
 
-Create the configuration file `/usr/local/etc/nginx/sites-enabled/mailhog.conf` and replace all content by:
+Create the configuration file `/usr/local/etc/nginx/servers/mailhog.conf` and replace all content by:
 ```bash
 server {
     listen 80;
@@ -72,18 +72,32 @@ To access the web interface, enter : `http://mailhog.test` or `http://localhost:
 
 ## 3. Usage
 
+> You can either use the native command or the `Pleaz` CLI.
+
 #### (macOS)
 * Start service:
 ```bash
+## Native
 brew services start mailhog
+
+## Pleaz CLI
+pleaz service:start mailhog
 ```
 
 * Stop service:
 ```bash
+## Native
 brew services stop mailhog
+
+## Pleaz CLI
+pleaz service:stop mailhog
 ```
 
 * Restart service:
 ```bash
+## Native
 brew services restart mailhog
+
+## Pleaz CLI
+pleaz service:restart mailhog
 ```
