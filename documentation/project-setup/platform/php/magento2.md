@@ -150,7 +150,7 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ### Step 5. Server configuration
 
-* Create the configuration file `config/pleaz/services/nginx/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/magento2/server.conf)
+* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/magento2/server.conf)
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 >
@@ -158,9 +158,9 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 >
 > Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Copy the file of your `nginx.conf.sample` of the magento2 source code into `config/pleaz/services/nginx/includes/sites.conf`
+* Copy the file of your `nginx.conf.sample` of the magento2 source code into `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
 ```bash
-cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/services/nginx/includes/sites.conf
+cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 > If you don't have the file `nginx.conf.sample` into your project magento2, you can use this file [sites.conf](../../../stubs/nginx/context/servers/magento2/includes/sites.conf)

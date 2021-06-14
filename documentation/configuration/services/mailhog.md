@@ -42,7 +42,12 @@ Otherwise, follow the instructions at [Documentation > Installation > NGINX](./.
 
 The default directory location of the `Server Block` is `/usr/local/etc/nginx/servers/`.
 
-Create the configuration file `/usr/local/etc/nginx/servers/mailhog.conf` and replace all content by:
+Create a directory:
+```bash
+mkdir -p /usr/local/etc/nginx/servers/mailhog.test
+```
+
+Create the configuration file `/usr/local/etc/nginx/servers/mailhog.test/mailhog.conf` and replace all content by:
 ```bash
 server {
     listen 80;
