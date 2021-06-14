@@ -128,7 +128,7 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ### Step 5. Server configuration
 
-* Create the configuration file `config/pleaz/services/nginx/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/default/server.conf)
+* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/default/server.conf)
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 >
@@ -136,7 +136,7 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 >
 > Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Create the configuration file `config/pleaz/services/nginx/includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
+* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
 
 * Modify the upstream `fastcgi_backend` into the file `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
 
