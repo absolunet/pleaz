@@ -103,13 +103,13 @@ Example:
 >
 > My Domain URL is `myproject.test`
 >
-> My Docker image database is `mysql:5.7`
+> My Docker image database is `mariadb:10.2`
 >
-> My Docker image Elasticsearch is `docker.elastic.co/elasticsearch/elasticsearch:7.7.1`
+> My Docker image Elasticsearch is `magento/magento-cloud-docker-elasticsearch:7.9-1.2.2`
 >
-> My Docker image Redis is `redis:latest`
+> My Docker image Redis is `redis:6.0`
 >
-> My Docker image RabbitMQ is `rabbitmq:3-management`
+> My Docker image RabbitMQ is `rabbitmq:3.8`
 
 It will look like:
 
@@ -122,6 +122,15 @@ ELASTICSEARCH_IMAGE=magento/magento-cloud-docker-elasticsearch:7.9-1.2.2
 REDIS_IMAGE=redis:6.0
 RABBITMQ_IMAGE=rabbitmq:3.8
 ```
+
+To find existing official version of the service images
+
+- [Elasticsearch Docker Hub](https://hub.docker.com/r/magento/magento-cloud-docker-elasticsearch/tags?page=1&ordering=last_updated)
+- [Redis Docker Hub](https://hub.docker.com/_/redis?tab=tags&page=1&ordering=last_updated)
+- [RabbitMQ Docker Hub](https://hub.docker.com/_/rabbitmq?tab=tags&page=1&ordering=last_updated)
+- [MariaDB Docker Hub](https://hub.docker.com/_/mariadb?tab=tags&page=1&ordering=last_updated)
+- [MySQL Docker Hub](https://hub.docker.com/_/mysql?tab=tags&page=1&ordering=last_updated)
+
 
 #### 2. Configure services containers
 
