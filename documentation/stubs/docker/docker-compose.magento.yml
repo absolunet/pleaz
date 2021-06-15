@@ -1,70 +1,87 @@
 version: '3.7'
+
 services:
   db:
-    image: ${DATABASE_IMAGE}
+    hostname: db.magento2.docker
     container_name: ${COMPOSE_PROJECT_NAME}-db
-    ports:
-      - "8001:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-      - ./services/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:delegated
+    image: '${DATABASE_IMAGE}'
+    shm_size: 2gb
     environment:
-      - MYSQL_HOST=${COMPOSE_PROJECT_NAME}-db
       - MYSQL_ROOT_PASSWORD=${COMPOSE_PROJECT_NAME}1234
       - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
       - MYSQL_USER=${COMPOSE_PROJECT_NAME}
       - MYSQL_PASSWORD=${COMPOSE_PROJECT_NAME}1234
-    networks:
-      - backend
-
-  mq:
-    image: ${RABBITMQ_IMAGE}
-    container_name: ${COMPOSE_PROJECT_NAME}-mq
     ports:
-      - "15672:15672"
-      - "5672:5672"
-    hostname: ${COMPOSE_PROJECT_NAME}-mq
-    environment:
-      RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
-      RABBITMQ_DEFAULT_USER: rabbitmq
-      RABBITMQ_DEFAULT_PASS: rabbitmq
-      RABBITMQ_DEFAULT_VHOST: /
+      - "${DATABASE_PORT:-3306}:3306"
     volumes:
-      - ./services/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:delegated
+      - 'magento-db:/var/lib/mysql'
+    healthcheck:
+      test: 'mysqladmin ping -h localhost -p${COMPOSE_PROJECT_NAME}1234'
+      interval: 30s
+      timeout: 30s
+      retries: 3
     networks:
-      - backend
+      magento:
+        aliases:
+          - db.magento2.docker
+
+  redis:
+    hostname: redis.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-redis
+    image: '${REDIS_IMAGE}'
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    sysctls:
+      net.core.somaxconn: 1024
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    healthcheck:
+      test: 'redis-cli ping || exit 1'
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      magento:
+        aliases:
+          - redis.magento2.docker
 
   elasticsearch:
-    image: ${ELASTICSEARCH_IMAGE}
+    hostname: elasticsearch.magento2.docker
     container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
-    ports:
-      - "9200:9200"
-    environment:
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    image: '${ELASTICSEARCH_IMAGE}'
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    volumes:
-      - /usr/share/elasticsearch/data
-      - ./services/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:delegated
-    networks:
-      - backend
-
-  redis:
-    container_name: ${COMPOSE_PROJECT_NAME}-redis
-    image: ${REDIS_IMAGE}
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
     ports:
-      - "6379:6379"
+      - "${ELASTICSEARCH_PORT:-9200}:9200"
     networks:
-      - backend
+      magento:
+        aliases:
+          - elasticsearch.magento2.docker
+
+  rabbitmq:
+    hostname: rabbitmq.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-rabbitmq
+    image: '${RABBITMQ_IMAGE}'
+    ports:
+      - "${RABBITMQ_PORT:-15672}:15672"
+      - "${RABBITMQ_WEB_PORT:-5672}:5672"
+    networks:
+      magento:
+        aliases:
+          - rabbitmq.magento2.docker
 
 volumes:
-  dbdata:
-    name: ${COMPOSE_PROJECT_NAME}-dbdata
+  magento-db:
+    name: ${COMPOSE_PROJECT_NAME}-magento-db
 
 networks:
-  backend:
-    name: backend
+  magento:
+    driver: bridge
