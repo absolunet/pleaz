@@ -26,6 +26,20 @@ class BaseHandler extends Handler {
 	}
 
 	/**
+	 * @return Promise<{ messages: string[] }>
+	 */
+	async doctor() {
+		await this.test({
+			file: 'config/pleaz/docker-compose.yml',
+			quiet: true,
+		});
+
+		return {
+			messages: [],
+		};
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	async start() {
@@ -75,8 +89,24 @@ class BaseHandler extends Handler {
 	 *
 	 * @returns {Promise} The async process promise.
 	 */
-	async test() {
-		await this.spawn('docker-compose', 'config');
+	async test({
+		file = null,
+		quiet = false,
+	}) {
+		const parameters = [];
+
+		if (file) {
+			parameters.push('--file');
+			parameters.push(file);
+		}
+
+		parameters.push('config');
+
+		if (quiet) {
+			parameters.push('--quiet');
+		}
+
+		await this.spawn('docker-compose', parameters);
 	}
 
 	/**
