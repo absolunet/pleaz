@@ -33,7 +33,8 @@ Install and configure the following services
 
 You must configure domain `magento2.docker` into `dnsmasq` if not exists.
 
-Edit the file `/usr/local/etc/dnsmasq.conf` and add at the end of the file:
+Edit the file `/usr/local/etc/dnsmasq.conf` and add the following line at the end of the file:
+
 ```bash
 address=/magento2.docker/127.0.0.1
 ```
@@ -54,7 +55,7 @@ pleaz service:restart dnsmasq
 
 ### Step 1. Build a structure
 
-* Build a structure into the directory `config/pleaz/macos` used for configuration into your root directory of your project
+* Create the following configuration files and directories inside the root directory of your project.
 
 ```bash
 mkdir -p config/pleaz/macos/services/nginx/includes
@@ -79,9 +80,9 @@ config/
       services/
         nginx/
           <DOMAIN_NAME>/
-            sites.conf
+            server.conf
             includes/
-              server.conf
+              sites.conf
 ```
 
 ### Step 2. Configure Docker environment file
