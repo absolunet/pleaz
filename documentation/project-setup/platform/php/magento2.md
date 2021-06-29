@@ -6,10 +6,9 @@
 1. [Configuring a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
     * [Step 1. Build a structure](#markdown-header-step-1-build-a-structure)
     * [Step 2. Configure Docker environment file](#markdown-header-step-2-configure-docker-environment-file)
-    * [Step 3. Configure external services](#markdown-header-step-3-configure-externam-services)
-    * [Step 4. Park your project into the global configuration of NGINX](#markdown-header-step-4-park-your-project-into-global-configuration-of-nginx)
-    * [Step 5. Configuration](#markdown-header-step-5-configuration)
-    * [Step 6. Create locally trusted SSL Certificates with `mkcert`](#markdown-header-step-6-create-locally-trusted-ssl-certificates-with-mkcert)
+    * [Step 3. Park your project into the global configuration of NGINX](#markdown-header-step-3-park-your-project-into-global-configuration-of-nginx)
+    * [Step 4. Configuration](#markdown-header-step-4-configuration)
+    * [Step 5. Create locally trusted SSL Certificates with `mkcert`](#markdown-header-step-5-create-locally-trusted-ssl-certificates-with-mkcert)
 2. [Start project](#markdown-header-2-start-project)
 3. [Important Locations](#markdown-header-3-important-locations)
 
@@ -32,14 +31,35 @@ Install and configure the following services
 
 ## 1. Configuring magento2 project
 
-### Step 1. Build a structure
+You must configure the domain `magento2.docker` into `dnsmasq` if it does not exist.
 
-* Build a structure into the directory `config/pleaz` used for configuration into your root directory of your project
+Edit the file `/usr/local/etc/dnsmasq.conf` and add the following line at the end of the file:
 
 ```bash
-mkdir -p config/pleaz/services/{mysql,elasticsearch,rabbitmq,nginx}
-touch config/pleaz/services/{elasticsearch/elasticsearch.yml,mysql/custom.cnf,rabbitmq/enabled_plugins}
-touch config/pleaz/{.env,docker-compose.yml}
+address=/magento2.docker/127.0.0.1
+```
+
+Create the file `/etc/resolver/magento2.docker`:
+```bash
+echo "nameserver 127.0.0.1" > /etc/resolver/magento2.docker
+```
+
+Restart `dnsmasq`
+```bash
+## Native macOS
+sudo brew services restart dnsmasq
+
+## Pleaz CLI
+pleaz service:restart dnsmasq
+```
+
+### Step 1. Build a structure
+
+* Create the following configuration files and directories inside the root directory of your project.
+
+```bash
+mkdir -p config/pleaz/macos/services/nginx/includes
+touch config/pleaz/macos/{.env,docker-compose.yml}
 ```
 
 * Create the directory for the NGINX `server block`.
@@ -47,34 +67,29 @@ touch config/pleaz/{.env,docker-compose.yml}
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-mkdir -p config/pleaz/services/nginx/<DOMAIN_NAME>/includes
+mkdir -p config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes
 ```
 
 The structure should look like this:
 ```bash
 config/
   pleaz/
-    .env
-    docker-compose.yml
-    services/
-      elasticsearch/
-        elasticsearch.yml
-      mysql/
-        custom.cnf
-      rabbitmq/
-        enabled_plugins
-      nginx/
-        <DOMAIN_NAME>/
-          sites.conf
-          includes/
+    macos/
+      .env
+      docker-compose.yml
+      services/
+        nginx/
+          <DOMAIN_NAME>/
             server.conf
+            includes/
+              sites.conf
 ```
 
 ### Step 2. Configure Docker environment file
 
 #### 1. Configure the environment
 
-Edit the file `config/pleaz/.env` and replace all content by:
+Edit the file `config/pleaz/macos/.env` and replace all content by:
 
 > Variables must be completed
 
@@ -89,13 +104,13 @@ Example:
 >
 > My Domain URL is `myproject.test`
 >
-> My Docker image database is `mysql:5.7`
+> My Docker image database is `mariadb:10.2`
 >
-> My Docker image Elasticsearch is `docker.elastic.co/elasticsearch/elasticsearch:7.7.1`
+> My Docker image Elasticsearch is `magento/magento-cloud-docker-elasticsearch:7.9-1.2.2`
 >
-> My Docker image Redis is `redis:latest`
+> My Docker image Redis is `redis:6.0`
 >
-> My Docker image RabbitMQ is `rabbitmq:3-management`
+> My Docker image RabbitMQ is `rabbitmq:3.8`
 
 It will look like:
 
@@ -103,32 +118,28 @@ It will look like:
 COMPOSE_PROJECT_NAME=myproject
 DOMAIN_URL=myproject.test
 
-DATABASE_IMAGE=mysql:5.7
-ELASTICSEARCH_IMAGE=docker.elastic.co/elasticsearch/elasticsearch:7.7.1
-REDIS_IMAGE=redis:latest
-RABBITMQ_IMAGE=rabbitmq:3-management
+DATABASE_IMAGE=mariadb:10.2
+ELASTICSEARCH_IMAGE=magento/magento-cloud-docker-elasticsearch:7.9-1.2.2
+REDIS_IMAGE=redis:6.0
+RABBITMQ_IMAGE=rabbitmq:3.8
 ```
+
+To find existing official version of the service images
+
+- [Elasticsearch Docker Hub](https://hub.docker.com/r/magento/magento-cloud-docker-elasticsearch/tags?page=1&ordering=last_updated)
+- [Redis Docker Hub](https://hub.docker.com/_/redis?tab=tags&page=1&ordering=last_updated)
+- [RabbitMQ Docker Hub](https://hub.docker.com/_/rabbitmq?tab=tags&page=1&ordering=last_updated)
+- [MariaDB Docker Hub](https://hub.docker.com/_/mariadb?tab=tags&page=1&ordering=last_updated)
+- [MySQL Docker Hub](https://hub.docker.com/_/mysql?tab=tags&page=1&ordering=last_updated)
+
 
 #### 2. Configure services containers
 
-Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.magento.yml](./../../../stubs/docker/docker-compose.magento.yml)
+Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by: [docker-compose.magento.yml](./../../../stubs/docker/docker-compose.magento.yml)
 
 ---
 
-### Step 3. Configure external services
-
-For each services, edit the file and replace content:
-
-- **MySQL/MariaDB:** Edit `config/pleaz/services/mysql/custom.cnf` and replace all content by: [custom.cnf](./../../../stubs/docker/services/mysql/custom.cnf)
-
-- **Elasticsearch:** Edit `config/pleaz/services/elasticsearch/elasticsearch.yml` and replace all content by: [elasticsearch.yml](./../../../stubs/docker/services/elasticsearch/elasticsearch.yml)
-
-- **RabbitMQ:** Edit `config/pleaz/services/rabbitmq/enabled_plugins` and replace all content by: [enabled_plugins](./../../../stubs/docker/services/rabbitmq/enabled_plugins)
-
-
----
-
-### Step 4. Park your project into the global configuration of NGINX
+### Step 3. Park your project into the global configuration of NGINX
 
 > For easier maintenance, we will centralize the point of entry of projects in the configuration of NGINX.
 
@@ -148,9 +159,9 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ---
 
-### Step 5. Server configuration
+### Step 4. Server configuration
 
-* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/magento2/server.conf)
+* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/magento2/server.conf)
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 >
@@ -158,14 +169,14 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 >
 > Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Copy the file of your `nginx.conf.sample` of the magento2 source code into `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
+* Copy the content of your Magento 2 file `nginx.conf.sample` into `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
 ```bash
-cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 > If you don't have the file `nginx.conf.sample` into your project magento2, you can use this file [sites.conf](../../../stubs/nginx/context/servers/magento2/includes/sites.conf)
 
-* Modify the upstream `fastcgi_backend` into the file `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+* Modify the upstream `fastcgi_backend` variable in the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
 
 > Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
 
@@ -175,14 +186,14 @@ Your PHP version is 7.3.
 > Replace `fastcgi_backend` by `fastcgi_backend7.3`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 Your PHP version is 7.4.
 > Replace `fastcgi_backend` by `fastcgi_backend7.4`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 ---
@@ -193,7 +204,7 @@ We are going to create a symbolic link from our project to this directory.
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJECT_ROOT>/config/pleaz/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -s <PROJECT_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
 
 Example:
@@ -201,12 +212,12 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---
 
-### Step 6. Create locally trusted SSL Certificates with `mkcert`
+### Step 5. Create locally trusted SSL Certificates with `mkcert`
 
 > Please see instruction here: [SSL certificates](./../../../procedure/ssl-certificates.md)
 
@@ -217,7 +228,7 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test 
 #### (macOS)
 
 ```bash
-$ cd config/pleaz
+$ cd config/pleaz/macos
 
 ## Start docker services (MySQL)
 $ docker-compose up -d
