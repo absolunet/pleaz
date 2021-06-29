@@ -31,7 +31,7 @@ Install and configure the following services
 
 ## 1. Configuring magento2 project
 
-You must configure domain `magento2.docker` into `dnsmasq` if not exists.
+You must configure the domain `magento2.docker` into `dnsmasq` if it does not exist.
 
 Edit the file `/usr/local/etc/dnsmasq.conf` and add the following line at the end of the file:
 
@@ -169,14 +169,14 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 >
 > Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Copy the file of your `nginx.conf.sample` of the magento2 source code into `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
+* Copy the content of your Magento 2 file `nginx.conf.sample` into `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
 ```bash
 cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 > If you don't have the file `nginx.conf.sample` into your project magento2, you can use this file [sites.conf](../../../stubs/nginx/context/servers/magento2/includes/sites.conf)
 
-* Modify the upstream `fastcgi_backend` into the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+* Modify the upstream `fastcgi_backend` variable in the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
 
 > Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
 
