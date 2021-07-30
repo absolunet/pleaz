@@ -26,16 +26,15 @@ class BaseHandler extends Handler {
 	}
 
 	/**
-	 * @return Promise<{ messages: string[] }>
+	 * Tests whether the docker-compose.yml exists or not.
+	 *
+	 * @returns {Promise<void>} Returns void, from a promise.
 	 */
 	async doctor() {
-		await this.test({
-			file: 'config/pleaz/docker-compose.yml',
-			quiet: true,
-		});
+		await this.test(true);
 
 		return {
-			messages: [],
+			messages: []
 		};
 	}
 
@@ -87,18 +86,11 @@ class BaseHandler extends Handler {
 	/**
 	 * Test docker-compose service.
 	 *
-	 * @returns {Promise} The async process promise.
+	 * @param {boolean} quiet - If true, only errors from the underlying bash command will be printed to console.
+	 * @returns {Promise<void>} The async process promise.
 	 */
-	async test({
-		file = null,
-		quiet = false,
-	}) {
+	async test(quiet = false) {
 		const parameters = [];
-
-		if (file) {
-			parameters.push('--file');
-			parameters.push(file);
-		}
 
 		parameters.push('config');
 

@@ -16,6 +16,7 @@ import RedisHandler                 from '../handlers/docker/RedisHandler';
 import VarnishHandler               from '../handlers/docker/VarnishHandler';
 import MqHandler                    from '../handlers/docker/MqHandler';
 import ProjectHandler               from '../handlers/project/ProjectHandler';
+import ContainerHandler             from '../handlers/docker/ContainerHandler';
 
 /**
  * Application service provider.
@@ -84,6 +85,7 @@ class AppServiceProvider extends ServiceProvider {
 		this.app.bind('handler.php', PhpHandler);
 		this.app.bind('handler.dnsmasq', DnsmasqHandler);
 		this.app.bind('handler.mailhog', MailHogHandler);
+		this.app.bind('handler.container', ContainerHandler);
 		this.app.bind('handler.docker', DockerHandler);
 		this.app.bind('handler.db', DatabaseHandler);
 		this.app.bind('handler.elasticsearch', ElasticsearchHandler);
