@@ -28,6 +28,18 @@ class NginxHandler extends BaseHandler {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	async restart() {
+		await this.test();
+		await super.restart();
+
+		return {
+			message: `${this.serviceName} is restarted.`
+		};
+	}
+
+	/**
 	 * Test NGINX service.
 	 *
 	 * @returns {Promise} The async process promise.

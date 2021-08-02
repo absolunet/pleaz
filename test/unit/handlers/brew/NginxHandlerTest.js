@@ -36,6 +36,17 @@ class NginxHandlerTest extends HandlerTestCase {
 		this.thenShouldReturn(output, { message: `${this.fakeHandler.serviceName} is started.` });
 	}
 
+	async testRestartMethodIsCalledThroughDedicatedHandler() {
+		const output = await this.whenCallMethod('restart');
+		this.thenExpectSpawnToHaveCalledWithArguments('sudo', [
+			'brew', 'services', 'restart', 'nginx'
+		]);
+		this.thenExpectSpawnToHaveCalledWithArguments('sudo', [
+			'nginx', '-t'
+		]);
+		this.thenShouldReturn(output, { message: `${this.fakeHandler.serviceName} is restarted.` });
+	}
+
 	// GIVEN METHODS
 	//--------------------------------------------------------
 	givenBaseHandler() {
