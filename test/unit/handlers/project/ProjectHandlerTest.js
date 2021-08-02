@@ -11,6 +11,7 @@ class ProjectHandlerTest extends HandlerTestCase {
 
 	beforeEach() {
 		super.beforeEach();
+		this.givenFakePath();
 		this.givenFakeCommand();
 		this.givenProjectHandler();
 
@@ -23,13 +24,13 @@ class ProjectHandlerTest extends HandlerTestCase {
 
 		this.thenExpectSpawnToHaveCalledWithArguments('ln', [
 			'-sfn',
-			'/private/tmp/config/pleaz/macos/services/nginx/domain.mock',
+			'undefined/domain.mock',
 			'/usr/local/etc/nginx/servers/'
 		]);
 
 		this.thenExpectSpawnToHaveCalledWithArguments('ln', [
 			'-sfn',
-			'/private/tmp/',
+			'/private/tmp/dockerComposeDirectoryMocked/',
 			'/usr/local/var/www/domain.mock'
 		]);
 
@@ -44,30 +45,39 @@ class ProjectHandlerTest extends HandlerTestCase {
 
 	// GIVEN METHODS
 	//--------------------------------------------------------
+
+	givenFakePath() {
+		this.fakePath = {
+			resolve: jest.fn()
+		};
+	}
+
 	givenProjectHandler() {
-
-		Object.defineProperty(ProjectHandler.prototype, 'webRoot', {
-			configurable: true,
-
-			get() {
-				return '/private/tmp';
-			}
-		});
 
 		Object.defineProperty(ProjectHandler.prototype, 'cwd', {
 			configurable: true,
 
 			get() {
-				return '/private/tmp';
+				return '/private/tmp/dockerComposeDirectoryMocked';
+			}
+		});
+
+		Object.defineProperty(ProjectHandler.prototype, 'dockerComposeDirectory', {
+			configurable: true,
+
+			get() {
+				return '/private/tmp/dockerComposeDirectoryMocked';
 			}
 		});
 
 		this.fakeHandler = this.app.make(ProjectHandler, {
 			app:      this.app,
 			command:  this.fakeCommand,
+			path:     this.fakePath,
 			getDomainNamesListFromDirectory:  jest.fn(() => {
 				return ['domain.mock'];
-			})
+			}),
+			changeCurrentDirectory:  jest.fn()
 		});
 	}
 

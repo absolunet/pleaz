@@ -1,4 +1,5 @@
-import Handler from './../Handler';
+import Handler     from './../Handler';
+import CustomError from '../../exceptions/CustomError';
 
 /**
  * Project Handler Class.
@@ -64,12 +65,32 @@ class ProjectHandler extends Handler {
 	}
 
 	/**
+	 * Get docker compose file directory.
+	 *
+	 * @returns {string} - Return docker compose file directory.
+	 */
+	get dockerComposeDirectory() {
+		return 'config/pleaz/macos';
+	}
+
+	/**
 	 * Get project server block configuration.
 	 *
 	 * @returns {string} - Get project server block configuration.
 	 */
 	get nginxConfigServicePath() {
-		return 'config/pleaz/macos/services/nginx';
+		return `${this.dockerComposeDirectory}/services/nginx`;
+	}
+
+	/**
+	 * Ensure to be in docker-compose file directory.
+	 *
+	 * @throws {CustomError} If current directory is not valid.
+	 */
+	ensureToBeDockerComposeFileDirectory() {
+		if (!this.cwd.endsWith(this.dockerComposeDirectory)) {
+			throw new CustomError(`You must be in "${this.dockerComposeDirectory}" directory.`);
+		}
 	}
 
 	/**
@@ -115,6 +136,8 @@ class ProjectHandler extends Handler {
 	 * @returns {Promise<{message: string}>} The async process promise.
 	 */
 	async setup() {
+		await this.ensureToBeDockerComposeFileDirectory();
+
 		// Change directory to webroot
 		await this.changeCurrentDirectory(this.webRoot);
 
