@@ -11,73 +11,84 @@ class ProjectHandlerTest extends HandlerTestCase {
 
 	beforeEach() {
 		super.beforeEach();
+		this.givenSpiedProcess();
 		this.givenFakePath();
 		this.givenFakeCommand();
 		this.givenProjectHandler();
-
 	}
 
 	// TESTS
 	//--------------------------------------------------------
-	async testSetupMethodIsCalledThroughDedicatedHandler() {
-		const output = await this.whenCallMethod('setup');
+	async testCreateSymlinksMethodIsCalledThroughProjectHandler() {
+		this.givenCurrentWorkingDirectory('/directoryMocked/config/pleaz/macos');
+
+		const output = await this.whenCallMethod('createSymlinks');
 
 		this.thenExpectSpawnToHaveCalledWithArguments('ln', [
 			'-sfn',
-			'undefined/domain.mock',
+			'/directoryMocked/config/pleaz/macos/services/nginx/domain.mock',
 			'/usr/local/etc/nginx/servers/'
 		]);
 
 		this.thenExpectSpawnToHaveCalledWithArguments('ln', [
 			'-sfn',
-			'/private/tmp/dockerComposeDirectoryMocked/',
+			'/directoryMocked/',
 			'/usr/local/var/www/domain.mock'
 		]);
 
 		this.thenShouldReturn(
 			output,
 			{
-				message: `Symbolic links for server blocks have been created.`
+				message: `Symbolic links have been created.`
 			}
 		);
 
 	}
 
+	async testCreateSymlinksMethodIsCalledThroughProjectHandlerWithGoodCurrentDirectory() {
+		this.givenCurrentWorkingDirectory('/directoryMocked/config/pleaz/macos');
+
+		await this.whenAttemptingAsync(async () => {
+			await this.whenCallMethod('createSymlinks');
+		});
+
+		this.thenShouldNotHaveThrown();
+	}
+
+	async testCreateSymlinksMethodIsCalledThroughProjectHandlerWithBadCurrentDirectory() {
+		this.givenCurrentWorkingDirectory('/directoryMocked/very-bad-directory');
+
+		await this.whenAttemptingAsync(async () => {
+			await this.whenCallMethod('createSymlinks');
+		});
+
+		this.thenShouldHaveThrown();
+	}
+
 	// GIVEN METHODS
 	//--------------------------------------------------------
-
 	givenFakePath() {
 		this.fakePath = {
 			resolve: jest.fn()
 		};
 	}
 
+	givenSpiedProcess() {
+		this.processSpy = jest.spyOn(process, 'cwd');
+	}
+
+	givenCurrentWorkingDirectory(value) {
+		this.processSpy.mockReturnValue(value);
+	}
+
 	givenProjectHandler() {
-
-		Object.defineProperty(ProjectHandler.prototype, 'cwd', {
-			configurable: true,
-
-			get() {
-				return '/private/tmp/dockerComposeDirectoryMocked';
-			}
-		});
-
-		Object.defineProperty(ProjectHandler.prototype, 'dockerComposeDirectory', {
-			configurable: true,
-
-			get() {
-				return '/private/tmp/dockerComposeDirectoryMocked';
-			}
-		});
-
 		this.fakeHandler = this.app.make(ProjectHandler, {
 			app:      this.app,
 			command:  this.fakeCommand,
 			path:     this.fakePath,
 			getDomainNamesListFromDirectory:  jest.fn(() => {
 				return ['domain.mock'];
-			}),
-			changeCurrentDirectory:  jest.fn()
+			})
 		});
 	}
 

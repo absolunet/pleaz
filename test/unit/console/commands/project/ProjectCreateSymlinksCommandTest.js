@@ -1,14 +1,14 @@
 //--------------------------------------------------------
-//-- Node IoC - Test - Unit - ProjectSetupCommandTest
+//-- Node IoC - Test - Unit - ProjectCreateSymlinksCommandTest
 //--------------------------------------------------------
 'use strict';
 
-const Handler               = require('../../../../../dist/node/app/handlers/Handler');
-const ProjectSetupCommand   = require('../../../../../dist/node/app/console/commands/project/ProjectSetupCommand');
-const TestCase              = require('../../../../TestCase');
+const Handler                       = require('../../../../../dist/node/app/handlers/Handler');
+const ProjectCreateSymlinksCommand  = require('../../../../../dist/node/app/console/commands/project/ProjectCreateSymlinksCommand');
+const TestCase                      = require('../../../../TestCase');
 
 
-class ProjectSetupCommandTest extends TestCase {
+class ProjectCreateSymlinksCommandTest extends TestCase {
 
 	beforeEach() {
 		super.beforeEach();
@@ -18,10 +18,10 @@ class ProjectSetupCommandTest extends TestCase {
 		this.givenCommand();
 	}
 
-	async testSetupProjectThroughProjectHandler() {
+	async testCreateSymlinksProjectThroughProjectHandler() {
 		this.givenFakeProjectHandler();
-		await this.whenRunningCommand('setup');
-		this.thenShouldSetupProjectThroughProjectHandler();
+		await this.whenRunningCommand('createSymlinks');
+		this.thenShouldCreateSymlinksProjectThroughProjectHandler();
 
 		this.thenShouldHaveCalledCommand('service:restart nginx');
 	}
@@ -30,7 +30,7 @@ class ProjectSetupCommandTest extends TestCase {
 	//--------------------------------------------------------
 	givenCommand() {
 		this.app.make('command').add(() => {
-			return this.make(ProjectSetupCommand, {
+			return this.make(ProjectCreateSymlinksCommand, {
 				app: this.app,
 				terminal: this.mockedTerminal,
 				call: this.mockedCommandCall
@@ -56,7 +56,7 @@ class ProjectSetupCommandTest extends TestCase {
 
 	givenFakeProjectHandler() {
 		this.spies.handlers.project = {};
-		this.spies.handlers.project.setup = jest.fn(() =>  {
+		this.spies.handlers.project.createSymlinks = jest.fn(() =>  {
 			return { message: this.mockedTerminal.success(`${this.constructor.name} success`) };
 		});
 
@@ -64,7 +64,7 @@ class ProjectSetupCommandTest extends TestCase {
 
 		this.app.bind(`handler.project`, class extends Handler {
 
-			setup() {
+			createSymlinks() {
 				return self.spies.handlers.project.createSymlinks();
 			}
 
@@ -84,8 +84,8 @@ class ProjectSetupCommandTest extends TestCase {
 
 	// THEN METHODS
 	//--------------------------------------------------------
-	thenShouldSetupProjectThroughProjectHandler() {
-		this.expect(this.spies.handlers.project.setup).toHaveBeenCalled();
+	thenShouldCreateSymlinksProjectThroughProjectHandler() {
+		this.expect(this.spies.handlers.project.createSymlinks).toHaveBeenCalled();
 	}
 
 	thenShouldHaveCalledCommand(command) {
@@ -95,4 +95,4 @@ class ProjectSetupCommandTest extends TestCase {
 }
 
 
-module.exports = ProjectSetupCommandTest;
+module.exports = ProjectCreateSymlinksCommandTest;

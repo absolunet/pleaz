@@ -1,19 +1,19 @@
 //--------------------------------------------------------
-//-- Node IoC - Command - List PHP
+//-- Node IoC - Command - Create symbolic links for the project
 //--------------------------------------------------------
 
 import ProjectCommand from './ProjectCommand';
 
 /**
- * ProjectSetupCommand.
+ * ProjectCreateSymlinksCommand.
  */
-class ProjectSetupCommand extends ProjectCommand {
+class ProjectCreateSymlinksCommand extends ProjectCommand {
 
 	/**
 	 * @inheritdoc
 	 */
 	get name() {
-		return 'project:setup';
+		return 'project:create-symlinks';
 	}
 
 	/**
@@ -27,14 +27,14 @@ class ProjectSetupCommand extends ProjectCommand {
 	 * @inheritdoc
 	 */
 	get description() {
-		return 'Setup a project - Create a symlink for NGINX.';
+		return 'Create symbolic links for the project.';
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	async handle() {
-		const { message } = await this.project.setup();
+		const { message } = await this.project.createSymlinks();
 
 		// Restart Nginx
 		await this.call(`service:restart nginx`);
@@ -45,4 +45,4 @@ class ProjectSetupCommand extends ProjectCommand {
 }
 
 
-export default ProjectSetupCommand;
+export default ProjectCreateSymlinksCommand;

@@ -16,6 +16,24 @@ class NginxHandler extends BaseHandler {
 	}
 
 	/**
+	 *  Get Server configuration path.
+	 *
+	 * @returns {string} - Server configuration path.
+	 */
+	get configServerPath() {
+		return '/usr/local/etc/nginx/servers';
+	}
+
+	/**
+	 * Get Server Web Root path.
+	 *
+	 * @returns {string} - Server Web Root path.
+	 */
+	get webPath() {
+		return '/usr/local/var/www';
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	async start() {

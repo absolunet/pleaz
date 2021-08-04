@@ -47,29 +47,11 @@ class ProjectHandler extends Handler {
 	}
 
 	/**
-	 *  Get Server configuration path.
-	 *
-	 * @returns {string} - Server configuration path.
-	 */
-	get nginxConfigServerPath() {
-		return '/usr/local/etc/nginx/servers';
-	}
-
-	/**
-	 * Get Server Web Root path.
-	 *
-	 * @returns {string} - Server Web Root path.
-	 */
-	get nginxWebPath() {
-		return '/usr/local/var/www';
-	}
-
-	/**
 	 * Get docker compose file directory.
 	 *
 	 * @returns {string} - Return docker compose file directory.
 	 */
-	get dockerComposeDirectory() {
+	get pleazConfigDirectory() {
 		return 'config/pleaz/macos';
 	}
 
@@ -78,28 +60,19 @@ class ProjectHandler extends Handler {
 	 *
 	 * @returns {string} - Get project server block configuration.
 	 */
-	get nginxConfigServicePath() {
-		return `${this.dockerComposeDirectory}/services/nginx`;
+	get nginxConfigDirectory() {
+		return `${this.pleazConfigDirectory}/services/nginx`;
 	}
 
 	/**
-	 * Ensure to be in docker-compose file directory.
+	 * Ensure to be in Pleaz config directory.
 	 *
 	 * @throws {CustomError} If current directory is not valid.
 	 */
-	ensureToBeDockerComposeFileDirectory() {
-		if (!this.cwd.endsWith(this.dockerComposeDirectory)) {
-			throw new CustomError(`You must be in "${this.dockerComposeDirectory}" directory.`);
+	isPleazConfigRoot() {
+		if (!process.cwd().endsWith(this.pleazConfigDirectory)) {
+			throw new CustomError(`You must be in "${this.pleazConfigDirectory}" directory.`);
 		}
-	}
-
-	/**
-	 * Get current directory.
-	 *
-	 * @returns {string} - Return current directory.
-	 */
-	get cwd() {
-		return process.cwd();
 	}
 
 	/**
@@ -108,7 +81,7 @@ class ProjectHandler extends Handler {
 	 * @returns {string} - Return project code source path.
 	 */
 	get webRoot() {
-		return `${this.cwd}/../../../`;
+		return this.app.formatPath(process.cwd(), '../../..');
 	}
 
 	/**
@@ -122,38 +95,28 @@ class ProjectHandler extends Handler {
 	}
 
 	/**
-	 * Change current directory.
-	 *
-	 * @param {string} directory - Directory.
-	 */
-	changeCurrentDirectory(directory) {
-		process.chdir(directory);
-	}
-
-	/**
-	 * Setup project for Web Server Block.
+	 * Create Symlinks for web server block.
 	 *
 	 * @returns {Promise<{message: string}>} The async process promise.
 	 */
-	async setup() {
-		await this.ensureToBeDockerComposeFileDirectory();
+	async createSymlinks() {
+		await this.isPleazConfigRoot();
 
-		// Change directory to webroot
-		await this.changeCurrentDirectory(this.webRoot);
+		const nginxHandler = this.app.make('handler.nginx', { command: this });
 
-		const configServiceDirectory = this.path.resolve(this.nginxConfigServicePath);
+		const configServiceDirectory = `${this.webRoot}/${this.nginxConfigDirectory}`;
 		const listDirectories = await this.getDomainNamesListFromDirectory(configServiceDirectory);
 
 		listDirectories.forEach((domainName) => {
 			// - Create Symlink /usr/local/etc/nginx/servers/{domainName}
-			this.spawn('ln', `-sfn ${configServiceDirectory}/${domainName} ${this.nginxConfigServerPath}/`);
+			this.spawn('ln', `-sfn ${configServiceDirectory}/${domainName} ${nginxHandler.configServerPath}/`);
 
 			// - Create Symlink /usr/local/var/www/{domainName}
-			this.spawn('ln', `-sfn ${this.cwd}/ ${this.nginxWebPath}/${domainName}`);
+			this.spawn('ln', `-sfn ${this.webRoot}/ ${nginxHandler.webPath}/${domainName}`);
 		});
 
 		return {
-			message: `Symbolic links for server blocks have been created.`
+			message: `Symbolic links have been created.`
 		};
 	}
 
