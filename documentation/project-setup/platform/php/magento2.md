@@ -146,7 +146,7 @@ Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by
 The root directory of the NGINX by default is `/usr/local/var/www`. We are going to create a symbolic link from our project to this directory.
 
 ```bash
-ln -s <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
+ln -sfn <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
 ```
 
 Example:
@@ -154,7 +154,7 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
+ln -sfn /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 ```
 
 ---
@@ -204,7 +204,7 @@ We are going to create a symbolic link from our project to this directory.
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJECT_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -sfn <PROJECT_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
 
 Example:
@@ -212,7 +212,7 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -sfn /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---
@@ -230,8 +230,11 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 ```bash
 $ cd config/pleaz/macos
 
-## Start docker services (MySQL)
+## Start docker services
 $ docker-compose up -d
+
+## Stop and clean docker services
+$ docker-compose down
 
 > You can either use the native command or the `Pleaz` CLI.
 

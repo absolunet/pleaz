@@ -65,7 +65,7 @@ class ProjectSetupCommandTest extends TestCase {
 		this.app.bind(`handler.project`, class extends Handler {
 
 			setup() {
-				return self.spies.handlers.project.setup();
+				return self.spies.handlers.project.createSymlinks();
 			}
 
 		});
@@ -77,7 +77,7 @@ class ProjectSetupCommandTest extends TestCase {
 	async whenRunningCommand() {
 		await this.whenAttemptingAsync(async () => {
 			await this.app.make('command.registrar')
-				.resolve(`project:setup`);
+				.resolve(`project:create-symlinks`);
 		});
 	}
 
