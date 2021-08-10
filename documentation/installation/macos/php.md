@@ -55,4 +55,4 @@ $(brew --prefix php@<PHP_VERSION>)/bin/pecl install <PHP_EXTENSION>
 
 ## 2. Configuration
 
-> Follow instruction here: [Service Configuration - PHP](./../../configuration/services/php.md)
+> Follow instruction here: [Service Configuration - PHP](./../../configuration/services/macos/php.md)

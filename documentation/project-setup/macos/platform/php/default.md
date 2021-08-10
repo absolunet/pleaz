@@ -1,15 +1,14 @@
-# Project Setup: PHP
+# Project Setup: PHP (macOS)
 
-> [Documentation](./../../../readme.md) > [Project setup](./../../readme.md) > [PHP](./default.md)
+> [Documentation](../../../../readme.md) > [Project setup](../../../readme.md) > [PHP](default.md)
 
 ## Table of Contents
 1. [Configuring a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
     * [Step 1. Build a structure](#markdown-header-step-1-build-a-structure)
     * [Step 2. Configure Docker environment file](#markdown-header-step-2-configure-docker-environment-file)
-    * [Step 3. Configure external services](#markdown-header-step-3-configure-externam-services)
-    * [Step 4. Park your project into the global configuration of NGINX](#markdown-header-step-4-park-your-project-into-global-configuration-of-nginx)
-    * [Step 5. Configuration](#markdown-header-step-5-configuration)
-    * [Step 6. Create locally trusted SSL Certificates with `mkcert`](#markdown-header-step-6-create-locally-trusted-ssl-certificates-with-mkcert)
+    * [Step 3. Park your project into the global configuration of NGINX](#markdown-header-step-3-park-your-project-into-global-configuration-of-nginx)
+    * [Step 4. Configuration](#markdown-header-step-4-configuration)
+    * [Step 5. Create locally trusted SSL Certificates with `mkcert`](#markdown-header-step-5-create-locally-trusted-ssl-certificates-with-mkcert)
 2. [Start project](#markdown-header-2-start-project)
 3. [Important Locations](#markdown-header-3-important-locations)
 
@@ -20,24 +19,24 @@
 ### Stack Requirement
 Install and configure the following services
 
-- [NGINX](../../../installation/macos/nginx.md)
+- [NGINX](../../../../installation/macos/nginx.md)
 
-- [PHP](../../../installation/macos/php.md)
+- [PHP](../../../../installation/macos/php.md)
 
-- [dnsmasq](../../../installation/macos/dnsmasq.md)
+- [dnsmasq](../../../../installation/macos/dnsmasq.md)
 
-- [MailHog](../../../installation/macos/mailhog.md)
+- [MailHog](../../../../installation/macos/mailhog.md)
 
-- [Docker](../../../installation/macos/docker.md)
+- [Docker](../../../../installation/macos/docker.md)
 
 ## 1. Configuring a simple web server with PHP and SSL
 
 ### Step 1. Build a structure
 
 * Build a structure into the directory `config/pleaz` used for configuration into your root directory of your project
+
 ```bash
-mkdir -p config/pleaz/services/{mysql,nginx}
-touch config/pleaz/{.env,docker-compose.yml,services/mysql/custom.cnf}
+touch config/pleaz/macos/{.env,docker-compose.yml}
 ```
 
 * Create the directory for the NGINX `server block`.
@@ -45,30 +44,28 @@ touch config/pleaz/{.env,docker-compose.yml,services/mysql/custom.cnf}
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-mkdir -p config/pleaz/services/nginx/<DOMAIN_NAME>/includes
+mkdir -p config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes
 ```
 
 The structure should look like this:
 ```bash
 config/
   pleaz/
-    .env
-    docker-compose.yml
-    services/
-      mysql/
-        custom.cnf
-      nginx/
-        <DOMAIN_NAME>/
-          sites.conf
-          includes/
+    macos/
+      .env
+      docker-compose.yml
+        nginx/
+          <DOMAIN_NAME>/
             server.conf
+            includes/
+              sites.conf
 ```
 
 ### Step 2. Configure Docker environment file
 
 #### 1. Configure the environment
 
-Edit the file `config/pleaz/.env` and replace all content by:
+Edit the file `config/pleaz/macos/.env` and replace all content by:
 
 > Variables must be completed
 
@@ -93,20 +90,11 @@ DATABASE_IMAGE=mysql:5.7
 
 #### 2. Configure services containers
 
-Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.php.yml](../../../stubs/docker/docker-compose.php.yml)
+Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by: [docker-compose.php.yml](../../../../stubs/docker/macos/docker-compose.php.yml)
 
 ---
 
-### Step 3. Configure external services
-
-Edit the file and replace content:
-
-- **MySQL/MariaDB:** Edit `config/pleaz/services/mysql/custom.cnf` and replace all content by: [custom.cnf](../../../stubs/docker/services/mysql/custom.cnf)
-
-
----
-
-### Step 4. Park your project into the global configuration of NGINX
+### Step 3. Park your project into the global configuration of NGINX
 
 > For easier maintenance, we will centralize the point of entry of projects in the configuration of NGINX.
 
@@ -126,9 +114,9 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ---
 
-### Step 5. Server configuration
+### Step 4. Server configuration
 
-* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/default/server.conf)
+* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/default/server.conf)
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 >
@@ -136,9 +124,9 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 >
 > Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
+* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../../stubs/nginx/context/servers/default/includes/sites.conf)
 
-* Modify the upstream `fastcgi_backend` into the file `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+* Modify the upstream `fastcgi_backend` into the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../../configuration/services/nginx.md)
 
 > Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
 
@@ -148,14 +136,14 @@ Your PHP version is 7.3.
 > Replace `fastcgi_backend` by `fastcgi_backend7.3`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 Your PHP version is 7.4.
 > Replace `fastcgi_backend` by `fastcgi_backend7.4`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 ---
@@ -166,7 +154,7 @@ We are going to create a symbolic link from our project to this directory.
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJET_ROOT>/config/pleaz/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
 
 Example:
@@ -174,14 +162,14 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---
 
-### Step 6. Create locally trusted SSL Certificates with `mkcert`
+### Step 5. Create locally trusted SSL Certificates with `mkcert`
 
-> Please see instruction here: [SSL certificates](./../../../procedure/ssl-certificates.md)
+> Please see instruction here: [SSL certificates](../../../../procedure/ssl-certificates.md)
 
 ---
 
@@ -192,8 +180,11 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test 
 ```bash
 $ cd config/pleaz
 
-## Start docker services (MySQL)
+## Start docker services
 $ docker-compose up -d
+
+## Stop docker services
+$ docker-compose down
 
 > You can either use the native command or the `Pleaz` CLI.
 

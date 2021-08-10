@@ -29,4 +29,4 @@ After running this command, the default NGINX configuration files will be locate
 
 ## 2. Configuration
 
-See [Service Configuration - NGINX](./../../configuration/services/nginx.md)
+See [Service Configuration - NGINX](./../../configuration/services/macos/nginx.md)

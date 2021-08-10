@@ -1,0 +1,71 @@
+version: '3.7'
+
+services:
+  db:
+    hostname: db.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-db
+    image: '${DATABASE_IMAGE}'
+    shm_size: 2gb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${COMPOSE_PROJECT_NAME}1234
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
+      - MYSQL_USER=${COMPOSE_PROJECT_NAME}
+      - MYSQL_PASSWORD=${COMPOSE_PROJECT_NAME}1234
+    ports:
+      - "${DATABASE_PORT:-3306}:3306"
+    volumes:
+      - 'dbdata:/var/lib/mysql'
+    healthcheck:
+      test: 'mysqladmin ping -h localhost -p${COMPOSE_PROJECT_NAME}1234'
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      project:
+        aliases:
+          - db.docker
+
+  fpm:
+    hostname: fpm.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-fpm
+    image: '${PHP_FPM_IMAGE}'
+    ports:
+      - "${FPM_PORT:-9000}:9000"
+    volumes:
+      - './../../../:/var/www/html'
+    networks:
+      project:
+        aliases:
+          - fpm.docker
+      mailhog:
+    depends_on:
+      db:
+        condition: service_started
+
+  web:
+    hostname: web.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-web
+    image: '${NGINX_IMAGE}'
+    ports:
+      - "${WEB_PORT:-80}:80"
+      - "${WEB_SSL_PORT:-443}:443"
+    volumes:
+      - './../../../:/usr/share/nginx/html'
+    environment:
+      - 'NGINX_WORKER_PROCESSES=1'
+      - 'NGINX_WORKER_CONNECTIONS=1024'
+    networks:
+      project:
+        aliases:
+          - web.docker
+    depends_on:
+      fpm:
+        condition: service_started
+
+volumes:
+  dbdata:
+    name: ${COMPOSE_PROJECT_NAME}-db
+
+networks:
+  project:
+    driver: bridge

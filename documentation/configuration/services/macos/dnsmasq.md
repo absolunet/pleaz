@@ -1,6 +1,6 @@
 # Service Configuration - dnsmasq
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [dnsmasq](./dnsmasq.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [dnsmasq](dnsmasq.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)

@@ -5,6 +5,9 @@
 ## Table of Contents
 
 #### (macOS)
-- [Project setup PHP default](../project-setup/platform/php/default.md)
-- [Project setup Magento2](../project-setup/platform/php/magento2.md)
+- [Project setup PHP default](macos/platform/php/default.md)
+- [Project setup Magento2](macos/platform/php/magento2.md)
 
+#### (WSL 2) (Windows Subsystem for Linux)
+- [Project setup PHP default](wsl2/platform/php/default.md)
+- [Project setup Magento2](wsl2/platform/php/magento2.md)

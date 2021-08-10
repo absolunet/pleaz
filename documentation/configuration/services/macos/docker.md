@@ -1,6 +1,6 @@
 # Service Configuration - Docker Desktop
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [Docker](./docker.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [Docker](docker.md)
 
 [Docker Desktop](https://docs.docker.com/) is an easy-to-install application for your Mac or Windows environment that enables you to build and share containerized applications and microservices
 
@@ -31,3 +31,27 @@ For our use, we must set :
 * **Swap**: 512M
 
 > The Resources tab allows you to configure CPU, memory, disk, proxies, network, and other resources.
+
+## 2. Usage
+
+> To start Docker service containers, you need to be in the `config/pleaz/` directory
+
+```bash
+# PLATFORM {macos|linux}
+cd config/pleaz/<PLATFORM>
+```
+
+* Start service container:
+```bash
+docker-compose up -d
+```
+
+* Stop/Pause service container:
+```bash
+docker-compose stop
+```
+
+* Clean all service containers:
+```bash
+docker-compose down
+```

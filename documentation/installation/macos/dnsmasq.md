@@ -29,5 +29,5 @@ brew install dnsmasq
 
 ## 2. Configuration
 
-> Follow instruction here: [Service Configuration - dnsmasq](./../../configuration/services/dnsmasq.md)
+> Follow instruction here: [Service Configuration - dnsmasq](./../../configuration/services/macos/dnsmasq.md)
 

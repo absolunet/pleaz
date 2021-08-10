@@ -8,8 +8,13 @@
 
 #### (macOS)
 
-- [PHP](./project-setup/platform/php/default.md)
-- [Magento2](./project-setup/platform/php/magento2.md)
+- [PHP](project-setup/macos/platform/php/default.md)
+- [Magento2](project-setup/macos/platform/php/magento2.md)
+
+#### (WSL 2) Windows Subsystem for Linux
+
+- [PHP](project-setup/wsl2/platform/php/default.md)
+- [Magento2](project-setup/wsl2/platform/php/magento2.md)
 
 ### Procedure
 
@@ -27,17 +32,25 @@
 - [Docker](./installation/macos/docker.md)
 - [Homebrew](./installation/macos/homebrew.md)
 
+#### (WSL 2) Windows Subsystem for Linux
+- [dnsmasq](./installation/wsl2/dnsmasq.md)
+- [MailHog](./installation/wsl2/mailhog.md)
+- [Docker](./installation/wsl2/docker.md)
+
 ### Service configuration
 
-- [NGINX](configuration/services/nginx.md)
-- [PHP](configuration/services/php.md)
-- [dnsmasq](configuration/services/dnsmasq.md)
-- [MailHog](configuration/services/mailhog.md)
-- [Docker](configuration/services/docker.md)
+#### (macOS)
+
+- [NGINX](configuration/services/macos/nginx.md)
+- [PHP](configuration/services/macos/php.md)
+- [dnsmasq](configuration/services/macos/dnsmasq.md)
+- [MailHog](configuration/services/macos/mailhog.md)
+- [Docker](configuration/services/macos/docker.md)
 
 ### Workflow Diagram - PHP
 
 - [macOS](./workflow/macos/workflow.md)
+- [WSL 2 (Windows Subsystem for Linux)](./workflow/wsl2/workflow.md)
 
 ### Support
 

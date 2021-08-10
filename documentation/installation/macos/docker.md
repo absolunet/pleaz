@@ -18,4 +18,4 @@
 
 ## 2. Configuration
 
-See [Service Configuration - Docker](./../../configuration/services/docker.md)
+See [Service Configuration - Docker](./../../configuration/services/macos/docker.md)

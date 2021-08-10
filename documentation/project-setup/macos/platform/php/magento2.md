@@ -1,6 +1,6 @@
-# Project Setup: Magento2
+# Project Setup: Magento2 (macOS)
 
-> [Documentation](./../../../readme.md) > [Project setup](./../../readme.md) > [Magento2](./magento2.md)
+> [Documentation](../../../../readme.md) > [Project setup](../../../readme.md) > [Magento2](magento2.md)
 
 ## Table of Contents
 1. [Configuring a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
@@ -19,15 +19,15 @@
 ### Stack Requirement
 Install and configure the following services
 
-- [NGINX](./../../../installation/macos/nginx.md)
+- [NGINX](../../../../installation/macos/nginx.md)
 
-- [PHP](./../../../installation/macos/php.md)
+- [PHP](../../../../installation/macos/php.md)
 
-- [dnsmasq](./../../../installation/macos/dnsmasq.md)
+- [dnsmasq](../../../../installation/macos/dnsmasq.md)
 
-- [MailHog](./../../../installation/macos/mailhog.md)
+- [MailHog](../../../../installation/macos/mailhog.md)
 
-- [Docker](./../../../installation/macos/docker.md)
+- [Docker](../../../../installation/macos/docker.md)
 
 ## 1. Configuring magento2 project
 
@@ -58,7 +58,6 @@ pleaz service:restart dnsmasq
 * Create the following configuration files and directories inside the root directory of your project.
 
 ```bash
-mkdir -p config/pleaz/macos/services/nginx/includes
 touch config/pleaz/macos/{.env,docker-compose.yml}
 ```
 
@@ -135,7 +134,7 @@ To find existing official version of the service images
 
 #### 2. Configure services containers
 
-Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by: [docker-compose.magento.yml](./../../../stubs/docker/docker-compose.magento.yml)
+Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by: [docker-compose.magento.yml](../../../../stubs/docker/macos/docker-compose.magento.yml)
 
 ---
 
@@ -146,7 +145,7 @@ Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by
 The root directory of the NGINX by default is `/usr/local/var/www`. We are going to create a symbolic link from our project to this directory.
 
 ```bash
-ln -s <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
+ln -sfn <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
 ```
 
 Example:
@@ -154,14 +153,14 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
+ln -sfn /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 ```
 
 ---
 
 ### Step 4. Server configuration
 
-* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/magento2/server.conf)
+* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/magento2/server.conf)
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 >
@@ -174,9 +173,9 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
-> If you don't have the file `nginx.conf.sample` into your project magento2, you can use this file [sites.conf](../../../stubs/nginx/context/servers/magento2/includes/sites.conf)
+> If you don't have the file `nginx.conf.sample` into your project magento2, you can use this file [sites.conf](../../../../stubs/nginx/context/servers/magento2/includes/sites.conf)
 
-* Modify the upstream `fastcgi_backend` variable in the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+* Modify the upstream `fastcgi_backend` variable in the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../../configuration/services/nginx.md)
 
 > Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
 
@@ -219,7 +218,7 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 
 ### Step 5. Create locally trusted SSL Certificates with `mkcert`
 
-> Please see instruction here: [SSL certificates](./../../../procedure/ssl-certificates.md)
+> Please see instruction here: [SSL certificates](../../../../procedure/ssl-certificates.md)
 
 ---
 
@@ -230,8 +229,11 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 ```bash
 $ cd config/pleaz/macos
 
-## Start docker services (MySQL)
+## Start docker services
 $ docker-compose up -d
+
+## Stop docker services
+$ docker-compose down
 
 > You can either use the native command or the `Pleaz` CLI.
 

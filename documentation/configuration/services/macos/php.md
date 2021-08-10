@@ -1,6 +1,6 @@
 # Service Configuration - PHP
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [PHP](./php.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [PHP](php.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)

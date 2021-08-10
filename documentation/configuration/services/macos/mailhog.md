@@ -1,6 +1,6 @@
 # Service Configuration - MailHog
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [MailHog](./mailhog.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [MailHog](mailhog.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
@@ -38,7 +38,7 @@ You can configure a [Server Block](https://www.nginx.com/resources/wiki/start/to
 
 To configure a `Server Block` (like "VirtualHost" Apache term), please make sure that NGINX is installed.
 
-Otherwise, follow the instructions at [Documentation > Installation > NGINX](./../../installation/macos/nginx.md)
+Otherwise, follow the instructions at [Documentation > Installation > NGINX](../../../installation/macos/nginx.md)
 
 The default directory location of the `Server Block` is `/usr/local/etc/nginx/servers/`.
 

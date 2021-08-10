@@ -5,8 +5,11 @@
 ## Table of Contents
 
 ### Services
-- [NGINX](services/nginx.md)
-- [PHP](services/php.md)
-- [dnsmasq](services/dnsmasq.md)
-- [MailHog](services/mailhog.md)
-- [Docker](services/docker.md)
+
+#### (macOS)
+
+- [NGINX](services/macos/nginx.md)
+- [PHP](services/macos/php.md)
+- [dnsmasq](services/macos/dnsmasq.md)
+- [MailHog](services/macos/mailhog.md)
+- [Docker](services/macos/docker.md)
