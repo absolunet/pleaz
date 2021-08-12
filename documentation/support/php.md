@@ -1,4 +1,4 @@
-### Support - PHP
+### Support - PHP (macOS)
 
 > [Documentation](./../readme.md) > [Support](./readme.md) > [PHP](./php.md)
 
@@ -31,7 +31,7 @@ ln -s . pecl
 
 ---
 
-> For those who have problems with NGINX, (page not displayed or not found).
+> For those who have problems with NGINX on `macOS`, (page not displayed or not found).
 >
 > Verify that the NGINX process has access to the complete disk.
 >

@@ -22,14 +22,7 @@ class ProjectHandler extends Handler {
 	 * @inheritdoc
 	 */
 	static get dependencies() {
-		return ['app', 'terminal', 'file', 'path'];
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	get privileged() {
-		return false;
+		return ['app', 'file'];
 	}
 
 	/**
@@ -61,7 +54,7 @@ class ProjectHandler extends Handler {
 	 * @returns {string} - Get project server block configuration.
 	 */
 	get nginxConfigDirectory() {
-		return `${this.pleazConfigDirectory}/services/nginx`;
+		return 'services/nginx';
 	}
 
 	/**
@@ -69,7 +62,7 @@ class ProjectHandler extends Handler {
 	 *
 	 * @throws {CustomError} If current directory is not valid.
 	 */
-	isPleazConfigRoot() {
+	ensureIsPleazConfigDirectory() {
 		if (!process.cwd().endsWith(this.pleazConfigDirectory)) {
 			throw new CustomError(`You must be in "${this.pleazConfigDirectory}" directory.`);
 		}
@@ -80,7 +73,7 @@ class ProjectHandler extends Handler {
 	 *
 	 * @returns {string} - Return project code source path.
 	 */
-	get webRoot() {
+	get webProjectRoot() {
 		return this.app.formatPath(process.cwd(), '../../..');
 	}
 
@@ -100,19 +93,16 @@ class ProjectHandler extends Handler {
 	 * @returns {Promise<{message: string}>} The async process promise.
 	 */
 	async createSymlinks() {
-		await this.isPleazConfigRoot();
+		await this.ensureIsPleazConfigDirectory();
 
 		const nginxHandler = this.app.make('handler.nginx', { command: this });
-
-		const configServiceDirectory = `${this.webRoot}/${this.nginxConfigDirectory}`;
-		const listDirectories = await this.getDomainNamesListFromDirectory(configServiceDirectory);
+		const listDirectories = await this.getDomainNamesListFromDirectory(this.nginxConfigDirectory);
 
 		listDirectories.forEach((domainName) => {
 			// - Create Symlink /usr/local/etc/nginx/servers/{domainName}
-			this.spawn('ln', `-sfn ${configServiceDirectory}/${domainName} ${nginxHandler.configServerPath}/`);
-
+			this.spawn('ln', `-sfn ${process.cwd()}/${this.nginxConfigDirectory}/${domainName} ${nginxHandler.serverConfigPath}/`);
 			// - Create Symlink /usr/local/var/www/{domainName}
-			this.spawn('ln', `-sfn ${this.webRoot}/ ${nginxHandler.webPath}/${domainName}`);
+			this.spawn('ln', `-sfn ${this.webProjectRoot}/ ${nginxHandler.webServerPath}/${domainName}`);
 		});
 
 		return {
