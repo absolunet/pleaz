@@ -16,6 +16,24 @@ class NginxHandler extends BaseHandler {
 	}
 
 	/**
+	 *  Get Server configuration path.
+	 *
+	 * @returns {string} - Server configuration path.
+	 */
+	get serverConfigPath() {
+		return '/usr/local/etc/nginx/servers';
+	}
+
+	/**
+	 * Get web server path.
+	 *
+	 * @returns {string} - Web server path.
+	 */
+	get webServerPath() {
+		return '/usr/local/var/www';
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	async start() {
@@ -24,6 +42,18 @@ class NginxHandler extends BaseHandler {
 
 		return {
 			message: `${this.serviceName} is started.`
+		};
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	async restart() {
+		await this.test();
+		await super.restart();
+
+		return {
+			message: `${this.serviceName} is restarted.`
 		};
 	}
 

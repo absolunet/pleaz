@@ -203,7 +203,7 @@ We are going to create a symbolic link from our project to this directory.
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJECT_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -sfn <PROJECT_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
 
 Example:
@@ -211,7 +211,7 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -sfn /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---

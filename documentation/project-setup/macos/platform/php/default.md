@@ -178,7 +178,7 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 #### (macOS)
 
 ```bash
-$ cd config/pleaz
+$ cd config/pleaz/macos
 
 ## Start docker services
 $ docker-compose up -d
