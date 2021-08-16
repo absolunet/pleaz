@@ -83,7 +83,7 @@ To access the web interface, enter : `http://mailhog.test` or `http://localhost:
 * Start service:
 ```bash
 ## Native
-brew services start mailhog
+sudo brew services start mailhog
 
 ## Pleaz CLI
 pleaz service:start mailhog
@@ -92,7 +92,7 @@ pleaz service:start mailhog
 * Stop service:
 ```bash
 ## Native
-brew services stop mailhog
+sudo brew services stop mailhog
 
 ## Pleaz CLI
 pleaz service:stop mailhog

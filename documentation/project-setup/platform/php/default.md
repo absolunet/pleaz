@@ -34,10 +34,11 @@ Install and configure the following services
 
 ### Step 1. Build a structure
 
-* Build a structure into the directory `config/pleaz` used for configuration into your root directory of your project
+* Create the following configuration files and directories inside the root directory of your project.
+
 ```bash
-mkdir -p config/pleaz/services/{mysql,nginx}
-touch config/pleaz/{.env,docker-compose.yml,services/mysql/custom.cnf}
+mkdir -p config/pleaz/macos/services/{mysql,nginx}
+touch config/pleaz/macos/{.env,docker-compose.yml,services/mysql/custom.cnf}
 ```
 
 * Create the directory for the NGINX `server block`.
@@ -45,30 +46,31 @@ touch config/pleaz/{.env,docker-compose.yml,services/mysql/custom.cnf}
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-mkdir -p config/pleaz/services/nginx/<DOMAIN_NAME>/includes
+mkdir -p config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes
 ```
 
 The structure should look like this:
 ```bash
 config/
   pleaz/
-    .env
-    docker-compose.yml
-    services/
-      mysql/
-        custom.cnf
-      nginx/
-        <DOMAIN_NAME>/
-          sites.conf
-          includes/
+    macos/
+      .env
+      docker-compose.yml
+      services/
+      	mysql/
+          custom.cnf
+        nginx/
+          <DOMAIN_NAME>/
             server.conf
+            includes/
+              sites.conf
 ```
 
 ### Step 2. Configure Docker environment file
 
 #### 1. Configure the environment
 
-Edit the file `config/pleaz/.env` and replace all content by:
+Edit the file `config/pleaz/macos/.env` and replace all content by:
 
 > Variables must be completed
 
@@ -93,7 +95,7 @@ DATABASE_IMAGE=mysql:5.7
 
 #### 2. Configure services containers
 
-Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [docker-compose.php.yml](../../../stubs/docker/docker-compose.php.yml)
+Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by: [docker-compose.php.yml](../../../stubs/docker/docker-compose.php.yml)
 
 ---
 
@@ -101,7 +103,7 @@ Edit the file `config/pleaz/docker-compose.yml` and replace all content by: [doc
 
 Edit the file and replace content:
 
-- **MySQL/MariaDB:** Edit `config/pleaz/services/mysql/custom.cnf` and replace all content by: [custom.cnf](../../../stubs/docker/services/mysql/custom.cnf)
+- **MySQL/MariaDB:** Edit `config/pleaz/macos/services/mysql/custom.cnf` and replace all content by: [custom.cnf](../../../stubs/docker/services/mysql/custom.cnf)
 
 
 ---
@@ -128,7 +130,7 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ### Step 5. Server configuration
 
-* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/default/server.conf)
+* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../stubs/nginx/context/servers/default/server.conf)
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 >
@@ -136,9 +138,9 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 >
 > Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Create the configuration file `config/pleaz/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
+* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../stubs/nginx/context/servers/default/includes/sites.conf)
 
-* Modify the upstream `fastcgi_backend` into the file `config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
+* Modify the upstream `fastcgi_backend` into the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../configuration/services/nginx.md)
 
 > Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
 
@@ -148,14 +150,14 @@ Your PHP version is 7.3.
 > Replace `fastcgi_backend` by `fastcgi_backend7.3`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 Your PHP version is 7.4.
 > Replace `fastcgi_backend` by `fastcgi_backend7.4`
 
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 ---
@@ -166,7 +168,7 @@ We are going to create a symbolic link from our project to this directory.
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJET_ROOT>/config/pleaz/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
 
 Example:
@@ -174,7 +176,7 @@ Example:
 > My Domain Name is `myproject.test`
 
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---
@@ -190,10 +192,13 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/services/nginx/myproject.test 
 #### (macOS)
 
 ```bash
-$ cd config/pleaz
+$ cd config/pleaz/macos
 
-## Start docker services (MySQL)
+## Start docker services
 $ docker-compose up -d
+
+## Stop and clean docker services
+$ docker-compose down
 
 > You can either use the native command or the `Pleaz` CLI.
 

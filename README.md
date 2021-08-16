@@ -21,16 +21,18 @@ $ npm install -g @absolunet/pleaz
 ```sh
 Available commands:
   docker
-   docker:test      Validate and view the docker-compose.yml file
+   docker:test              Validate and view the docker-compose.yml file.
+  project
+   project:create-symlinks  Create symbolic links for the project.
   php
-   php:list         List all versions of PHP installed.
-   php:switch       Switch current PHP version.
-   php:xdebug       Get Xdebug status or enable/disable.
+   php:list                 List all versions of PHP installed.
+   php:switch               Switch current PHP version.
+   php:xdebug               Get Xdebug status or enable/disable.
   service
-   service:restart  Restart service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
-   service:start    Start service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
-   service:status   Get specific service status [nginx, php, dnsmasq, mailhog, db, elasticsearch, redis, varnish, mq].
-   service:stop     Stop service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
+   service:restart          Restart service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
+   service:start            Start service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
+   service:status           Get specific service status [nginx, php, dnsmasq, mailhog, db, elasticsearch, redis, varnish, mq].
+   service:stop             Stop service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
 
 Options:
   -v, --verbose  Adjust the verbosity of the command.
