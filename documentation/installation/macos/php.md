@@ -8,9 +8,7 @@
 	* [Installation PHP extensions](#markdown-header-installation-php-extensions)
 2. [Configuration](#markdown-header-2-configuration)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services

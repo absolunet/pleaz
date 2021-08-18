@@ -7,10 +7,7 @@
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
 
-==============================================================================
-
-==============================================================================
-
+---
 
 ## 1. Configuration
 
@@ -37,8 +34,8 @@ For our use, we must set :
 > To start Docker service containers, you need to be in the `config/pleaz/` directory
 
 ```bash
-# PLATFORM {macos|linux}
-cd config/pleaz/<PLATFORM>
+# Navigate to the Pleaz config directory.
+cd config/pleaz/<macos|linux>
 ```
 
 * Start service container:

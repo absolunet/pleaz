@@ -20,13 +20,10 @@
 Install and configure the following services
 
 - [NGINX](../../../../installation/macos/nginx.md)
-
 - [PHP](../../../../installation/macos/php.md)
-
 - [dnsmasq](../../../../installation/macos/dnsmasq.md)
-
+  - `.test` domain should be configured
 - [MailHog](../../../../installation/macos/mailhog.md)
-
 - [Docker](../../../../installation/macos/docker.md)
 
 ## 1. Configuring magento2 project
@@ -55,33 +52,35 @@ pleaz service:restart dnsmasq
 
 ### Step 1. Build a structure
 
-* Create the following configuration files and directories inside the root directory of your project.
+1. At the root of your project, add a config directory (e.g. `config/pleaz`). This will be used to store all important files for the services.
 
+2. Add the docker config files
 ```bash
 touch config/pleaz/macos/{.env,docker-compose.yml}
 ```
 
-* Create the directory for the NGINX `server block`.
+3. Create the directory for the NGINX `server block`.
 
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
 mkdir -p config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes
+touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf
+touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 The structure should look like this:
 ```bash
 config/
-  pleaz/
-    macos/
-      .env
-      docker-compose.yml
-      services/
-        nginx/
-          <DOMAIN_NAME>/
-            server.conf
-            includes/
-              sites.conf
+└── pleaz/
+    └── macos/
+        ├── .env
+      	├── docker-compose.yml
+        └── nginx/
+            └── <DOMAIN_NAME>/
+                ├── server.conf
+                └── includes/
+                    └── sites.conf
 ```
 
 ### Step 2. Configure Docker environment file
@@ -90,33 +89,30 @@ config/
 
 Edit the file `config/pleaz/macos/.env` and replace all content by:
 
+```bash
+COMPOSE_PROJECT_NAME="Name of your project"
+DOMAIN_URL="Your domain URL without http(s)"
+ELASTICSEARCH_IMAGE="Docker image used"
+DATABASE_IMAGE="Docker image used"
+REDIS_IMAGE="Docker image used"
+```
+
 > Variables must be completed
 
-- **COMPOSE_PROJECT_NAME=** "Name of your project"
-- **DOMAIN_URL=** "Your domain URL without http(s)"
-- **ELASTICSEARCH_IMAGE=** "Docker image used"
-- **DATABASE_IMAGE=** "Docker image used"
-- **REDIS_IMAGE=** "Docker image used"
 
 Example:
-> My project is `myproject`
->
-> My Domain URL is `myproject.test`
->
-> My Docker image database is `mariadb:10.2`
->
-> My Docker image Elasticsearch is `magento/magento-cloud-docker-elasticsearch:7.9-1.2.2`
->
-> My Docker image Redis is `redis:6.0`
->
-> My Docker image RabbitMQ is `rabbitmq:3.8`
+- Project name is `myproject`
+- Domain URL is `myproject.test`
+- Docker image for the database is `mariadb:10.2`
+- Docker image for Elasticsearch is `magento/magento-cloud-docker-elasticsearch:7.9-1.2.2`
+- Docker image for Redis is `redis:6.0`
+- Docker image for RabbitMQ is `rabbitmq:3.8`
 
 It will look like:
 
 ```bash
 COMPOSE_PROJECT_NAME=myproject
 DOMAIN_URL=myproject.test
-
 DATABASE_IMAGE=mariadb:10.2
 ELASTICSEARCH_IMAGE=magento/magento-cloud-docker-elasticsearch:7.9-1.2.2
 REDIS_IMAGE=redis:6.0
@@ -140,78 +136,62 @@ Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by
 
 ### Step 3. Park your project into the global configuration of NGINX
 
-> For easier maintenance, we will centralize the point of entry of projects in the configuration of NGINX.
+> For easier maintenance, the point of entry of projects in the configuration of NGINX has been centralized.
 
-The root directory of the NGINX by default is `/usr/local/var/www`. We are going to create a symbolic link from our project to this directory.
+The web root directory of the NGINX by default is `/usr/local/var/www`. We are going to create a symbolic link from our project to this directory.
 
 ```bash
-ln -sfn <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
+ln -s <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
 ```
 
 Example:
-> My project is `/Users/johndoe/Sites/myproject`
-> My Domain Name is `myproject.test`
+- My project is `/Users/johndoe/Sites/myproject`
+- My Domain Name is `myproject.test`
 
 ```bash
-ln -sfn /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
+ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 ```
 
 ---
 
 ### Step 4. Server configuration
 
-* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/magento2/server.conf)
+### Step 4. Server configuration
 
-> Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
->
-> Replace `<DOMAIN_NAME>` by your domain name
->
-> Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
+1. Edit the server configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/default/server.conf)
 
-* Copy the content of your Magento 2 file `nginx.conf.sample` into `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
+	- Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
+	- Replace `<DOMAIN_NAME>` by your domain name
+	- Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
+2. Copy the content of the provided Magento 2 NGINX config file `nginx.conf.sample` into `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf`
 ```bash
 cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
-
 > If you don't have the file `nginx.conf.sample` into your project magento2, you can use this file [sites.conf](../../../../stubs/nginx/context/servers/magento2/includes/sites.conf)
 
-* Modify the upstream `fastcgi_backend` variable in the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../../configuration/services/nginx.md)
+3. In the `sites.conf` file, modify the upstream `fastcgi_backend` variable with the correct PHP version used (e.g. `fastcgi_backend<PHP_VERSION>`). See upstream variable [NGINX - Configuration](../../../../configuration/services/nginx.md)
+4. Park your project in the NGINX servers directory via a symlink.
+	- Replace `<DOMAIN_NAME>` by your domain name
 
-> Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
+```bash
+ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+```
 
-ie:
+Example:
 
-Your PHP version is 7.3.
-> Replace `fastcgi_backend` by `fastcgi_backend7.3`
+- PHP version is 7.3.
+- The project is located in `/Users/johndoe/Sites/myproject`
+- The Domain Name is `myproject.test`
+
+1. Configure the `server.conf`
+2. Edit the fastcgi backend in the `sites.conf` (Replace `fastcgi_backend` by `fastcgi_backend7.3`)
 
 ```bash
 sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
-
-Your PHP version is 7.4.
-> Replace `fastcgi_backend` by `fastcgi_backend7.4`
-
+3. Park the project
 ```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
-```
-
----
-
-The `servers` directory of the NGINX by default is `/usr/local/etc/nginx/servers`.
-We are going to create a symbolic link from our project to this directory.
-
-> Replace `<DOMAIN_NAME>` by your domain name
-
-```bash
-ln -sfn <PROJECT_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
-```
-
-Example:
-> My project is `/Users/johndoe/Sites/myproject`
-> My Domain Name is `myproject.test`
-
-```bash
-ln -sfn /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
 
 ---
@@ -224,7 +204,7 @@ ln -sfn /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproje
 
 ## 2. Start project
 
-#### (macOS)
+> You can either use the native command or the `Pleaz` CLI.
 
 ```bash
 $ cd config/pleaz/macos
@@ -234,8 +214,6 @@ $ docker-compose up -d
 
 ## Stop docker services
 $ docker-compose down
-
-> You can either use the native command or the `Pleaz` CLI.
 
 ## Native
 sudo brew services start nginx

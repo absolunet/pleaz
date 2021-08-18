@@ -3,18 +3,16 @@
 > [Documentation](../../../../readme.md) > [Project setup](../../../readme.md) > [PHP](default.md)
 
 ## Table of Contents
-1. [Configuring a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
+1. [Configure a simple web server with PHP and SSL](#markdown-header-1-configuring-a-simple-web-server-with-php-fpm-and-ssl)
     * [Step 1. Build a structure](#markdown-header-step-1-build-a-structure)
     * [Step 2. Configure Docker environment file](#markdown-header-step-2-configure-docker-environment-file)
     * [Step 3. Park your project into the global configuration of NGINX](#markdown-header-step-3-park-your-project-into-global-configuration-of-nginx)
-    * [Step 4. Configuration](#markdown-header-step-4-configuration)
+    * [Step 4. Server Configuration](#markdown-header-step-4-server-configuration)
     * [Step 5. Create locally trusted SSL Certificates with `mkcert`](#markdown-header-step-5-create-locally-trusted-ssl-certificates-with-mkcert)
 2. [Start project](#markdown-header-2-start-project)
 3. [Important Locations](#markdown-header-3-important-locations)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -33,32 +31,35 @@ Install and configure the following services
 
 ### Step 1. Build a structure
 
-* Build a structure into the directory `config/pleaz` used for configuration into your root directory of your project
+1. At the root of your project, add a config directory (e.g. `config/pleaz`). This will be used to store all important files for the services.
 
+2. Add the docker config files
 ```bash
 touch config/pleaz/macos/{.env,docker-compose.yml}
 ```
 
-* Create the directory for the NGINX `server block`.
+3. Create the directory for the NGINX `server block`.
 
 > Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
 mkdir -p config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes
+touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf
+touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
 ```
 
 The structure should look like this:
 ```bash
 config/
-  pleaz/
-    macos/
-      .env
-      docker-compose.yml
-        nginx/
-          <DOMAIN_NAME>/
-            server.conf
-            includes/
-              sites.conf
+└── pleaz/
+    └── macos/
+        ├── .env
+      	├── docker-compose.yml
+        └── nginx/
+            └── <DOMAIN_NAME>/
+                ├── server.conf
+                └── includes/
+                    └── sites.conf
 ```
 
 ### Step 2. Configure Docker environment file
@@ -67,24 +68,24 @@ config/
 
 Edit the file `config/pleaz/macos/.env` and replace all content by:
 
+```bash
+COMPOSE_PROJECT_NAME="Name of your project"
+DOMAIN_URL="Your domain URL without http(s)"
+DATABASE_IMAGE="Docker image used"
+```
 > Variables must be completed
 
-- **COMPOSE_PROJECT_NAME=** "Name of your project"
-- **DOMAIN_URL=** "Your domain URL without http(s)"
-- **DATABASE_IMAGE=** "Docker image used"
+
 
 Example:
-> My project is `myproject`
->
-> My Domain URL is `myproject.test`
->
-> My Docker image database is `mysql:5.7`
+- My project is `myproject`
+- My Domain URL is `myproject.test`
+- My Docker image database is `mysql:5.7`
 
 It will look like:
 ```bash
 COMPOSE_PROJECT_NAME=myproject
 DOMAIN_URL=myproject.test
-
 DATABASE_IMAGE=mysql:5.7
 ```
 
@@ -96,17 +97,17 @@ Edit the file `config/pleaz/macos/docker-compose.yml` and replace all content by
 
 ### Step 3. Park your project into the global configuration of NGINX
 
-> For easier maintenance, we will centralize the point of entry of projects in the configuration of NGINX.
+> For easier maintenance, the point of entry of projects in the configuration of NGINX has been centralized.
 
-The root directory of the NGINX by default is `/usr/local/var/www`. We are going to create a symbolic link from our project to this directory.
+The web root directory of the NGINX by default is `/usr/local/var/www`. We are going to create a symbolic link from our project to this directory.
 
 ```bash
 ln -s <ABSOLUTE_PATH_PROJECT_DIRECTORY> /usr/local/var/www/<DOMAIN_NAME>
 ```
 
 Example:
-> My project is `/Users/johndoe/Sites/myproject`
-> My Domain Name is `myproject.test`
+- My project is `/Users/johndoe/Sites/myproject`
+- My Domain Name is `myproject.test`
 
 ```bash
 ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
@@ -116,51 +117,34 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ### Step 4. Server configuration
 
-* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/default/server.conf)
+1. Edit the server configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/default/server.conf)
 
-> Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
->
-> Replace `<DOMAIN_NAME>` by your domain name
->
-> Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
+	- Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
+    - Replace `<DOMAIN_NAME>` by your domain name
+    - Replace `<RELATIVE_PATH_SOURCE>` by your relative path of your source code (example: `src/store`)
 
-* Create the configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../../stubs/nginx/context/servers/default/includes/sites.conf)
+2. Edit the sites configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>includes/sites.conf` and replace all content by: [sites.conf](../../../../stubs/nginx/context/servers/default/includes/sites.conf)
+    - Modify the upstream `fastcgi_backend` variable with the correct PHP version used (e.g. `fastcgi_backend<PHP_VERSION>`). See upstream variable [NGINX - Configuration](../../../../configuration/services/nginx.md)
 
-* Modify the upstream `fastcgi_backend` into the file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf` variable with the correct PHP version used. See upstream variable [NGINX - Configuration](../../../../configuration/services/nginx.md)
-
-> Replace `fastcgi_backend` by `fastcgi_backend<PHP_VERSION>`
-
-ie:
-
-Your PHP version is 7.3.
-> Replace `fastcgi_backend` by `fastcgi_backend7.3`
-
-```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
-```
-
-Your PHP version is 7.4.
-> Replace `fastcgi_backend` by `fastcgi_backend7.4`
-
-```bash
-sed -i "" "s/fastcgi_backend/fastcgi_backend7.4/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
-```
-
----
-
-The `servers` directory of the NGINX by default is `/usr/local/etc/nginx/servers`.
-We are going to create a symbolic link from our project to this directory.
-
-> Replace `<DOMAIN_NAME>` by your domain name
+3. Park your project in the NGINX servers directory via a symlink.
+    - Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
 ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
 ```
+example:
 
-Example:
-> My project is `/Users/johndoe/Sites/myproject`
-> My Domain Name is `myproject.test`
+- PHP version is 7.3.
+- The project is located in `/Users/johndoe/Sites/myproject`
+- The Domain Name is `myproject.test`
 
+1. Configure the `server.conf`
+2. Edit the fastcgi backend in the `sites.conf` (Replace `fastcgi_backend` by `fastcgi_backend7.3`)
+
+```bash
+sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+```
+3. Park the project
 ```bash
 ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
 ```
@@ -177,6 +161,8 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 
 #### (macOS)
 
+> You can either use the native command or the `Pleaz` CLI.
+
 ```bash
 $ cd config/pleaz/macos
 
@@ -186,9 +172,7 @@ $ docker-compose up -d
 ## Stop docker services
 $ docker-compose down
 
-> You can either use the native command or the `Pleaz` CLI.
-
-## Native
+## Native services
 sudo brew services start nginx
 sudo brew services start dnsmasq
 sudo brew services start mailhog

@@ -8,9 +8,7 @@
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
 2. [Update the Homebrew repository index](#markdown-header-2-update-the-homebrew-repository-index)
 
-==============================================================================
-
-==============================================================================
+---
 
 ## 1. Installation on macOS
 

@@ -9,12 +9,10 @@ It encapsulates the SMTP protocol with extensions and does not require specific 
 MailHog runs a super simple SMTP server that hogs outgoing emails sent to it.
 
 ## Table of Contents
-1. [Create a Docker network bridge on WSL 2](#markdown-header-1-create-a-docker-network-bridge-on-wsl-2)
-1. [Starting the `mailhog` service with a Docker container on WSL 2](#markdown-header-2-starting-the-mailhog-service-with-a-docker-container-on-wsl-2)
+1. [Create a Docker network](#markdown-header-1-create-a-docker-network)
+1. [Start the `mailhog` service](#markdown-header-2-start-the-mailhog-service)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -22,9 +20,9 @@ Install and configure the following services
 - [WSL 2 + distro Ubuntu](./TODO.md)
 - [Docker for Windows](./docker.md)
 
-## 1. Create a Docker network bridge on `WSL 2`
+## 1. Create a Docker network
 
-To establish a communication between `mailhog` and all services container we will create a network bridge `mailhog`.
+To allow communication between `mailhog` and all service containers, a network bridge needs to be created (called `mailhog` ).
 
 Open a terminal on `WSL 2` (Ubuntu) and execute this command:
 ```bash
@@ -32,7 +30,7 @@ Open a terminal on `WSL 2` (Ubuntu) and execute this command:
 docker network create -d bridge mailhog
 ```
 
-## 2. Starting the `mailhog` service with a Docker container on `WSL 2`
+## 2. Start the `mailhog` service
 
 Open a terminal on `WSL 2` (Ubuntu) and execute this command:
 
@@ -46,10 +44,9 @@ docker run \
 mailhog/mailhog
 ```
 
-> The service container will start automatically when `WSL 2` is started with the flag `--restart always`.
+> By using the flag `--restart always`, the container will start automatically when `WSL 2` is restarted.
 >
 
 > Note: The web interface can be found at the following address:
 >
 > - `http://mailhog.docker:8025`
-> - `http://localhost:8025`
