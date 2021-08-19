@@ -31,7 +31,7 @@ Install and configure the following services
 
 2. Add the docker config files
 ```bash
-touch config/pleaz/macos/{.env,docker-compose.yml}
+touch config/pleaz/linux/{.env,docker-compose.yml}
 ```
 
 The structure should look like this:
