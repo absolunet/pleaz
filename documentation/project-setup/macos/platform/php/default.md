@@ -44,8 +44,7 @@ touch config/pleaz/macos/{.env,docker-compose.yml}
 
 ```bash
 mkdir -p config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes
-touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf
-touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/includes/sites.conf
+touch config/pleaz/macos/services/nginx/<DOMAIN_NAME>/{server.conf,includes/sites.conf}
 ```
 
 The structure should look like this:
