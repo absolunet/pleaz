@@ -2,14 +2,12 @@
 
 > [Documentation](./../readme.md) > [Service Configuration](./readme.md)
 
-## Table of Contents
+# Services
 
-### Services
+## macOS
 
-#### (macOS)
-
+- [dnsmasq](services/macos/dnsmasq.md)
+- [Docker](services/macos/docker.md)
+- [MailHog](services/macos/mailhog.md)
 - [NGINX](services/macos/nginx.md)
 - [PHP](services/macos/php.md)
-- [dnsmasq](services/macos/dnsmasq.md)
-- [MailHog](services/macos/mailhog.md)
-- [Docker](services/macos/docker.md)

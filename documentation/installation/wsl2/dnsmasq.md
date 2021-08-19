@@ -9,9 +9,7 @@
 1. [Configure the `dnsmasq` service on WSL 2 Ubuntu](#markdown-header-2-configure-the-dnsmasq-service-on-wsl-2)
 1. [Starting the `dnsmasq` service with a Docker container on WSL 2](#markdown-header-3-starting-the-dnsmasq-service-with-a-docker-container-on-wsl-2)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -20,26 +18,14 @@ Install and configure the following services
 - [Docker for Windows](./docker.md)
 
 
-## 1. Add DNS servers on the WSL network adapter.
+## 1. Change preferred DNS servers on the WSL network adapter.
 
-To establish a communication between `Windows` and `WSL 2`, we will add dns server on the network interface (wsl adapter).
+In order to provide a custom dns server to windows, the `wsl` network adapter needs to be modified to use a local dns server along with the default ones.
 
-The execution will be done on Windows with `PowerShell terminal`.
-
-> 1 - To run PowerShell as administrator via the Run command window:
->
-> Press Win Key + R.
->
-> A small window will pop up as shown in the screenshot below.
->
-> 2 - Type in powershell and press Ctrl+Shift+Enter or press and hold Ctrl+Shift.
->
-> 3 - Click OK to make PowerShell run as administrator.
-
-Open Windows `PowerShell terminal` as administrator and execute this command:
+The execution will be done on Windows with `PowerShell (Administrator)` .
 
 ```markdown
-# PowerShell
+# PowerShell (Admin)
 Get-NetAdapter -Name *WSL* | Select-Object InterfaceIndex | Set-DnsClientServerAddress -ServerAddresses ("1.1.1.1","127.0.0.1","8.8.8.8")
 ```
 
@@ -65,12 +51,12 @@ address=/test/127.0.0.1
 address=/docker/127.0.0.1
 ```
 
-If you use another local domain name, add as follows:
+If you use another local domain name, add as follows to the bottom of the dnsmasq config file:
 ```bash
 address=/<DOMAIN_NAME>/127.0.0.1
 ```
 
-## 3. Starting the `dnsmasq` service with a Docker container on `WSL 2`
+## 3. Configure the dnsmasq service to start automatically with Docker
 
 Open a terminal on `WSL 2` (Ubuntu) and execute this command:
 
@@ -88,7 +74,7 @@ docker run \
 jpillora/dnsmasq
 ```
 
-> The service container will start automatically when `WSL 2` is started with the flag `--restart always`.
+> By using the flag `--restart always`, the container will start automatically when `WSL 2` is restarted.
 >
 
 > Note: You can also connect to `http://dnsmasq.docker:5380/` to see the dnsmasq logs and change configurations.

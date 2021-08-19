@@ -10,9 +10,7 @@
 2. [Start project](#markdown-header-2-start-project)
 3. [Important Locations](#markdown-header-3-important-locations)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -25,8 +23,9 @@ Install and configure the following services
 
 ### Step 1. Build a structure
 
-* Create the following configuration files and directories inside the root directory of your project.
+1. At the root of your project, add a config directory (e.g. `config/pleaz`). This will be used to store all important files for the services.
 
+2. Add the docker config files
 ```bash
 touch config/pleaz/linux/{.env,docker-compose.yml}
 ```
@@ -34,10 +33,10 @@ touch config/pleaz/linux/{.env,docker-compose.yml}
 The structure should look like this:
 ```bash
 config/
-  pleaz/
-    linux/
-      .env
-      docker-compose.yml
+└── pleaz/
+    └── linux/
+        ├── .env
+        └── docker-compose.yml
 ```
 
 ### Step 2. Configure Docker environment file
@@ -53,29 +52,6 @@ Edit the file `config/pleaz/linux/.env` and replace all content by: [.env.php-sa
 - **DATABASE_IMAGE=** "Docker image used"
 - **NGINX_IMAGE=** "NGINX image used"
 - **PHP_FPM_IMAGE=** "PHP-FPM image used"
-
-Example:
-> My project is `myproject`
->
-> My Domain URL is `myproject.test`
->
-> My Docker image database is `mysql:5.7`
->
-> My Docker image NGINX is `nginx:latest`
->
-> My Docker image PHP-FPM is `php:7.4`
->
-
-It will look like:
-
-```bash
-COMPOSE_PROJECT_NAME=myproject
-DOMAIN_URL=myproject.test
-
-DATABASE_IMAGE=mysql:5.7
-NGINX_IMAGE=nginx:latest
-PHP_FPM_IMAGE=php:7.4
-```
 
 To find existing official version of the service images
 
@@ -98,8 +74,6 @@ Edit the file `config/pleaz/linux/docker-compose.yml` and replace all content by
 ---
 
 ## 2. Start project
-
-#### (WSL 2)
 
 ```bash
 $ cd config/pleaz/linux

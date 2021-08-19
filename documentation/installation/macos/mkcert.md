@@ -11,9 +11,7 @@ It automatically creates and installs a local CA in the system root store, and g
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
 1. [Generate locally trusted SSL Certificates](#markdown-header-2-generate-locally-trusted-ssl-certificates)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services

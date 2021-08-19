@@ -6,9 +6,7 @@
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
 2. [Configuration](#markdown-header-2-configuration)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
