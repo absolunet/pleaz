@@ -8,9 +8,7 @@
 1. [Installation Docker Desktop on macOS](#markdown-header-1-installation-docker-desktop-on-macos)
 1. [Configuration](#markdown-header-2-configuration)
 
-==============================================================================
-
-==============================================================================
+---
 
 ## 1. Installation Docker Desktop on macOS
 
@@ -18,4 +16,4 @@
 
 ## 2. Configuration
 
-See [Service Configuration - Docker](./../../configuration/services/docker.md)
+See [Service Configuration - Docker](./../../configuration/services/macos/docker.md)

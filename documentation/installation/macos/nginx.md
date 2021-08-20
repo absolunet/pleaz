@@ -6,9 +6,7 @@
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
 2. [Configuration](#markdown-header-2-configuration)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -29,4 +27,4 @@ After running this command, the default NGINX configuration files will be locate
 
 ## 2. Configuration
 
-See [Service Configuration - NGINX](./../../configuration/services/nginx.md)
+See [Service Configuration - NGINX](./../../configuration/services/macos/nginx.md)

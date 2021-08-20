@@ -1,6 +1,6 @@
 # Service Configuration - NGINX
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [NGINX](./nginx.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [NGINX](nginx.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
@@ -8,15 +8,13 @@
 1. [Important Locations](#markdown-header-3-important-locations)
 1. [Usage](#markdown-header-4-usage)
 
-==============================================================================
-
-==============================================================================
+---
 
 ## 1. Configuration
 
 The default location of the `nginx.conf` on macOS after installing with Homebrew is `/usr/local/etc/nginx/nginx.conf`.
 
-Edit the configuration file and replace all content by: [nginx.conf](./../../stubs/nginx/context/nginx.conf)
+Edit the configuration file and replace all content by: [nginx.conf](../../../stubs/nginx/context/nginx.conf)
 
 To have different version of PHP upstream, we have created variables in the nginx.conf file, inside `http` services.
 

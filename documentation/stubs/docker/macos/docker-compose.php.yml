@@ -4,10 +4,9 @@ services:
     image: ${DATABASE_IMAGE}
     container_name: ${COMPOSE_PROJECT_NAME}-db
     ports:
-      - "8001:3306"
+      - "${DATABASE_PORT:-3306}:3306"
     volumes:
       - dbdata:/var/lib/mysql
-      - ./services/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:delegated
     environment:
       - MYSQL_HOST=${COMPOSE_PROJECT_NAME}-db
       - MYSQL_ROOT_PASSWORD=${COMPOSE_PROJECT_NAME}1234

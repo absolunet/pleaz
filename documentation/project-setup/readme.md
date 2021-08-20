@@ -2,9 +2,18 @@
 
 > [Documentation](../readme.md) > [Project Setup](./readme.md)
 
-## Table of Contents
+# Project Types
+## macOS
+- [Project setup PHP default](macos/platform/php/default.md)
+- [Project setup Magento2](macos/platform/php/magento2.md)
 
-#### (macOS)
-- [Project setup PHP default](../project-setup/platform/php/default.md)
-- [Project setup Magento2](../project-setup/platform/php/magento2.md)
+## WSL 2 (Windows Subsystem for Linux)
+- [Project setup PHP default](wsl2/platform/php/default.md)
+- [Project setup Magento2](wsl2/platform/php/magento2.md)
 
+---
+
+# Workflow Overview
+
+- [Workflow macOS](../assets/workflow.png)
+- [Workflow WSL2](../assets/workflow-wsl2.png)
