@@ -28,28 +28,6 @@ Install and configure the following services
 
 ## 1. Configuring magento2 project
 
-You must configure the domain `magento2.docker` into `dnsmasq` if it does not exist.
-
-Edit the file `/usr/local/etc/dnsmasq.conf` and add the following line at the end of the file:
-
-```bash
-address=/magento2.docker/127.0.0.1
-```
-
-Create the file `/etc/resolver/magento2.docker`:
-```bash
-echo "nameserver 127.0.0.1" > /etc/resolver/magento2.docker
-```
-
-Restart `dnsmasq`
-```bash
-## Native macOS
-sudo brew services restart dnsmasq
-
-## Pleaz CLI
-pleaz service:restart dnsmasq
-```
-
 ### Step 1. Build a structure
 
 1. At the root of your project, add a config directory (e.g. `config/pleaz`). This will be used to store all important files for the services.
