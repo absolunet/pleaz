@@ -4,6 +4,13 @@
 
 ## Table of Contents
 
-#### Database
+### Database
 - [Backup/Restore](./database-backup-restore.md)
-- [Generate SSL Certificate](./ssl-certificates.md)
+
+### SSL Certificate
+
+#### macOS
+- [Generate SSL Certificate](macos/ssl-certificates.md)
+
+#### WSL 2 (Windows Subsystem for Linux)
+- [Generate SSL Certificate](wsl2/ssl-certificates.md)

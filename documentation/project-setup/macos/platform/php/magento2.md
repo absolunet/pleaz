@@ -133,8 +133,6 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
 
 ### Step 4. Server configuration
 
-### Step 4. Server configuration
-
 1. Edit the server configuration file `config/pleaz/macos/services/nginx/<DOMAIN_NAME>/server.conf` and replace all content by: [server.conf](../../../../stubs/nginx/context/servers/default/server.conf)
 
 	- Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
@@ -175,7 +173,7 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 
 ### Step 5. Create locally trusted SSL Certificates with `mkcert`
 
-> Please see instruction here: [SSL certificates](../../../../procedure/ssl-certificates.md)
+> Please see instruction here: [SSL certificates](../../../../procedure/macos/ssl-certificates.md)
 
 ---
 

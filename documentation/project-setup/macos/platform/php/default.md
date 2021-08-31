@@ -152,7 +152,7 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 
 ### Step 5. Create locally trusted SSL Certificates with `mkcert`
 
-> Please see instruction here: [SSL certificates](../../../../procedure/ssl-certificates.md)
+> Please see instruction here: [SSL certificates](../../../../procedure/macos/ssl-certificates.md)
 
 ---
 
