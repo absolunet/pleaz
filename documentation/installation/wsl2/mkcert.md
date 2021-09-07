@@ -16,9 +16,8 @@ It automatically creates and installs a local CA in the system root store, and g
 ---
 
 ### Stack Requirement
-Install and configure the following services
 
-- [Homebrew](homebrew.md)
+- [WSL 2 + distro Ubuntu](./TODO.md)
 
 ## 1. Installation on Windows
 
@@ -27,7 +26,7 @@ To install the `mkcert` on Windows:
 Open Powershell
 
 - Set the Ubuntu distribution as default
-```bash
+```powershell
 # Print the distribution list
 wsl --list --all
 
@@ -36,17 +35,17 @@ wsl --setdefault <DISTRIBUTION_UBUNTU>
 ```
 
 - Download `mkcert` for Windows
-```bash
+```powershell
 wget -O $HOME\mkcert-windows.exe https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe
 ```
 
 - Generate `mkcert` CAROOT on Windows
-```bash
+```powershell
 ./mkcert-windows.exe -install
 ```
 
 - Create symbolic links in the Windows `mkcert` folder to WSL 2
-```bash
+```powershell
 wsl --exec ln -sfn /mnt/c/Users/${env:UserName}/AppData/Local/mkcert /home/${env:UserName}/.local/share/mkcert
 ```
 
@@ -57,7 +56,7 @@ Open Powershell
 To install the `mkcert` on WSL 2:
 
 - Download `mkcert` for Linux
-```bash
+```powershell
 wsl --exec wget -O /home/${env:Username}/mkcert-linux https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
 ```
 
@@ -65,7 +64,7 @@ wsl --exec wget -O /home/${env:Username}/mkcert-linux https://github.com/FiloSot
 
 Open Powershell
 
-```bash
+```powershell
 wsl --exec /home/${env:Username}/mkcert-linux -install
 ```
 

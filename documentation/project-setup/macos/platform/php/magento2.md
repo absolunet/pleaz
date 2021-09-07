@@ -175,6 +175,21 @@ ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject
 
 > Please see instruction here: [SSL certificates](../../../../procedure/macos/ssl-certificates.md)
 
+For `Magento2`, you must create a wildcard SSL Certificate with the name `magento.crt` and `magento.key`
+
+Open a terminal and execute:
+```bash
+mkcert -cert-file /usr/local/etc/nginx/certs/ssl/magento.crt -key-file /usr/local/etc/nginx/certs/ssl/magento.key "*.local.test"
+```
+
+For multiple-Domain Wildcard SSL, just add domain at the end of the command:
+
+ie: `*.local.test` and `*.dev.test`
+
+```bash
+mkcert -cert-file /usr/local/etc/nginx/certs/ssl/magento.crt -key-file /usr/local/etc/nginx/certs/ssl/magento.key "*.local.test" "*.dev.test"
+```
+
 ---
 
 ## 2. Start project

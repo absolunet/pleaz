@@ -23,7 +23,14 @@ SSL certificates must be located in `/home/${env:Username}/.local/share/certs/ss
 
 > Locally trusted SSL certificates must be generated within this directory.
 
-```bash
+```powershell
 # Create certificat wildcard SSL for *.local.test
 wsl --exec /home/${env:Username}/mkcert-linux -cert-file /home/${env:Username}/.local/share/certs/ssl/_wildcard.local.test.pem -key-file /home/${env:Username}/.local/share/certs/ssl/_wildcard.local.test-key.pem "*.local.test"
+```
+
+For multiple-Domain Wildcard SSL, just add domain at the end of the command:
+
+ie: `*.local.test` and `*.dev.test`
+```powershell
+wsl --exec /home/${env:Username}/mkcert-linux -cert-file /home/${env:Username}/.local/share/certs/ssl/_wildcard.local.test.pem -key-file /home/${env:Username}/.local/share/certs/ssl/_wildcard.local.test-key.pem "*.local.test" "*.dev.test"
 ```
