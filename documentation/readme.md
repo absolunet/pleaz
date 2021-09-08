@@ -23,7 +23,7 @@
 ### Procedures
 
 - [Database Backup/Restore](procedure/database-backup-restore.md)
-- [Generate SSL Certificate](procedure/ssl-certificates.md)
+- Generate SSL Certificate ([macOS](procedure/macos/ssl-certificates.md) | [WSL 2](procedure/wsl2/ssl-certificates.md))
 
 ---
 

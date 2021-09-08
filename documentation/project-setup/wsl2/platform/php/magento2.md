@@ -79,7 +79,22 @@ Edit the file `config/pleaz/linux/docker-compose.yml` and replace all content by
 
 ### Step 3. Create locally trusted SSL Certificates
 
-> Work in progress.
+> Please see instruction here: [SSL certificates](../../../../procedure/wsl2/ssl-certificates.md)
+
+For `Magento2`, you must create a wildcard SSL Certificate with the name `magento.crt` and `magento.key`
+
+Open Powershell and execute:
+```powershell
+wsl --exec /home/${env:Username}/mkcert-linux -cert-file /home/${env:Username}/.local/share/certs/ssl/magento.crt -key-file /home/${env:Username}/.local/share/certs/ssl/magento.key "*.local.test"
+```
+
+For multiple-Domain Wildcard SSL, just add domain at the end of the command:
+
+ie: `*.local.test` and `*.dev.test`
+
+```powershell
+wsl --exec /home/${env:Username}/mkcert-linux -cert-file /home/${env:Username}/.local/share/certs/ssl/magento.crt -key-file /home/${env:Username}/.local/share/certs/ssl/magento.key "*.local.test" "*.dev.test"
+```
 
 ---
 
