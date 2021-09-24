@@ -26,7 +26,7 @@ The execution will be done on Windows with `PowerShell (Administrator)` .
 
 ```markdown
 # PowerShell (Admin)
-Get-NetAdapter -Name *WSL* | Select-Object InterfaceIndex | Set-DnsClientServerAddress -ServerAddresses ("1.1.1.1","127.0.0.1","8.8.8.8")
+Register-ScheduledTask -TaskName "WSL-DnsConfig" -Trigger (New-ScheduledTaskTrigger -AtLogon) -Action (New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-WindowStyle Hidden -Command ""wsl exit; Get-NetAdapter -Name *WSL* | Select-Object InterfaceIndex | Set-DnsClientServerAddress -ServerAddresses ('127.0.0.1','1.1.1.1','8.8.8.8')""") -RunLevel Highest -Force;
 ```
 
 This will change the main DNS of the WSL network adapter to use Google, Cloudflare and local DNS (dnsmasq on Ubuntu)
