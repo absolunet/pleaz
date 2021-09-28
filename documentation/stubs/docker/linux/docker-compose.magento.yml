@@ -83,7 +83,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-fpm
     image: '${PHP_FPM_IMAGE}'
     ports:
-      - "${FPM_PORT:-9000}:9000"
+      - "9000"
     volumes: &appvolumes
       - './../../../:/app'
       - '${HOME}/.local/share/certs/ssl:/etc/nginx/ssl/'
@@ -150,6 +150,7 @@ services:
       - 'PHP_IDE_CONFIG=serverName=magento_cloud_docker'
       - 'XDEBUG_CONFIG=remote_host=host.docker.internal'
     volumes: *appvolumes
+    entrypoint: [ '/docker-entrypoint.sh', 'tail', '-f', '/dev/null']
     networks:
       - magento
       - mailhog
