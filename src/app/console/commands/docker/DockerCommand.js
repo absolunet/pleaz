@@ -32,7 +32,7 @@ class DockerCommand extends Command {
 	/**
 	 * Make a docker Handler Instance.
 	 *
-	 * @returns {app.handler.DockerHandler} DockerHandler Instance.
+	 * @returns {app.handler.ContainerHandler} DockerHandler Instance.
 	 */
 	get docker() {
 		return this.app.make('handler.docker', { command: this });

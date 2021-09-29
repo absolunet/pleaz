@@ -26,6 +26,19 @@ class BaseHandler extends Handler {
 	}
 
 	/**
+	 * Tests whether the docker-compose.yml exists or not.
+	 *
+	 * @returns {Promise<void>} Returns void, from a promise.
+	 */
+	async doctor() {
+		await this.test(true);
+
+		return {
+			messages: []
+		};
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	async start() {
@@ -73,10 +86,19 @@ class BaseHandler extends Handler {
 	/**
 	 * Test docker-compose service.
 	 *
-	 * @returns {Promise} The async process promise.
+	 * @param {boolean} quiet - If true, only errors from the underlying bash command will be printed to console.
+	 * @returns {Promise<void>} The async process promise.
 	 */
-	async test() {
-		await this.spawn('docker-compose', 'config');
+	async test(quiet = false) {
+		const parameters = [];
+
+		parameters.push('config');
+
+		if (quiet) {
+			parameters.push('--quiet');
+		}
+
+		await this.spawn('docker-compose', parameters);
 	}
 
 	/**
