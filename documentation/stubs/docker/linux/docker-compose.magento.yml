@@ -1,0 +1,167 @@
+version: '3.7'
+
+services:
+  db:
+    hostname: db.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-db
+    image: '${DATABASE_IMAGE}'
+    shm_size: 2gb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${COMPOSE_PROJECT_NAME}1234
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
+      - MYSQL_USER=${COMPOSE_PROJECT_NAME}
+      - MYSQL_PASSWORD=${COMPOSE_PROJECT_NAME}1234
+    ports:
+      - "${DATABASE_PORT:-3306}:3306"
+    volumes:
+      - 'magento-db:/var/lib/mysql'
+    healthcheck:
+      test: 'mysqladmin ping -h localhost -p${COMPOSE_PROJECT_NAME}1234'
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      magento:
+        aliases:
+          - db.magento2.docker
+
+  redis:
+    hostname: redis.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-redis
+    image: '${REDIS_IMAGE}'
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    sysctls:
+      net.core.somaxconn: 1024
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    healthcheck:
+      test: 'redis-cli ping || exit 1'
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      magento:
+        aliases:
+          - redis.magento2.docker
+
+  elasticsearch:
+    hostname: elasticsearch.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
+    image: '${ELASTICSEARCH_IMAGE}'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      - 'cluster.name=docker-cluster'
+      - 'bootstrap.memory_lock=true'
+    ports:
+      - "${ELASTICSEARCH_PORT:-9200}:9200"
+    networks:
+      magento:
+        aliases:
+          - elasticsearch.magento2.docker
+
+  rabbitmq:
+    hostname: rabbitmq.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-rabbitmq
+    image: '${RABBITMQ_IMAGE}'
+    ports:
+      - "${RABBITMQ_PORT:-15672}:15672"
+      - "${RABBITMQ_WEB_PORT:-5672}:5672"
+    networks:
+      magento:
+        aliases:
+          - rabbitmq.magento2.docker
+
+  fpm:
+    hostname: fpm.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-fpm
+    image: '${PHP_FPM_IMAGE}'
+    ports:
+      - "9000"
+    volumes: &appvolumes
+      - './../../../:/app'
+      - '${HOME}/.local/share/certs/ssl:/etc/nginx/ssl/'
+      - '${HOME}/.composer:/app/.composer'
+    environment:
+      - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
+      - 'PHP_EXTENSIONS=${PHP_EXTENSIONS}'
+    networks:
+      magento:
+        aliases:
+          - fpm.magento2.docker
+      mailhog:
+
+  fpm_xdebug:
+    hostname: fpm_xdebug.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-fpm_xdebug
+    image: '${PHP_FPM_IMAGE}'
+    volumes: *appvolumes
+    environment:
+      - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
+      - 'PHP_EXTENSIONS=${PHP_EXTENSIONS} xdebug'
+      - 'PHP_IDE_CONFIG=serverName=magento_cloud_docker'
+      - 'XDEBUG_CONFIG=remote_host=host.docker.internal'
+    networks:
+      magento:
+        aliases:
+          - fpm_xdebug.magento2.docker
+      mailhog:
+
+  web:
+    hostname: web.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-web
+    image: '${NGINX_IMAGE}'
+    ports:
+      - "${WEB_PORT:-80}:80"
+      - "${WEB_SSL_PORT:-443}:443"
+    volumes: *appvolumes
+    environment:
+      - 'WITH_XDEBUG=1'
+      - 'NGINX_WORKER_PROCESSES=1'
+      - 'NGINX_WORKER_CONNECTIONS=1024'
+    networks:
+      magento:
+        aliases:
+          - web.magento2.docker
+
+  varnish:
+    hostname: varnish.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-varnish
+    image: '${VARNISH_IMAGE}'
+    networks:
+      magento:
+        aliases:
+          - varnish.magento2.docker
+
+  deploy:
+    hostname: deploy.magento2.docker
+    container_name: ${COMPOSE_PROJECT_NAME}-deploy
+    image: '${PHP_CLI_IMAGE}'
+    environment:
+      - 'COMPOSER_VERSION=${COMPOSER_VERSION}'
+      - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
+      - 'PHP_EXTENSIONS=${PHP_EXTENSIONS} ${PHP_CLI_XDEBUG}'
+      - 'PHP_IDE_CONFIG=serverName=magento_cloud_docker'
+      - 'XDEBUG_CONFIG=remote_host=host.docker.internal'
+    volumes: *appvolumes
+    entrypoint: [ '/docker-entrypoint.sh', 'tail', '-f', '/dev/null']
+    networks:
+      - magento
+      - mailhog
+
+volumes:
+  magento-db:
+    name: ${COMPOSE_PROJECT_NAME}-magento-db
+
+networks:
+  magento:
+    driver: bridge
+  mailhog:
+    name: mailhog
+    driver: bridge

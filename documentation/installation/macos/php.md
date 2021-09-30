@@ -8,9 +8,7 @@
 	* [Installation PHP extensions](#markdown-header-installation-php-extensions)
 2. [Configuration](#markdown-header-2-configuration)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -55,4 +53,4 @@ $(brew --prefix php@<PHP_VERSION>)/bin/pecl install <PHP_EXTENSION>
 
 ## 2. Configuration
 
-> Follow instruction here: [Service Configuration - PHP](./../../configuration/services/php.md)
+> Follow instruction here: [Service Configuration - PHP](./../../configuration/services/macos/php.md)

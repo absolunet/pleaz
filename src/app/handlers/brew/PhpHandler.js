@@ -193,6 +193,7 @@ class PhpHandler extends BaseHandler {
 		const enableFile = `${this.getIniFilesPath()}/ext-xdebug.ini`;
 		const disableFile = `${enableFile}.dis`;
 
+		// Bash commands used for verbosity.
 		await (enable
 			? this.spawn('mv', [disableFile, enableFile], true)
 			: this.spawn('mv', [enableFile, disableFile], true));

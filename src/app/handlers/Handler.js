@@ -69,6 +69,29 @@ class Handler {
 	}
 
 	/**
+	 * Returns an object with the command and parameters to use with spawn.
+	 *
+	 * @param {string} command - The binary to call.
+	 * @param {string|Array<string>} [parameters = ''] - The given parameters.
+	 * @param {boolean} [privileged = false] - Can be used to override the default class config.
+	 * @returns {{spawnParameters: (string|Array<string>), spawnCommand: string}} - Command and parameters for spawn.
+	 */
+	getSpawnParameters(command, parameters = '', privileged = false) {
+		let spawnCommand = command;
+		const spawnParameters = Array.isArray(parameters) ? parameters : parameters.trim().split(' ');
+
+		if (this.privileged || privileged === true) {
+			spawnCommand = 'sudo';
+			spawnParameters.unshift(command);
+		}
+
+		return {
+			spawnCommand,
+			spawnParameters
+		};
+	}
+
+	/**
 	 * Spawn a process through the command instance.
 	 *
 	 * @param {string} command - The binary to call.
@@ -78,15 +101,32 @@ class Handler {
 	 * @protected
 	 */
 	spawn(command, parameters = '', privileged = false) {
-		let spawnCommand = command;
-		const spawnParameters = Array.isArray(parameters) ? parameters : parameters.trim().split(' ');
-
-		if (this.privileged || privileged === true) {
-			spawnCommand = 'sudo';
-			spawnParameters.unshift(command);
-		}
+		const { spawnCommand, spawnParameters } = this.getSpawnParameters(
+			command,
+			parameters,
+			privileged
+		);
 
 		return this.command.spawn(spawnCommand, spawnParameters);
+	}
+
+	/**
+	 * Spawn a process through the command instance.
+	 *
+	 * @param {string} command - The binary to call.
+	 * @param {string|Array} [parameters = ''] - The given parameters.
+	 * @param {boolean} [privileged = false] - Can be used to override the default class config.
+	 * @returns {string} The output of the command.
+	 * @protected
+	 */
+	spawnSync(command, parameters = '', privileged = false) {
+		const { spawnCommand, spawnParameters } = this.getSpawnParameters(
+			command,
+			parameters,
+			privileged
+		);
+
+		return this.command.terminal.crossSpawn.sync(spawnCommand, spawnParameters);
 	}
 
 	/**

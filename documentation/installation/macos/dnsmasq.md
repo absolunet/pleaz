@@ -8,9 +8,7 @@
 1. [Installation on macOS](#markdown-header-1-installation-on-macos)
 2. [Configuration](#markdown-header-2-configuration)
 
-==============================================================================
-
-==============================================================================
+---
 
 ### Stack Requirement
 Install and configure the following services
@@ -29,5 +27,5 @@ brew install dnsmasq
 
 ## 2. Configuration
 
-> Follow instruction here: [Service Configuration - dnsmasq](./../../configuration/services/dnsmasq.md)
+> Follow instruction here: [Service Configuration - dnsmasq](./../../configuration/services/macos/dnsmasq.md)
 

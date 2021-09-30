@@ -1,15 +1,13 @@
 # Service Configuration - MailHog
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [MailHog](./mailhog.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [MailHog](mailhog.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
 2. [Starting MailHog](#markdown-header-2-starting)
 3. [Usage](#markdown-header-3-usage)
 
-==============================================================================
-
-==============================================================================
+---
 
 ## 1. Configuration
 
@@ -38,7 +36,7 @@ You can configure a [Server Block](https://www.nginx.com/resources/wiki/start/to
 
 To configure a `Server Block` (like "VirtualHost" Apache term), please make sure that NGINX is installed.
 
-Otherwise, follow the instructions at [Documentation > Installation > NGINX](./../../installation/macos/nginx.md)
+Otherwise, follow the instructions at [Documentation > Installation > NGINX](../../../installation/macos/nginx.md)
 
 The default directory location of the `Server Block` is `/usr/local/etc/nginx/servers/`.
 
@@ -83,7 +81,7 @@ To access the web interface, enter : `http://mailhog.test` or `http://localhost:
 * Start service:
 ```bash
 ## Native
-brew services start mailhog
+sudo brew services start mailhog
 
 ## Pleaz CLI
 pleaz service:start mailhog
@@ -92,7 +90,7 @@ pleaz service:start mailhog
 * Stop service:
 ```bash
 ## Native
-brew services stop mailhog
+sudo brew services stop mailhog
 
 ## Pleaz CLI
 pleaz service:stop mailhog

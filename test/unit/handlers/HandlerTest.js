@@ -19,10 +19,64 @@ class HandlerTest extends TestCase {
 
 	// TESTS
 	//--------------------------------------------------------
+	testGetSpawnParametersShouldReturnCommandWithoutArguments() {
+		const output = this.fakeHandler.getSpawnParameters('foo');
+		this.thenExpectOutputToStrictEqual(output, {
+			spawnCommand: 'foo',
+			spawnParameters: ['']
+		});
+	}
+
+	testGetSpawnParametersShouldReturnCommandWithArgumentsAsString() {
+		const output = this.fakeHandler.getSpawnParameters('foo', 'param1 param2');
+		this.thenExpectOutputToStrictEqual(output, {
+			spawnCommand: 'foo',
+			spawnParameters: ['param1', 'param2']
+		});
+	}
+
+	testGetSpawnParametersShouldReturnCommandWithArgumentsAsArray() {
+		const output = this.fakeHandler.getSpawnParameters('foo', ['param1', 'param2']);
+		this.thenExpectOutputToStrictEqual(output, {
+			spawnCommand: 'foo',
+			spawnParameters: ['param1', 'param2']
+		});
+	}
+
+	testGetSpawnParametersShouldReturnCommandWithoutArgumentsWhenPrivileged() {
+		const output = this.fakeHandler.getSpawnParameters('foo', [], true);
+		this.thenExpectOutputToStrictEqual(output, {
+			spawnCommand: 'sudo',
+			spawnParameters: ['foo']
+		});
+	}
+
+	testGetSpawnParametersShouldReturnCommandWithArgumentsAsStringWhenPrivileged() {
+		const output = this.fakeHandler.getSpawnParameters('foo', 'param1 param2', true);
+		this.thenExpectOutputToStrictEqual(output, {
+			spawnCommand: 'sudo',
+			spawnParameters: ['foo', 'param1', 'param2']
+		});
+	}
+
+	testGetSpawnParametersShouldReturnCommandWithArgumentsAsArrayWhenPrivileged() {
+		const output = this.fakeHandler.getSpawnParameters('foo', ['param1', 'param2'], true);
+		this.thenExpectOutputToStrictEqual(output, {
+			spawnCommand: 'sudo',
+			spawnParameters: ['foo', 'param1', 'param2']
+		});
+	}
+
 	async testSpawnCommandIsCalledWithoutExpectedArguments() {
 		this.givenSpawnCommand('foo', []);
 		await this.whenSpawning();
 		this.thenSpawnShouldHaveBeenCalledWith('foo', []);
+	}
+
+	async testSpawnSyncCommandIsCalledWithoutExpectedArguments() {
+		this.givenSpawnSyncCommand('foo', []);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('foo', []);
 	}
 
 	async testSpawnCommandIsCalledWithExpectedArgumentsAsString() {
@@ -31,10 +85,22 @@ class HandlerTest extends TestCase {
 		this.thenSpawnShouldHaveBeenCalledWith('foo', ['param1', 'param2']);
 	}
 
+	async testSpawnSyncCommandIsCalledWithExpectedArgumentsAsString() {
+		this.givenSpawnSyncCommand('foo', 'param1 param2');
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('foo', ['param1', 'param2']);
+	}
+
 	async testSpawnCommandIsCalledWithExpectedArgumentsAsArray() {
 		this.givenSpawnCommand('foo', ['param1', 'param2']);
 		await this.whenSpawning();
 		this.thenSpawnShouldHaveBeenCalledWith('foo', ['param1', 'param2']);
+	}
+
+	async testSpawnSyncCommandIsCalledWithExpectedArgumentsAsArray() {
+		this.givenSpawnSyncCommand('foo', ['param1', 'param2']);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('foo', ['param1', 'param2']);
 	}
 
 	async testSpawnCommandIsCalledWithoutExpectedArgumentsWhenPrivileged() {
@@ -43,16 +109,34 @@ class HandlerTest extends TestCase {
 		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo']);
 	}
 
+	async testSpawnSyncCommandIsCalledWithoutExpectedArgumentsWhenPrivileged() {
+		this.givenPrivilegedSpawnSyncCommand('foo', []);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('sudo', ['foo']);
+	}
+
 	async testSpawnCommandIsCalledWithExpectedArgumentsWhenPrivilegedAsString() {
 		this.givenPrivilegedSpawnCommand('foo', 'param1 param2');
 		await this.whenSpawning();
 		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
 	}
 
+	async testSpawnSyncCommandIsCalledWithExpectedArgumentsWhenPrivilegedAsString() {
+		this.givenPrivilegedSpawnSyncCommand('foo', 'param1 param2');
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
+	}
+
 	async testSpawnCommandIsCalledWithExpectedArgumentsWhenPrivilegedAsArray() {
 		this.givenPrivilegedSpawnCommand('foo', ['param1', 'param2']);
 		await this.whenSpawning();
 		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
+	}
+
+	async testSpawnSyncCommandIsCalledWithExpectedArgumentsWhenPrivilegedAsArray() {
+		this.givenPrivilegedSpawnSyncCommand('foo', ['param1', 'param2']);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
 	}
 
 	async testSpawnCommandIsCalledWithoutExpectedArgumentsWhenHandlerIsPrivileged() {
@@ -62,16 +146,29 @@ class HandlerTest extends TestCase {
 		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo']);
 	}
 
+	async testSpawnSyncCommandIsCalledWithoutExpectedArgumentsWhenHandlerIsPrivileged() {
+		this.givenPrivilegedFakeHandler();
+		this.givenSpawnCommand('foo', []);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('sudo', ['foo']);
+	}
+
 	async testSpawnCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivilegedAsString() {
 		this.givenSpawnCommand('foo', 'param1 param2', true);
 		await this.whenSpawning();
 		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
 	}
 
-	async testSpawnCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivilegedAsArray() {
-		this.givenSpawnCommand('foo', ['param1', 'param2'], true);
-		await this.whenSpawning();
-		this.thenSpawnShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
+	async testSpawnSyncCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivilegedAsString() {
+		this.givenSpawnSyncCommand('foo', 'param1 param2', true);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
+	}
+
+	async testSpawnSyncCommandIsCalledWithExpectedArgumentsWhenHandlerIsPrivilegedAsArray() {
+		this.givenSpawnSyncCommand('foo', ['param1', 'param2'], true);
+		await this.whenSpawningSync();
+		this.thenSpawnSyncShouldHaveBeenCalledWith('sudo', ['foo', 'param1', 'param2']);
 	}
 
 	// GIVEN METHODS
@@ -84,6 +181,7 @@ class HandlerTest extends TestCase {
 
 	givenFakeHandler() {
 		this.spies.handler.spawn = jest.fn();
+		this.spies.handler.spawnSync = jest.fn();
 
 		const self = this;  // eslint-disable-line unicorn/no-this-assignment
 
@@ -93,8 +191,22 @@ class HandlerTest extends TestCase {
 				return {
 					spawn: (command, parameters) => {
 						return self.spies.handler.spawn(command, parameters);
+					},
+					terminal: {
+						crossSpawn: {
+							sync: jest.fn()
+						}
 					}
 				};
+			}
+
+			spawnSync(command, parameters, privileged) {
+				const {
+					spawnCommand,
+					spawnParameters
+				} = this.getSpawnParameters(command, parameters, privileged);
+
+				return self.spies.handler.spawnSync(spawnCommand, spawnParameters);
 			}
 
 		});
@@ -119,8 +231,20 @@ class HandlerTest extends TestCase {
 		};
 	}
 
+	givenSpawnSyncCommand(command, parameters, privileged = false) {
+		this.spawnSyncArguments = {
+			command,
+			parameters,
+			privileged
+		};
+	}
+
 	givenPrivilegedSpawnCommand(command, parameters) {
 		this.givenSpawnCommand(command, parameters, true);
+	}
+
+	givenPrivilegedSpawnSyncCommand(command, parameters) {
+		this.givenSpawnSyncCommand(command, parameters, true);
 	}
 
 	// WHEN METHODS
@@ -129,10 +253,22 @@ class HandlerTest extends TestCase {
 		this.fakeHandler.spawn(this.spawnArguments.command, this.spawnArguments.parameters, this.spawnArguments.privileged);
 	}
 
+	whenSpawningSync() {
+		this.fakeHandler.spawnSync(this.spawnSyncArguments.command, this.spawnSyncArguments.parameters, this.spawnSyncArguments.privileged);
+	}
+
 	// THEN METHODS
 	//--------------------------------------------------------
+	thenExpectOutputToStrictEqual(output, comparator) {
+		this.expect(output).toStrictEqual(comparator);
+	}
+
 	thenSpawnShouldHaveBeenCalledWith(command, parameters) {
 		this.expect(this.spies.handler.spawn).toHaveBeenCalledWith(command, parameters);
+	}
+
+	thenSpawnSyncShouldHaveBeenCalledWith(command, parameters) {
+		this.expect(this.spies.handler.spawnSync).toHaveBeenCalledWith(command, parameters);
 	}
 
 }

@@ -1,15 +1,13 @@
 # Service Configuration - PHP
 
-> [Documentation](./../../readme.md) > [Service Configuration](./../readme.md) > [PHP](./php.md)
+> [Documentation](../../../readme.md) > [Service Configuration](../../readme.md) > [PHP](php.md)
 
 ## Table of Contents
 1. [Configuration](#markdown-header-1-configuration)
 1. [Installation Xdebug](#markdown-header-2-installation-xdebug)
 2. [Usage](#markdown-header-3-usage)
 
-==============================================================================
-
-==============================================================================
+---
 
 ## 1. Configuration
 
