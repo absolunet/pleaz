@@ -10,8 +10,8 @@ It automatically creates and installs a local CA in the system root store, and g
 
 ## Table of Contents
 1. [Installation on Windows](#markdown-header-1-installation-on-windows)
-1. [Installation on WSL 2](#markdown-header-1-installation-on-wsl-2)
-1. [Generate locally trusted SSL Certificates](#markdown-header-2-generate-locally-trusted-ssl-certificates)
+1. [Installation on WSL 2](#markdown-header-2-installation-on-wsl-2)
+1. [Generate locally trusted SSL Certificates](#markdown-header-3-generate-locally-trusted-ssl-certificates)
 
 ---
 
@@ -49,7 +49,7 @@ wget -O $HOME\mkcert-windows.exe https://github.com/FiloSottile/mkcert/releases/
 wsl --exec ln -sfn /mnt/c/Users/${env:UserName}/AppData/Local/mkcert /home/${env:UserName}/.local/share/mkcert
 ```
 
-## 1. Installation on WSL 2 (Linux)
+## 2. Installation on WSL 2 (Linux)
 
 Open Powershell
 
@@ -70,7 +70,7 @@ wsl --exec /home/${env:Username}/mkcert-linux -install
 
 ---
 
-## 2. Generate locally trusted SSL Certificates
+## 3. Generate locally trusted SSL Certificates
 
 > Follow instruction here: [SSL certificates](../../procedure/wsl2/ssl-certificates.md)
 

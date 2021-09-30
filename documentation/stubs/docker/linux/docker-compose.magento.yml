@@ -83,9 +83,11 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-fpm
     image: '${PHP_FPM_IMAGE}'
     ports:
-      - "${FPM_PORT:-9000}:9000"
+      - "9000"
     volumes: &appvolumes
       - './../../../:/app'
+      - '${HOME}/.local/share/certs/ssl:/etc/nginx/ssl/'
+      - '${HOME}/.composer:/app/.composer'
     environment:
       - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
       - 'PHP_EXTENSIONS=${PHP_EXTENSIONS}'
@@ -94,9 +96,6 @@ services:
         aliases:
           - fpm.magento2.docker
       mailhog:
-    depends_on:
-      db:
-        condition: service_started
 
   fpm_xdebug:
     hostname: fpm_xdebug.magento2.docker
@@ -113,9 +112,6 @@ services:
         aliases:
           - fpm_xdebug.magento2.docker
       mailhog:
-    depends_on:
-      db:
-        condition: service_started
 
   web:
     hostname: web.magento2.docker
@@ -126,7 +122,6 @@ services:
       - "${WEB_SSL_PORT:-443}:443"
     volumes: *appvolumes
     environment:
-      - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
       - 'WITH_XDEBUG=1'
       - 'NGINX_WORKER_PROCESSES=1'
       - 'NGINX_WORKER_CONNECTIONS=1024'
@@ -134,9 +129,6 @@ services:
       magento:
         aliases:
           - web.magento2.docker
-    depends_on:
-      fpm:
-        condition: service_started
 
   varnish:
     hostname: varnish.magento2.docker
@@ -146,9 +138,6 @@ services:
       magento:
         aliases:
           - varnish.magento2.docker
-    depends_on:
-      web:
-        condition: service_started
 
   deploy:
     hostname: deploy.magento2.docker
@@ -161,10 +150,10 @@ services:
       - 'PHP_IDE_CONFIG=serverName=magento_cloud_docker'
       - 'XDEBUG_CONFIG=remote_host=host.docker.internal'
     volumes: *appvolumes
+    entrypoint: [ '/docker-entrypoint.sh', 'tail', '-f', '/dev/null']
     networks:
       - magento
       - mailhog
-
 
 volumes:
   magento-db:

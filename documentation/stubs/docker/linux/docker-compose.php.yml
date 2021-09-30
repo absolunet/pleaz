@@ -30,7 +30,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-fpm
     image: '${PHP_FPM_IMAGE}'
     ports:
-      - "${FPM_PORT:-9000}:9000"
+      - "9000"
     volumes:
       - './../../../:/var/www/html'
     networks:
@@ -38,9 +38,6 @@ services:
         aliases:
           - fpm.docker
       mailhog:
-    depends_on:
-      db:
-        condition: service_started
 
   web:
     hostname: web.docker
@@ -58,9 +55,6 @@ services:
       project:
         aliases:
           - web.docker
-    depends_on:
-      fpm:
-        condition: service_started
 
 volumes:
   dbdata:
