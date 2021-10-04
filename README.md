@@ -29,6 +29,7 @@ Available commands:
    php:switch               Switch current PHP version.
    php:xdebug               Get Xdebug status or enable/disable.
   service
+   service:doctor           Run doctor on a service to discover problems.
    service:restart          Restart service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
    service:start            Start service [brew, nginx, php, dnsmasq, mailhog, docker, db, elasticsearch, redis, varnish, mq].
    service:status           Get specific service status [nginx, php, dnsmasq, mailhog, db, elasticsearch, redis, varnish, mq].
