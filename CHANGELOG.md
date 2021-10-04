@@ -16,22 +16,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2021-09-30
 ### Added
 
-#### CLI
+#### CLI (macOS)
 - Added command `project:create-symlinks` - Creates NGINX symlinks for the project
 - Added command `service:doctor` - Returns the current state of your machine (Runs `service:status` for all services, `service:doctor nginx`, `php:list`, `php:xdebug`)
 - Added command `service:doctor nginx` - Returns the current state of NGINX
 
-#### Doc
+#### Doc (macOS)
 - Added troubleshooting for NGINX and docker-compose
 
 ### Changed
-#### Doc
+#### Doc (wsl2)
 - Changed the dnsmasq network adapter configuration for a scheduled task
-- Updated default docker image for Adobe Commerce PHP (fixes a bug with readonly )
-- Changed default docker image PHP Varnish (switched to `management`)
-- Updated the Adobe Commerce docker-compose configuration
-  - `deploy` service now runs continuously
-  - Removed `depends_on` configurations (deprecated flags)
+- Updated default docker image for Adobe Commerce PHP (fixes a bug with readonly)
+  - `magento/magento-cloud-docker-php:7.4-fpm-1.2.4`
+  - `magento/magento-cloud-docker-php:7.4-cli-1.2.4`
+- Changed default docker image PHP rabbitmq
+  - `rabbitmq:3.8` --> `rabbitmq:3.8-management`
+- Updated the Adobe Commerce `docker-compose.yml` configuration
+  - `deploy` service now runs continuously (changed the entrypoint)
+  - Removed `depends_on` configurations (deprecated docker-compose flags)
+- To execute commands on `deploy`: `docker exec -it {myproject}-deploy {command}`
 
 
 

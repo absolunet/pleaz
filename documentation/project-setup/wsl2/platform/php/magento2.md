@@ -110,9 +110,9 @@ docker-compose up -d
 docker-compose down
 
 ## Execute magento commands
-docker-compose run --rm deploy magento-command <your-command>
+docker exec -it <project-name>-deploy <your-command>
 #e.g.
-docker-compose run --rm deploy magento-command cache:flush
+docker exec -it myproject-deploy magento-command cache:flush
 ```
 
 ## 3. Important locations
