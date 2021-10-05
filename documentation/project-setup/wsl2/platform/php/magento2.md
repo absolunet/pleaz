@@ -39,11 +39,11 @@ The structure should look like this:
 config/
 └── pleaz/
     └── linux/
-        ├── services
-            ├── php-fpm
-                ├── php-fpm.conf
         ├── .env
-        └── docker-compose.yml
+        ├── docker-compose.yml
+        └── services
+            └── php-fpm
+                └── php-fpm.conf
 ```
 
 ### Step 2. Configure Docker environment file

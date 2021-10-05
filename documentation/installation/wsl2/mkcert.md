@@ -23,17 +23,6 @@ It automatically creates and installs a local CA in the system root store, and g
 
 To install the `mkcert` on Windows:
 
-#### Open Powershell
-
-- Set the Ubuntu distribution as default
-```powershell
-# Print the distribution list
-wsl --list --all
-
-# Put the name of the Ubuntu distribution
-wsl --setdefault <DISTRIBUTION_UBUNTU>
-```
-
 - Download `mkcert` for Windows
 ```powershell
 wget -O $HOME\mkcert-windows.exe https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe
@@ -60,8 +49,6 @@ chmod +x ~/mkcert-linux
 ```
 
 #### Create a new local CA
-
-Open Powershell
 
 ```bash
 ~/mkcert-linux -install

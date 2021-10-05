@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve the SSL certificate generation process on WSL 2
 - Added the missing variable `MAGENTO_RUN_MODE` into the service container `web` (NGINX) on `docker-compose.magento.yml` file
 - Added a volume into the service container `elasticsearch` to avoid data loss on `docker-compose.magento.yml` file
+- Added a mount volume to override `php-fpm.conf` on service container `fpm`. Fix issue with file's permission.
 
 
 ## [1.0.0] - 2021-09-30

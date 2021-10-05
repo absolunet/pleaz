@@ -90,6 +90,7 @@ services:
       - './../../../:/app'
       - '~/.local/share/certs/ssl:/etc/nginx/ssl/'
       - '~/.composer:/app/.composer'
+      - './services/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf'
     environment:
       - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
       - 'PHP_EXTENSIONS=${PHP_EXTENSIONS}'
