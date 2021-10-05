@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
-
+### Changed
+#### Doc (WSL 2)
+- Improve the SSL certificate generation process on WSL 2
+- Added the missing variable `MAGENTO_RUN_MODE` into the service container `web` (NGINX) on `docker-compose.magento.yml` file
+- Added a volume into the service container `elasticsearch` to avoid data loss on `docker-compose.magento.yml` file
 
 
 ## [1.0.0] - 2021-09-30
@@ -25,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added troubleshooting for NGINX and docker-compose
 
 ### Changed
-#### Doc (wsl2)
+#### Doc (WSL 2)
 - Changed the dnsmasq network adapter configuration for a scheduled task
 - Updated default docker image for Adobe Commerce PHP (fixes a bug with readonly)
   - `magento/magento-cloud-docker-php:7.4-fpm-1.2.4`

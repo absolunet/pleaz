@@ -61,6 +61,8 @@ services:
       - 'bootstrap.memory_lock=true'
     ports:
       - "${ELASTICSEARCH_PORT:-9200}:9200"
+    volumes:
+      - 'magento-elasticsearch:/usr/share/elasticsearch/data'
     networks:
       magento:
         aliases:
@@ -86,8 +88,8 @@ services:
       - "9000"
     volumes: &appvolumes
       - './../../../:/app'
-      - '${HOME}/.local/share/certs/ssl:/etc/nginx/ssl/'
-      - '${HOME}/.composer:/app/.composer'
+      - '~/.local/share/certs/ssl:/etc/nginx/ssl/'
+      - '~/.composer:/app/.composer'
     environment:
       - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
       - 'PHP_EXTENSIONS=${PHP_EXTENSIONS}'
@@ -122,6 +124,7 @@ services:
       - "${WEB_SSL_PORT:-443}:443"
     volumes: *appvolumes
     environment:
+      - 'MAGENTO_RUN_MODE=${MAGE_RUN_MODE}'
       - 'WITH_XDEBUG=1'
       - 'NGINX_WORKER_PROCESSES=1'
       - 'NGINX_WORKER_CONNECTIONS=1024'
@@ -158,6 +161,8 @@ services:
 volumes:
   magento-db:
     name: ${COMPOSE_PROJECT_NAME}-magento-db
+  magento-elasticsearch:
+    name: ${COMPOSE_PROJECT_NAME}-magento-elasticsearch
 
 networks:
   magento:

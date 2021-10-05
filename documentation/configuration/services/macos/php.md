@@ -18,7 +18,7 @@
 for each version of installed PHP Version:
 
 * edit the the file `/usr/local/etc/php/<PHP_VERSION>/php-fpm.d/www.conf` and
-* replace all content by the following configuration : [www.conf](./../../stubs/php-fpm/context/php-fpm.d/www.conf)
+* replace all content by the following configuration : [www.conf](./../../../stubs/php-fpm/context/macos/php-fpm.d/www.conf)
 
 > We will have to give to PHP the permission to access our files and avoid an error on server start.
 
@@ -45,7 +45,7 @@ For each version of PHP installed, you should add the following optimized config
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
 * Create the file `/usr/local/etc/php/<PHP_VERSION>/conf.d/z-performance.ini`
-* Add the following configuration: [z-performance.ini](./../../stubs/php-fpm/context/conf.d/z-performance.ini)
+* Add the following configuration: [z-performance.ini](./../../../stubs/php-fpm/context/macos/conf.d/z-performance.ini)
 
 ---
 
@@ -67,7 +67,7 @@ For each version of PHP installed, you should add the following configuration.
 ---
 
 * Create the file `/usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini`
-* Add the following configuration: [ext-xdebug.ini](./../../stubs/php-fpm/context/conf.d/ext-xdebug.ini)
+* Add the following configuration: [ext-xdebug.ini](./../../../stubs/php-fpm/context/macos/conf.d/ext-xdebug.ini)
 
 ---
 

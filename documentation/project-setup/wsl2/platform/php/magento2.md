@@ -31,7 +31,7 @@ Install and configure the following services
 
 2. Add the docker config files
 ```bash
-touch config/pleaz/linux/{.env,docker-compose.yml}
+touch config/pleaz/linux/{.env,docker-compose.yml,services/php-fpm/php-fpm.conf}
 ```
 
 The structure should look like this:
@@ -39,6 +39,9 @@ The structure should look like this:
 config/
 └── pleaz/
     └── linux/
+        ├── services
+            ├── php-fpm
+                ├── php-fpm.conf
         ├── .env
         └── docker-compose.yml
 ```
@@ -73,7 +76,11 @@ To find existing official version of the service images
 
 #### 2. Configure services container
 
+###### docker-compose
 Edit the file `config/pleaz/linux/docker-compose.yml` and replace all content by: [docker-compose.magento.yml](../../../../stubs/docker/linux/docker-compose.magento.yml)
+
+###### php-fpm
+Edit the file `config/pleaz/linux/services/php-fpm/php-fpm.conf` and replace all content by: [php-fpm.conf](../../../../stubs/php-fpm/context/linux/php-fpm.conf)
 
 ---
 
@@ -83,17 +90,17 @@ Edit the file `config/pleaz/linux/docker-compose.yml` and replace all content by
 
 For `Magento2`, you must create a wildcard SSL Certificate with the name `magento.crt` and `magento.key`
 
-Open Powershell and execute:
-```powershell
-wsl --exec /home/${env:Username}/mkcert-linux -cert-file /home/${env:Username}/.local/share/certs/ssl/magento.crt -key-file /home/${env:Username}/.local/share/certs/ssl/magento.key "*.local.test"
+Open WSL 2 terminal and execute:
+```bash
+~/mkcert-linux -cert-file ~/.local/share/certs/ssl/magento.crt -key-file ~/.local/share/certs/ssl/magento.key "*.local.test"
 ```
 
 For multiple-Domain Wildcard SSL, just add domain at the end of the command:
 
 ie: `*.local.test` and `*.dev.test`
 
-```powershell
-wsl --exec /home/${env:Username}/mkcert-linux -cert-file /home/${env:Username}/.local/share/certs/ssl/magento.crt -key-file /home/${env:Username}/.local/share/certs/ssl/magento.key "*.local.test" "*.dev.test"
+```bash
+~/mkcert-linux -cert-file ~/.local/share/certs/ssl/magento.crt -key-file ~/.local/share/certs/ssl/magento.key "*.local.test" "*.dev.test"
 ```
 
 ---
@@ -110,9 +117,9 @@ docker-compose up -d
 docker-compose down
 
 ## Execute magento commands
-docker exec -it <project-name>-deploy <your-command>
+docker exec -it --user=www <project-name>-deploy <your-command>
 #e.g.
-docker exec -it myproject-deploy magento-command cache:flush
+docker exec -it --user=www myproject-deploy magento-command cache:flush
 ```
 
 ## 3. Important locations
