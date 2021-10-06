@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [1.1.0] - 2021-10-06
 ### Changed
 #### Doc (WSL 2)
 - Improve the SSL certificate generation process on WSL 2
@@ -75,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]: https://github.com/absolunet/pleaz/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/absolunet/pleaz/compare/1.1.0...HEAD
+[1.1.0]:      https://github.com/absolunet/pleaz/compare/1.0.0...1.1.0
 [1.0.0]:      https://github.com/absolunet/pleaz/compare/0.1.0...1.0.0
 [0.1.0]:      https://github.com/absolunet/pleaz/releases/tag/0.1.0
