@@ -19,20 +19,9 @@ It automatically creates and installs a local CA in the system root store, and g
 
 - [WSL 2 + distro Ubuntu](./TODO.md)
 
-## 1. Installation on Windows
+## 1. Installation on Windows and WSL 2
 
 To install the `mkcert` on Windows:
-
-Open Powershell
-
-- Set the Ubuntu distribution as default
-```powershell
-# Print the distribution list
-wsl --list --all
-
-# Put the name of the Ubuntu distribution
-wsl --setdefault <DISTRIBUTION_UBUNTU>
-```
 
 - Download `mkcert` for Windows
 ```powershell
@@ -44,28 +33,25 @@ wget -O $HOME\mkcert-windows.exe https://github.com/FiloSottile/mkcert/releases/
 ./mkcert-windows.exe -install
 ```
 
+#### Open WSL 2 terminal
+
 - Create symbolic links in the Windows `mkcert` folder to WSL 2
-```powershell
-wsl --exec ln -sfn /mnt/c/Users/${env:UserName}/AppData/Local/mkcert /home/${env:UserName}/.local/share/mkcert
+```bash
+ln -sfn  $(wslpath "$(wslvar USERPROFILE)")/AppData/Local/mkcert ~/.local/share/mkcert
 ```
-
-## 2. Installation on WSL 2 (Linux)
-
-Open Powershell
 
 To install the `mkcert` on WSL 2:
 
 - Download `mkcert` for Linux
-```powershell
-wsl --exec wget -O /home/${env:Username}/mkcert-linux https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
+```bash
+wget -O ~/mkcert-linux https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
+chmod +x ~/mkcert-linux
 ```
 
 #### Create a new local CA
 
-Open Powershell
-
-```powershell
-wsl --exec /home/${env:Username}/mkcert-linux -install
+```bash
+~/mkcert-linux -install
 ```
 
 ---

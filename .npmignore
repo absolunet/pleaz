@@ -19,3 +19,4 @@ test
 !dist/**
 .env
 .env.example
+.idea
