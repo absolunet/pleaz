@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+#### Doc (WSL 2)
+- Remove / from mount volumes on docker-compose file to fix issues with Docker
+- Add process to create `.composer` directory to avoid issues with permission
+- Add double quote on PHP_EXTENSIONS variables into `.env` file
+- Update version for docker image built by magento
 
 
 
