@@ -82,6 +82,13 @@ Edit the file `config/pleaz/linux/docker-compose.yml` and replace all content by
 ###### php-fpm
 Edit the file `config/pleaz/linux/services/php-fpm/php-fpm.conf` and replace all content by: [php-fpm.conf](../../../../stubs/php-fpm/context/linux/php-fpm.conf)
 
+###### composer
+Open WSL 2 terminal and create `.composer` directory into your home directory:
+```bash
+mkdir -p ~/.composer
+sudo chown -R $USER ~/.composer
+```
+
 ---
 
 ### Step 3. Create locally trusted SSL Certificates
