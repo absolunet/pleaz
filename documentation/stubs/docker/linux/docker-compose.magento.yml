@@ -88,7 +88,7 @@ services:
       - "9000"
     volumes: &appvolumes
       - './../../../:/app'
-      - '~/.local/share/certs/ssl:/etc/nginx/ssl/'
+      - '~/.local/share/certs/ssl:/etc/nginx/ssl'
       - '~/.composer:/app/.composer'
       - './services/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.conf'
     environment:
