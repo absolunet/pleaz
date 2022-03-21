@@ -21,7 +21,7 @@ To install the `NGINX` :
 brew install nginx
 ```
 
-After running this command, the default NGINX configuration files will be located at `/usr/local/etc/nginx`.
+After running this command, the default NGINX configuration files will be located at `$(brew --prefix nginx)`.
 
 ---
 

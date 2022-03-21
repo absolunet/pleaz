@@ -35,5 +35,5 @@ brew list | grep php
 
 Clean out the old configuration options for PHP:
 ```bash
-rm -Rf /usr/local/etc/php/*
+rm -Rf $(brew --prefix php)/*
 ```

@@ -11,13 +11,13 @@
 
 ## 1. Configuration
 
-> You should modify the configuration file `/usr/local/etc/php/<PHP_VERSION>/php-fpm.d/www.conf`
+> You should modify the configuration file `$(brew --prefix php@<PHP_VERSION>)/php-fpm.d/www.conf`
 >
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
 for each version of installed PHP Version:
 
-* edit the the file `/usr/local/etc/php/<PHP_VERSION>/php-fpm.d/www.conf` and
+* edit the the file `$(brew --prefix php@<PHP_VERSION>)/php-fpm.d/www.conf` and
 * replace all content by the following configuration : [www.conf](./../../../stubs/php-fpm/context/macos/php-fpm.d/www.conf)
 
 > We will have to give to PHP the permission to access our files and avoid an error on server start.
@@ -33,7 +33,7 @@ johndoe
 or you can use this one line command and replace only `<PHP_VERSION>` with your specific version:
 
 ```bash
-sed -i "" "s/<USER>/${USER}/" /usr/local/etc/php/<PHP_VERSION>/php-fpm.d/www.conf
+sed -i "" "s/<USER>/${USER}/" $(brew --prefix php@<PHP_VERSION>)/php-fpm.d/www.conf
 ```
 
 ---
@@ -44,7 +44,7 @@ For each version of PHP installed, you should add the following optimized config
 >
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
-* Create the file `/usr/local/etc/php/<PHP_VERSION>/conf.d/z-performance.ini`
+* Create the file `$(brew --prefix php@<PHP_VERSION>)/conf.d/z-performance.ini`
 * Add the following configuration: [z-performance.ini](./../../../stubs/php-fpm/context/macos/conf.d/z-performance.ini)
 
 ---
@@ -61,12 +61,12 @@ For each version of PHP installed, you should add the following configuration.
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
-* Edit the file `/usr/local/etc/php/<PHP_VERSION>/php.ini`
+* Edit the file `$(brew --prefix php@<PHP_VERSION>)/php.ini`
 * Remove the line containing `zend_extension="xdebug.so"`
 
 ---
 
-* Create the file `/usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini`
+* Create the file `$(brew --prefix php@<PHP_VERSION>)/conf.d/ext-xdebug.ini`
 * Add the following configuration: [ext-xdebug.ini](./../../../stubs/php-fpm/context/macos/conf.d/ext-xdebug.ini)
 
 ---
@@ -132,10 +132,10 @@ pleaz service:stop php 7.4
 
 - Disable xdebug
 ```bash
-mv /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini.dis
+mv $(brew --prefix php@<PHP_VERSION>)/conf.d/ext-xdebug.ini $(brew --prefix php@<PHP_VERSION>)/conf.d/ext-xdebug.ini.dis
 ```
 
 - Enable xdebug
 ```bash
-mv /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini.dis /usr/local/etc/php/<PHP_VERSION>/conf.d/ext-xdebug.ini
+mv $(brew --prefix php@<PHP_VERSION>)/conf.d/ext-xdebug.ini.dis $(brew --prefix php@<PHP_VERSION>)/conf.d/ext-xdebug.ini
 ```

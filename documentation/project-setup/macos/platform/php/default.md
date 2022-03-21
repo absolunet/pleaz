@@ -129,7 +129,7 @@ ln -s /Users/johndoe/Sites/myproject /usr/local/var/www/myproject.test
     - Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> $(brew --prefix nginx)/servers/
 ```
 example:
 
@@ -145,7 +145,7 @@ sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/ng
 ```
 3. Park the project
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test $(brew --prefix nginx)/servers/
 ```
 
 ---
@@ -189,7 +189,7 @@ pleaz service:start php <PHP_VERSION>
 ## 3. Important locations
 
 * Document Project Root in -> `/usr/local/var/www/`
-* Locally trusted SSL Certificates in -> `/usr/local/etc/nginx/certs/ssl/`
-* `Server Block` directory -> `/usr/local/etc/nginx/servers`
+* Locally trusted SSL Certificates in -> `$(brew --prefix nginx)/certs/ssl/`
+* `Server Block` directory -> `$(brew --prefix nginx)/servers`
 * `pleaz` Configuration directory -> `<PROJET_ROOT>/config/pleaz`
 

@@ -6,7 +6,7 @@ If you're having problems related to configuration files when trying to start NG
 pleaz service:doctor nginx
 ```
 
-This command will for symlinks inside of the directories `/usr/local/etc/nginx/servers` and `/usr/local/var/www`.
+This command will for symlinks inside of the directories `$(brew --prefix nginx)/servers` and `/usr/local/var/www`.
 The symlinks will be printed to the terminal. Pleaz will also validate that the symlinks are targeting absolute path.
 
 Once the symlinks have been successfully validated, the doctor command will validate the NGINX configuration using

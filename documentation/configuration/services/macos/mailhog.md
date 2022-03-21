@@ -19,7 +19,7 @@ For PHP projects, you need to connect all locally installed versions of PHP to M
 
 > Replace `<PHP_VERSION>` by your version `[7.3|7.4|<MAJOR.MINOR>]`
 
-* For each PHP version, create the configuration file `/usr/local/etc/php/<PHP_VERSION>/conf.d/z-mailhog.ini` and replace all content by:
+* For each PHP version, create the configuration file `$(brew --prefix php@<PHP_VERSION>)/conf.d/z-mailhog.ini` and replace all content by:
 ```bash
 sendmail_path = "/usr/local/bin/mailhog sendmail test@example.org"
 ```
@@ -38,14 +38,14 @@ To configure a `Server Block` (like "VirtualHost" Apache term), please make sure
 
 Otherwise, follow the instructions at [Documentation > Installation > NGINX](../../../installation/macos/nginx.md)
 
-The default directory location of the `Server Block` is `/usr/local/etc/nginx/servers/`.
+The default directory location of the `Server Block` is `$(brew --prefix nginx)/servers/`.
 
 Create a directory:
 ```bash
-mkdir -p /usr/local/etc/nginx/servers/mailhog.test
+mkdir -p $(brew --prefix nginx)/servers/mailhog.test
 ```
 
-Create the configuration file `/usr/local/etc/nginx/servers/mailhog.test/mailhog.conf` and replace all content by:
+Create the configuration file `$(brew --prefix nginx)/servers/mailhog.test/mailhog.conf` and replace all content by:
 ```bash
 server {
     listen 80;

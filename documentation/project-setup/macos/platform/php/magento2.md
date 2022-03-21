@@ -149,7 +149,7 @@ cp <MAGENTO_SOURCE_CODE>/nginx.conf.sample config/pleaz/macos/services/nginx/<DO
 	- Replace `<DOMAIN_NAME>` by your domain name
 
 ```bash
-ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> /usr/local/etc/nginx/servers/
+ln -s <PROJET_ROOT>/config/pleaz/macos/services/nginx/<DOMAIN_NAME> $(brew --prefix nginx)/servers/
 ```
 
 Example:
@@ -166,7 +166,7 @@ sed -i "" "s/fastcgi_backend/fastcgi_backend7.3/" config/pleaz/macos/services/ng
 ```
 3. Park the project
 ```bash
-ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test /usr/local/etc/nginx/servers/
+ln -s /Users/johndoe/Sites/myproject/config/pleaz/macos/services/nginx/myproject.test $(brew --prefix nginx)/servers/
 ```
 
 ---
@@ -179,7 +179,7 @@ For `Magento2`, you must create a wildcard SSL Certificate with the name `magent
 
 Open a terminal and execute:
 ```bash
-mkcert -cert-file /usr/local/etc/nginx/certs/ssl/magento.crt -key-file /usr/local/etc/nginx/certs/ssl/magento.key "*.local.test"
+mkcert -cert-file $(brew --prefix nginx)/certs/ssl/magento.crt -key-file $(brew --prefix nginx)/certs/ssl/magento.key "*.local.test"
 ```
 
 For multiple-Domain Wildcard SSL, just add domain at the end of the command:
@@ -187,7 +187,7 @@ For multiple-Domain Wildcard SSL, just add domain at the end of the command:
 ie: `*.local.test` and `*.dev.test`
 
 ```bash
-mkcert -cert-file /usr/local/etc/nginx/certs/ssl/magento.crt -key-file /usr/local/etc/nginx/certs/ssl/magento.key "*.local.test" "*.dev.test"
+mkcert -cert-file $(brew --prefix nginx)/certs/ssl/magento.crt -key-file $(brew --prefix nginx)/certs/ssl/magento.key "*.local.test" "*.dev.test"
 ```
 
 ---
@@ -221,6 +221,6 @@ pleaz service:start php <PHP_VERSION>
 ## 3. Important locations
 
 * Document Project Root in -> `/usr/local/var/www/`
-* Locally trusted SSL Certificates in -> `/usr/local/etc/nginx/certs/ssl/`
-* `Server Block` directory -> `/usr/local/etc/nginx/servers`
+* Locally trusted SSL Certificates in -> `$(brew --prefix nginx)/certs/ssl/`
+* `Server Block` directory -> `$(brew --prefix nginx)/servers`
 * `pleaz` Configuration directory -> `<PROJET_ROOT>/config/pleaz`
