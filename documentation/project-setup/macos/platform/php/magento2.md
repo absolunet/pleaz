@@ -28,6 +28,8 @@ Install and configure the following services
 
 ## 1. Configuring magento2 project
 
+> The majority of tools are installed via the Homebrew tool. We will refer the Homebrew root directory with <HOMEBREW_[package]>, which can be retrieved via the command `brew --prefix [package]`
+
 ### Step 1. Build a structure
 
 1. At the root of your project, add a config directory (e.g. `config/pleaz`). This will be used to store all important files for the services.
@@ -221,6 +223,6 @@ pleaz service:start php <PHP_VERSION>
 ## 3. Important locations
 
 * Document Project Root in -> `/usr/local/var/www/`
-* Locally trusted SSL Certificates in -> `$(brew --prefix nginx)/certs/ssl/`
-* `Server Block` directory -> `$(brew --prefix nginx)/servers`
+* Locally trusted SSL Certificates in -> `<HOMEBREW_[nginx]>/certs/ssl/`
+* `Server Block` directory -> `<HOMEBREW_[nginx]>/servers`
 * `pleaz` Configuration directory -> `<PROJET_ROOT>/config/pleaz`

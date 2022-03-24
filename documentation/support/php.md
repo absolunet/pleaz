@@ -36,7 +36,7 @@ ln -s . pecl
 > Verify that the NGINX process has access to the complete disk.
 >
 > The fact that NGINX does not have access to the complete disk,
-> prevents it from resolving the symbolic links located in `$(brew --prefix nginx)/servers`
+> prevents it from resolving the symbolic links located in `<HOMEBREW_[nginx]>/servers`
 >
 
 Manually grant Full Disk Access: choose Apple menu > System Preferences, click Security & Privacy, then select the Privacy tab.

@@ -12,7 +12,9 @@
 
 ## 1. Configuration
 
-The default location of the `nginx.conf` on macOS after installing with Homebrew is `$(brew --prefix nginx)/nginx.conf`.
+> The majority of tools are installed via the Homebrew tool. We will refer the Homebrew root directory with <HOMEBREW_[package]>, which can be retrieved via the command `brew --prefix [package]`
+
+The default location of the `nginx.conf` on macOS after installing with Homebrew is `<HOMEBREW_[nginx]>/nginx.conf`.
 
 Edit the configuration file and replace all content by: [nginx.conf](../../../stubs/nginx/context/nginx.conf)
 
@@ -49,7 +51,7 @@ $ echo $USER
 johndoe
 ```
 
-Edit the file `$(brew --prefix nginx)/nginx.conf`
+Edit the file `<HOMEBREW_[nginx]>/nginx.conf`
 
 - Change the following parameter to:
 
@@ -97,9 +99,9 @@ sudo brew services start nginx
 ## 3. Important locations
 
 #### (macOS)
-* `Server Block` directory -> `$(brew --prefix nginx)/servers`
-* Default config -> `$(brew --prefix nginx)/nginx.conf`
-* Logs will be in -> `$(brew --prefix nginx)/logs`
+* `Server Block` directory -> `<HOMEBREW_[nginx]>/servers`
+* Default config -> `<HOMEBREW_[nginx]>/nginx.conf`
+* Logs will be in -> `<HOMEBREW_[nginx]>/logs`
 
 ---
 

@@ -23,7 +23,7 @@ Install and configure the following services
 > Wildcard SSL Certificates are configured to secure an unlimited amount of first-level sub domains under one main domain.
 > Rather than obtaining a different SSL cert for each individual sub domain, you can instead just get one Wildcard certificate to cover them all.
 
-By default, SSL certificates are located in `$(brew --prefix nginx)/certs/ssl/`.
+By default, SSL certificates are located in `<HOMEBREW_[nginx]>/certs/ssl/`.
 
 > Locally trusted SSL certificates must be generated within this directory.
 
