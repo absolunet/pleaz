@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.1.1] - 2022-03-28
+### Changed
+#### Doc (WSL 2)
+- Homebrew path modification for macOS
+
+
+
 ## [1.1.0] - 2021-10-06
 ### Changed
 #### Doc (WSL 2)
@@ -20,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the missing variable `MAGENTO_RUN_MODE` into the service container `web` (NGINX) on `docker-compose.magento.yml` file
 - Added a volume into the service container `elasticsearch` to avoid data loss on `docker-compose.magento.yml` file
 - Added a mount volume to override `php-fpm.conf` on service container `fpm`. Fix issue with file's permission.
+
 
 
 ## [1.0.0] - 2021-09-30
@@ -79,7 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]: https://github.com/absolunet/pleaz/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/absolunet/pleaz/compare/1.1.1...HEAD
+[1.1.1]:      https://github.com/absolunet/pleaz/compare/1.1.0...1.1.1
 [1.1.0]:      https://github.com/absolunet/pleaz/compare/1.0.0...1.1.0
 [1.0.0]:      https://github.com/absolunet/pleaz/compare/0.1.0...1.0.0
 [0.1.0]:      https://github.com/absolunet/pleaz/releases/tag/0.1.0

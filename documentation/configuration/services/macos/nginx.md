@@ -12,7 +12,9 @@
 
 ## 1. Configuration
 
-The default location of the `nginx.conf` on macOS after installing with Homebrew is `/usr/local/etc/nginx/nginx.conf`.
+> The majority of tools are installed via the Homebrew tool. We will refer the Homebrew root directory with <HOMEBREW_[package]>, which can be retrieved via the command `brew --prefix [package]`
+
+The default location of the `nginx.conf` on macOS after installing with Homebrew is `<HOMEBREW_[nginx]>/nginx.conf`.
 
 Edit the configuration file and replace all content by: [nginx.conf](../../../stubs/nginx/context/nginx.conf)
 
@@ -49,7 +51,7 @@ $ echo $USER
 johndoe
 ```
 
-Edit the file `/usr/local/etc/nginx/nginx.conf`
+Edit the file `<HOMEBREW_[nginx]>/nginx.conf`
 
 - Change the following parameter to:
 
@@ -60,7 +62,7 @@ user <USER> staff;
 or you can use this one line command:
 
 ```bash
-sed -i "" "s/<USER>/${USER}/" /usr/local/etc/nginx/nginx.conf
+sed -i "" "s/<USER>/${USER}/" $(brew --prefix nginx)/nginx.conf
 ```
 
 ---
@@ -70,7 +72,7 @@ sed -i "" "s/<USER>/${USER}/" /usr/local/etc/nginx/nginx.conf
 The log directory is not created by default. We have to create it manually to avoid errors at startup.
 
 ```bash
-mkdir -p /usr/local/etc/nginx/logs
+mkdir -p $(brew --prefix nginx)/logs
 ```
 
 ---
@@ -97,9 +99,9 @@ sudo brew services start nginx
 ## 3. Important locations
 
 #### (macOS)
-* `Server Block` directory -> `/usr/local/etc/nginx/servers`
-* Default config -> `/usr/local/etc/nginx/nginx.conf`
-* Logs will be in -> `/usr/local/etc/nginx/logs`
+* `Server Block` directory -> `<HOMEBREW_[nginx]>/servers`
+* Default config -> `<HOMEBREW_[nginx]>/nginx.conf`
+* Logs will be in -> `<HOMEBREW_[nginx]>/logs`
 
 ---
 

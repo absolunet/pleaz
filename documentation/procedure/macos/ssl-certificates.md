@@ -23,18 +23,18 @@ Install and configure the following services
 > Wildcard SSL Certificates are configured to secure an unlimited amount of first-level sub domains under one main domain.
 > Rather than obtaining a different SSL cert for each individual sub domain, you can instead just get one Wildcard certificate to cover them all.
 
-By default, SSL certificates are located in `/usr/local/etc/nginx/certs/ssl/`.
+By default, SSL certificates are located in `<HOMEBREW_[nginx]>/certs/ssl/`.
 
 > Locally trusted SSL certificates must be generated within this directory.
 
 ```bash
 # Create certificat wildcard SSL for *.local.test
-mkcert -cert-file /usr/local/etc/nginx/certs/ssl/_wildcard.local.test.pem -key-file /usr/local/etc/nginx/certs/ssl/_wildcard.local.test-key.pem "*.local.test"
+mkcert -cert-file $(brew --prefix nginx)/certs/ssl/_wildcard.local.test.pem -key-file $(brew --prefix nginx)/certs/ssl/_wildcard.local.test-key.pem "*.local.test"
 ```
 
 For multiple-Domain Wildcard SSL, just add domain at the end of the command:
 
 ie: `*.local.test` and `*.dev.test`
 ```bash
-mkcert -cert-file /usr/local/etc/nginx/certs/ssl/_wildcard.test.pem -key-file /usr/local/etc/nginx/certs/ssl/_wildcard.test-key.pem "*.local.test" "*.dev.test"
+mkcert -cert-file $(brew --prefix nginx)/certs/ssl/_wildcard.test.pem -key-file $(brew --prefix nginx)/certs/ssl/_wildcard.test-key.pem "*.local.test" "*.dev.test"
 ```

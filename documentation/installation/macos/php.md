@@ -18,7 +18,7 @@ Install and configure the following services
 
 ## 1. Installation on macOS
 
-> **_NOTE:_**  **If you have existing PHP installations via Homebrew, you need to first cleanup your setup with our [Upgrading Homebrew cleanup guide](./../../upgrading/cleanup-homebew-php.md) before continuing with this section.**
+> **_NOTE:_**  **If you have existing PHP installations via Homebrew, you need to first cleanup your setup with our [Upgrading Homebrew cleanup guide](./../../upgrading/cleanup-homebrew-php.md) before continuing with this section.**
 
 Remember only PHP 7.3 through 8.x are officially supported by Homebrew, but these also have to be built which is pretty slow.
 
